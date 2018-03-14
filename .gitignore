@@ -66,4 +66,3 @@ tmp/sockets/
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 *.log
-*.enc
