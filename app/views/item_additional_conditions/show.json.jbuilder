@@ -1,0 +1,1 @@
+json.partial! "item_additional_conditions/item_additional_condition", item_additional_condition: @item_additional_condition

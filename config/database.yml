@@ -25,4 +25,4 @@ test:
 
 production:
   <<: *default
-  url: <%= Rails.application.secrets.database_url %>
+  url: <%= ENV['DATABASE_URL'] %>

@@ -1,0 +1,1 @@
+json.partial! "yamato_logistic_order_templates/yamato_logistic_order_template", yamato_logistic_order_template: @yamato_logistic_order_template
