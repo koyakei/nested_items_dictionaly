@@ -47,11 +47,11 @@ create_table "items", id: :serial, force: :cascade do |t|
   t.references  :update_user, :foreign_key => { to_table: :users }, :null => false
   t.timestamps  null: false
   t.index       :name
-  t.index       :yamato_size_item_code_id
-  t.index       :yamato_handling_type_code_1_id
-  t.index       :yamato_packing_item_code_id
-  t.index       :yamato_handling_type_code_2_id
-  t.index       :parent_item_id
+  t.index       :yamato_size_item_code_id, :name => "items_yamato_size_item_code_id_index"
+  t.index       :yamato_handling_type_code_1_id, :name => "items_yamato_handling_type_code_1_id_index"
+  t.index       :yamato_handling_type_code_2_id, :name => "items_yamato_handling_type_code_2_id_index"
+  t.index       :yamato_packing_item_code_id, :name => "items_yamato_packing_item_code_id_index"
+  t.index       :parent_item_id, :name => "items_parent_item_id_index"
 end
 
 create_table "grades", id: :serial, force: :cascade do |t|
@@ -66,8 +66,8 @@ create_table "tags_items_maps", id: :serial, force: :cascade do |t|
   t.references  :update_user, :foreign_key => { to_table: :users }, :null => false
   t.timestamps  null: false
   t.index       [:tag_id, :item_id], :unique => true
-  t.index       :tag_id
-  t.index       :item_id
+  t.index       :tag_id, :name =>"tags_items_maps_tag_index"
+  t.index       :item_id, :name =>"tags_items_maps_item_index"
 end
 
 create_table "business_users", id: :serial, force: :cascade do |t|
@@ -95,15 +95,15 @@ create_table "item_grades_discounts", id: :serial, force: :cascade do |t|
   t.references  :business_user, :null => false, :foreign_key => true
   t.float       "discount_ratio", :limit => 53, :null => false
   t.index       [:item_id, :grade_id, :business_user_id], :unique => true, :name => "index_discount_item_grade_business_user"
-  t.index       :grade_id
-  t.index       :item_id
-  t.index       :business_user_id
+  t.index       :grade_id, :name => "item_grades_discounts_grade_index"
+  t.index       :item_id, :name => "item_grades_discounts_item_index"
+  t.index       :business_user_id, :name => "item_grades_discounts_business_user_index"
 end
 
 create_table "item_aliases", id: :serial, force: :cascade do |t|
   t.references  :item, :null => false, :foreign_key => true
   t.text        "alias", :null => false, :limit => 255
-  t.index       :item_id
+  t.index       :item_id, :name => "item_aliases_item_index"
 end
 
 create_table "item_images", id: :serial, force: :cascade do |t|
@@ -111,7 +111,7 @@ create_table "item_images", id: :serial, force: :cascade do |t|
   t.binary      "image", :limit => 15.megabytes, :null => false
   t.text        "name", :default => nil, :limit => 45
   t.text        "description", :default => nil, :limit => 255
-  t.index       :item_id
+  t.index       :item_id, :name => "item_images_item_index"
 end
 
 create_table "standard_units", id: :serial, force: :cascade do |t|
@@ -147,8 +147,8 @@ create_table "item_additional_conditions", id: :serial, force: :cascade do |t|
   t.references  :additional_condition, :null => false, :foreign_key => true
   t.timestamps  null: false
   t.index       [:item_id, :additional_condition_id], :unique => true, :name => "index_item_add_cond_item_cond"
-  t.index       :item_id
-  t.index       :additional_condition_id
+  t.index       :item_id, :name => "item_additional_conditions_item_index"
+  t.index       :additional_condition_id, :name => "item_additional_conditions_additional_condition_index"
 end
 
 create_table "accessories", id: :serial, force: :cascade do |t|
@@ -156,8 +156,8 @@ create_table "accessories", id: :serial, force: :cascade do |t|
   t.references  :accessory_item, :null => false, :foreign_key => true
   t.timestamps  null: false
   t.index       [:base_item_id, :accessory_item_id], :unique => true
-  t.index       :base_item_id
-  t.index       :accessory_item_id
+  t.index       :base_item_id, :name => "accessories_base_item_index"
+  t.index       :accessory_item_id, :name => "accessories_accessory_item_index"
 end
 
 create_table "makers", id: :serial, force: :cascade do |t|
@@ -176,8 +176,8 @@ create_table "product_informations", id: :serial, force: :cascade do |t|
   t.text        "jan_ean_upc", :default => nil, :limit => 15
   t.text        "url", :default => nil, :limit => 1023
   t.boolean     "automatic_assessment_type", :null => false, :default => false
-  t.index       :item_id, :unique => true
-  t.index       :maker_id
+  t.index       :item_id, :unique => true, :name => "product_informations_item_index"
+  t.index       :maker_id, :name => "product_informations_maker_index"
 end
 
 create_table "item_prospected_prices", id: :serial, force: :cascade do |t|
@@ -185,6 +185,6 @@ create_table "item_prospected_prices", id: :serial, force: :cascade do |t|
   t.references  :business_user, :null => false, :foreign_key => true
   t.integer     "prospected_price", :null => false
   t.index       [:item_id, :business_user_id], :unique => true
-  t.index       :item_id
-  t.index       :business_user_id
+  t.index       :item_id, :name => "item_prospected_prices_item_index"
+  t.index       :business_user_id, :name => "item_prospected_prices_business_user_index"
 end
