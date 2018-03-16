@@ -54,6 +54,7 @@ node_modules/
 # IntelliJ project files
 .idea
 *.iml
+bin/
 out
 gen
 .idea/
