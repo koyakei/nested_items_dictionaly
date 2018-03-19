@@ -1,0 +1,2 @@
+class BussinessUserController < ApplicationController
+end
