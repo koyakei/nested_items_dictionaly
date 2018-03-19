@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :maker_aliases
+  end
+  namespace :admin do
+    resources :makers
+  end
+  namespace :admin do
     resources :yamato_handling_type_codes
   end
   namespace :admin do

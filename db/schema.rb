@@ -10,27 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319072058) do
+ActiveRecord::Schema.define(version: 20180319082026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "maker_aliases", force: :cascade do |t|
+    t.bigint "maker_id", null: false
+    t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["maker_id"], name: "index_maker_aliases_on_maker_id"
+  end
+
+  create_table "makers", force: :cascade do |t|
+    t.text "name", null: false
+    t.text "remarks"
+    t.text "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_makers_on_name", unique: true
+  end
+
   create_table "yamato_handling_type_codes", force: :cascade do |t|
-    t.text "code"
-    t.text "name"
+    t.text "code", null: false
+    t.text "name", null: false
     t.index ["code"], name: "index_yamato_handling_type_codes_on_code", unique: true
   end
 
   create_table "yamato_packing_item_codes", force: :cascade do |t|
-    t.text "code"
-    t.text "name"
+    t.text "code", null: false
+    t.text "name", null: false
     t.index ["code"], name: "index_yamato_packing_item_codes_on_code", unique: true
   end
 
   create_table "yamato_size_item_codes", force: :cascade do |t|
-    t.text "code"
-    t.text "name"
+    t.text "code", null: false
+    t.text "name", null: false
     t.index ["code"], name: "index_yamato_size_item_codes_on_code", unique: true
   end
 
+  add_foreign_key "maker_aliases", "makers"
 end
