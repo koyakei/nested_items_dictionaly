@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :yamato_handling_type_codes
+  end
+  namespace :admin do
+    resources :yamato_packing_item_codes
+  end
+  namespace :admin do
     resources :yamato_size_item_codes
   end
   

@@ -1,0 +1,1 @@
+json.partial! "admin_yamato_handling_type_codes/admin_yamato_handling_type_code", admin_yamato_handling_type_code: @admin_yamato_handling_type_code

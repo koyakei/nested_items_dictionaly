@@ -10,15 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319044956) do
+ActiveRecord::Schema.define(version: 20180319072058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "admin_yamato_size_item_codes", force: :cascade do |t|
+  create_table "yamato_handling_type_codes", force: :cascade do |t|
     t.text "code"
     t.text "name"
-    t.index ["code"], name: "index_admin_yamato_size_item_codes_on_code", unique: true
+    t.index ["code"], name: "index_yamato_handling_type_codes_on_code", unique: true
+  end
+
+  create_table "yamato_packing_item_codes", force: :cascade do |t|
+    t.text "code"
+    t.text "name"
+    t.index ["code"], name: "index_yamato_packing_item_codes_on_code", unique: true
+  end
+
+  create_table "yamato_size_item_codes", force: :cascade do |t|
+    t.text "code"
+    t.text "name"
+    t.index ["code"], name: "index_yamato_size_item_codes_on_code", unique: true
   end
 
 end

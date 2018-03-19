@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+CSV.foreach('db/seeds/csv/yamato_packing_item_codes.csv') do |row|
+	Admin::YamatoPackingItemCode.new.save(code: row[0], name: row[1])
+end
+
+CSV.foreach('db/seeds/csv/yamato_size_item_codes.csv') do |row|
+	Admin::YamatoSizeItemCode.new.save(code: row[0], name: row[1])
+end
+
+CSV.foreach('db/seeds/csv/yamato_handling_type_codes.csv') do |row|
+	Admin::YamatoHandlingTypeCode.new.save(code: row[0], name: row[1])
+end

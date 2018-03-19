@@ -1,0 +1,1 @@
+json.partial! "admin_yamato_packing_item_codes/admin_yamato_packing_item_code", admin_yamato_packing_item_code: @admin_yamato_packing_item_code
