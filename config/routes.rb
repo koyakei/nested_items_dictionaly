@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :standard_units
+  end
+  namespace :admin do
     resources :maker_aliases
   end
   namespace :admin do
