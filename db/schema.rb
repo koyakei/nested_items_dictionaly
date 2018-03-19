@@ -10,5 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20180319044956) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "admin_yamato_size_item_codes", force: :cascade do |t|
+    t.text "code"
+    t.text "name"
+    t.index ["code"], name: "index_admin_yamato_size_item_codes_on_code", unique: true
+  end
+
 end
