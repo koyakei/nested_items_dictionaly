@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  resources :yamato_logistics
+  namespace :admin do
+    resources :tags
+  end
+  namespace :admin do
+    resources :display_units
+  end
+  namespace :admin do
+    resources :attributes
+  end
   namespace :admin do
     resources :standard_units
   end

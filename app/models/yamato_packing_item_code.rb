@@ -1,0 +1,2 @@
+class YamatoPackingItemCode < ApplicationRecord
+end

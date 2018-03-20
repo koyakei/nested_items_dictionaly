@@ -1,0 +1,2 @@
+class YamatoSizeItemCode < ApplicationRecord
+end

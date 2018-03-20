@@ -10,37 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319091403) do
+ActiveRecord::Schema.define(version: 20180320044056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "maker_aliases", force: :cascade do |t|
-    t.bigint "maker_id"
-    t.text "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["maker_id"], name: "index_maker_aliases_on_maker_id"
-  end
-
-  create_table "makers", force: :cascade do |t|
-    t.text "name"
-    t.text "remarks"
-    t.text "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_makers_on_name", unique: true
-  end
-
-  create_table "standard_units", force: :cascade do |t|
-    t.text "unit", null: false
-    t.index ["unit"], name: "index_standard_units_on_unit", unique: true
-  end
 
   create_table "yamato_handling_type_codes", force: :cascade do |t|
     t.text "code"
     t.text "name"
     t.index ["code"], name: "index_yamato_handling_type_codes_on_code", unique: true
+  end
+
+  create_table "yamato_logistics", force: :cascade do |t|
+    t.bigint "yamato_size_item_code_id"
+    t.bigint "yamato_packing_item_code_id"
+    t.bigint "yamato_handling_type_code1_id"
+    t.bigint "yamato_handling_type_code2_id"
+    t.index ["yamato_handling_type_code1_id"], name: "index_yamato_logistics_on_yamato_handling_type_code1_id"
+    t.index ["yamato_handling_type_code2_id"], name: "index_yamato_logistics_on_yamato_handling_type_code2_id"
+    t.index ["yamato_packing_item_code_id"], name: "index_yamato_logistics_on_yamato_packing_item_code_id"
+    t.index ["yamato_size_item_code_id"], name: "index_yamato_logistics_on_yamato_size_item_code_id"
   end
 
   create_table "yamato_packing_item_codes", force: :cascade do |t|
@@ -55,5 +44,8 @@ ActiveRecord::Schema.define(version: 20180319091403) do
     t.index ["code"], name: "index_yamato_size_item_codes_on_code", unique: true
   end
 
-  add_foreign_key "maker_aliases", "makers"
+  add_foreign_key "yamato_logistics", "yamato_handling_type_codes", column: "yamato_handling_type_code1_id"
+  add_foreign_key "yamato_logistics", "yamato_handling_type_codes", column: "yamato_handling_type_code2_id"
+  add_foreign_key "yamato_logistics", "yamato_packing_item_codes"
+  add_foreign_key "yamato_logistics", "yamato_size_item_codes"
 end

@@ -1,0 +1,2 @@
+class YamatoHandlingTypeCode < ApplicationRecord
+end
