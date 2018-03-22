@@ -52,12 +52,12 @@ node_modules/
 ### Example user template
 
 # IntelliJ project files
-.idea
+
 *.iml
 bin/
 out
 gen
-.idea/
+
 tmp/cache/
 tmp/pids/
 tmp/restart.txt

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Rails product-db: development" uuid="c404f5f7-3e67-4fec-bf5e-e905da6f55b6">
+      <driver-ref>eb140b51-8642-4a80-bb5b-e123c129f370</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:product_db_development</jdbc-url>
+    </data-source>
+  </component>
+</project>
