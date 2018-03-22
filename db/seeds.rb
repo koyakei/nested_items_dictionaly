@@ -1,30 +1,44 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+maker = Maker.new(id: 1, description: 'unknown')
+maker.save
+maker_alias = MakerAlias.new(name: '不明')
+maker_alias.maker = Maker.first
+maker_alias.save
+maker.maker_alias = maker_alias
+maker.save
+User.new(id: 1).save
+item_alias = ItemAlias.new
+item_alias.name = 'ALL'
+item_alias.creator = User.first
+item_alias.save!
+
+item = Item.new(id: 1)
+item.maker = Maker.first
+item.creator = User.first
+item.item_alias = ItemAlias.first
+
+item.max_threshold_price = 2_147_483_647
+item.min_threshold_price = 0
+item.save!(validate: false)
 CSV.foreach('db/seeds/csv/yamato_packing_item_codes.csv') do |row|
-	YamatoPackingItemCode.new.save(code: row[0], name: row[1])
+  YamatoPackingItemCode.new(code: row[0], name: row[1]).save
 end
 
 CSV.foreach('db/seeds/csv/yamato_size_item_codes.csv') do |row|
-	YamatoSizeItemCode.new.save(code: row[0], name: row[1])
+  YamatoSizeItemCode.new(code_from: row[0], name_from: row[1],
+                         code_to: row[2], name_to: row[3], size: row[4]).save
 end
 
 CSV.foreach('db/seeds/csv/yamato_handling_type_codes.csv') do |row|
-	YamatoHandlingTypeCode.new.save(code: row[0], name: row[1])
+  YamatoHandlingTypeCode.new(code: row[0], name: row[1]).save
 end
 
-YamatoLogistic.new.save(yamato_size_item_code: 1, yamato_packing_item_code: 1, yamato_handling_type_codeable: 1)
+yamato_logistic_order_template = YamatoLogisticOrderTemplate.new
+yamato_logistic_order_template.yamato_size_item_code = YamatoSizeItemCode.first
+yamato_logistic_order_template.yamato_packing_item_code = YamatoPackingItemCode.first
+yamato_logistic_order_template.yamato_handling_type_code = YamatoHandlingTypeCode.first
+yamato_logistic_order_template.save
 
-# CSV.foreach('db/seeds/csv/makers.csv') do |row|
-# 	aliases = []
-# 	row.from(3).each do |name|
-# 		aliases << MakerAlias.new(name: name)
-# 	end
-# 	Maker.new(name: row[0], remarks: row[1],
-# 	                         url: row[2],
-# 	                         maker_aliases: aliases).save
-# end
+logistic_order_template = LogisticOrderTemplate.new
+logistic_order_template.item = Item.first
+logistic_order_template.logistic_order_templatable = YamatoLogisticOrderTemplate.first
+logistic_order_template.save!

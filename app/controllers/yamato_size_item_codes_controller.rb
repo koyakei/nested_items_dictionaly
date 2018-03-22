@@ -48,6 +48,6 @@ class YamatoSizeItemCodesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def yamato_size_item_code_params
-      params.require(:yamato_size_item_code).permit(:code, :name)
+      params.require(:yamato_size_item_code).permit(:code_from, :name_from, :code_to, :name_to)
     end
 end
