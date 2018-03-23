@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1'
+gem 'rails', '5.2.0.rc2'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
-gem 'puma', '3.0'
+gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -50,7 +50,18 @@ end
 group :test do
   gem 'rspec'
   gem 'database_rewinder'
-  gem 'rspec-request_describer'
-  gem 'autodoc'
+  # gem 'rspec-request_describer'
   gem 'json_spec'
 end
+
+gem 'grape'                   # Grapeを使うときのGem
+gem 'grape-entity'            # 1対多のデータ構造を書くときに使う
+gem 'grape-swagger'           # Grapeで定義したAPIをSwagger形式でドキュメント化するために使う
+gem 'grape-swagger-ui'
+gem 'grape-swagger-entity'    # レスポンスモデルをSwaggerで見られる形式にするときに使う
+gem 'grape-swagger-rails'
+gem 'grape-active_model_serializers'
+gem 'grape_on_rails_routes'
+gem 'grape_logging'
+
+gem "aws-sdk-s3", require: false

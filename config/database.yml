@@ -26,4 +26,4 @@ test:
 
 production:
   <<: *default
-  url: <%= Rails.application.secrets.database_url %>
+  url: <%= Rails.application.credentials.production[:database_url] %>

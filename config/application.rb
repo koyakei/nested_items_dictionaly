@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 module RailsWebApp
   class Application < Rails::Application
-    config.read_encrypted_secrets = true
     config.generators do |g|
       g.api true
       g.test_framework :rspec
