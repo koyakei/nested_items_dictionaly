@@ -1,0 +1,163 @@
+                             Prefix Verb   URI Pattern                                         Controller#Action
+                       item_aliases GET    /item_aliases(.:format)                             item_aliases#index
+                                    POST   /item_aliases(.:format)                             item_aliases#create
+                     new_item_alias GET    /item_aliases/new(.:format)                         item_aliases#new
+                    edit_item_alias GET    /item_aliases/:id/edit(.:format)                    item_aliases#edit
+                         item_alias GET    /item_aliases/:id(.:format)                         item_aliases#show
+                                    PATCH  /item_aliases/:id(.:format)                         item_aliases#update
+                                    PUT    /item_aliases/:id(.:format)                         item_aliases#update
+                                    DELETE /item_aliases/:id(.:format)                         item_aliases#destroy
+                          tag_items GET    /tag_items(.:format)                                tag_items#index
+                                    POST   /tag_items(.:format)                                tag_items#create
+                       new_tag_item GET    /tag_items/new(.:format)                            tag_items#new
+                      edit_tag_item GET    /tag_items/:id/edit(.:format)                       tag_items#edit
+                           tag_item GET    /tag_items/:id(.:format)                            tag_items#show
+                                    PATCH  /tag_items/:id(.:format)                            tag_items#update
+                                    PUT    /tag_items/:id(.:format)                            tag_items#update
+                                    DELETE /tag_items/:id(.:format)                            tag_items#destroy
+                        item_images GET    /item_images(.:format)                              item_images#index
+                                    POST   /item_images(.:format)                              item_images#create
+                     new_item_image GET    /item_images/new(.:format)                          item_images#new
+                    edit_item_image GET    /item_images/:id/edit(.:format)                     item_images#edit
+                         item_image GET    /item_images/:id(.:format)                          item_images#show
+                                    PATCH  /item_images/:id(.:format)                          item_images#update
+                                    PUT    /item_images/:id(.:format)                          item_images#update
+                                    DELETE /item_images/:id(.:format)                          item_images#destroy
+              item_grades_discounts GET    /item_grades_discounts(.:format)                    item_grades_discounts#index
+                                    POST   /item_grades_discounts(.:format)                    item_grades_discounts#create
+           new_item_grades_discount GET    /item_grades_discounts/new(.:format)                item_grades_discounts#new
+          edit_item_grades_discount GET    /item_grades_discounts/:id/edit(.:format)           item_grades_discounts#edit
+               item_grades_discount GET    /item_grades_discounts/:id(.:format)                item_grades_discounts#show
+                                    PATCH  /item_grades_discounts/:id(.:format)                item_grades_discounts#update
+                                    PUT    /item_grades_discounts/:id(.:format)                item_grades_discounts#update
+                                    DELETE /item_grades_discounts/:id(.:format)                item_grades_discounts#destroy
+                    costs_for_items GET    /costs_for_items(.:format)                          costs_for_items#index
+                                    POST   /costs_for_items(.:format)                          costs_for_items#create
+                 new_costs_for_item GET    /costs_for_items/new(.:format)                      costs_for_items#new
+                edit_costs_for_item GET    /costs_for_items/:id/edit(.:format)                 costs_for_items#edit
+                     costs_for_item GET    /costs_for_items/:id(.:format)                      costs_for_items#show
+                                    PATCH  /costs_for_items/:id(.:format)                      costs_for_items#update
+                                    PUT    /costs_for_items/:id(.:format)                      costs_for_items#update
+                                    DELETE /costs_for_items/:id(.:format)                      costs_for_items#destroy
+                             grades GET    /grades(.:format)                                   grades#index
+                                    POST   /grades(.:format)                                   grades#create
+                          new_grade GET    /grades/new(.:format)                               grades#new
+                         edit_grade GET    /grades/:id/edit(.:format)                          grades#edit
+                              grade GET    /grades/:id(.:format)                               grades#show
+                                    PATCH  /grades/:id(.:format)                               grades#update
+                                    PUT    /grades/:id(.:format)                               grades#update
+                                    DELETE /grades/:id(.:format)                               grades#destroy
+                    item_attributes GET    /item_attributes(.:format)                          item_attributes#index
+                                    POST   /item_attributes(.:format)                          item_attributes#create
+                 new_item_attribute GET    /item_attributes/new(.:format)                      item_attributes#new
+                edit_item_attribute GET    /item_attributes/:id/edit(.:format)                 item_attributes#edit
+                     item_attribute GET    /item_attributes/:id(.:format)                      item_attributes#show
+                                    PATCH  /item_attributes/:id(.:format)                      item_attributes#update
+                                    PUT    /item_attributes/:id(.:format)                      item_attributes#update
+                                    DELETE /item_attributes/:id(.:format)                      item_attributes#destroy
+         item_additional_conditions GET    /item_additional_conditions(.:format)               item_additional_conditions#index
+                                    POST   /item_additional_conditions(.:format)               item_additional_conditions#create
+      new_item_additional_condition GET    /item_additional_conditions/new(.:format)           item_additional_conditions#new
+     edit_item_additional_condition GET    /item_additional_conditions/:id/edit(.:format)      item_additional_conditions#edit
+          item_additional_condition GET    /item_additional_conditions/:id(.:format)           item_additional_conditions#show
+                                    PATCH  /item_additional_conditions/:id(.:format)           item_additional_conditions#update
+                                    PUT    /item_additional_conditions/:id(.:format)           item_additional_conditions#update
+                                    DELETE /item_additional_conditions/:id(.:format)           item_additional_conditions#destroy
+           logistic_order_templates GET    /logistic_order_templates(.:format)                 logistic_order_templates#index
+                                    POST   /logistic_order_templates(.:format)                 logistic_order_templates#create
+        new_logistic_order_template GET    /logistic_order_templates/new(.:format)             logistic_order_templates#new
+       edit_logistic_order_template GET    /logistic_order_templates/:id/edit(.:format)        logistic_order_templates#edit
+            logistic_order_template GET    /logistic_order_templates/:id(.:format)             logistic_order_templates#show
+                                    PATCH  /logistic_order_templates/:id(.:format)             logistic_order_templates#update
+                                    PUT    /logistic_order_templates/:id(.:format)             logistic_order_templates#update
+                                    DELETE /logistic_order_templates/:id(.:format)             logistic_order_templates#destroy
+    yamato_logistic_order_templates GET    /yamato_logistic_order_templates(.:format)          yamato_logistic_order_templates#index
+                                    POST   /yamato_logistic_order_templates(.:format)          yamato_logistic_order_templates#create
+ new_yamato_logistic_order_template GET    /yamato_logistic_order_templates/new(.:format)      yamato_logistic_order_templates#new
+edit_yamato_logistic_order_template GET    /yamato_logistic_order_templates/:id/edit(.:format) yamato_logistic_order_templates#edit
+     yamato_logistic_order_template GET    /yamato_logistic_order_templates/:id(.:format)      yamato_logistic_order_templates#show
+                                    PATCH  /yamato_logistic_order_templates/:id(.:format)      yamato_logistic_order_templates#update
+                                    PUT    /yamato_logistic_order_templates/:id(.:format)      yamato_logistic_order_templates#update
+                                    DELETE /yamato_logistic_order_templates/:id(.:format)      yamato_logistic_order_templates#destroy
+         yamato_handling_type_codes GET    /yamato_handling_type_codes(.:format)               yamato_handling_type_codes#index
+                                    POST   /yamato_handling_type_codes(.:format)               yamato_handling_type_codes#create
+      new_yamato_handling_type_code GET    /yamato_handling_type_codes/new(.:format)           yamato_handling_type_codes#new
+     edit_yamato_handling_type_code GET    /yamato_handling_type_codes/:id/edit(.:format)      yamato_handling_type_codes#edit
+          yamato_handling_type_code GET    /yamato_handling_type_codes/:id(.:format)           yamato_handling_type_codes#show
+                                    PATCH  /yamato_handling_type_codes/:id(.:format)           yamato_handling_type_codes#update
+                                    PUT    /yamato_handling_type_codes/:id(.:format)           yamato_handling_type_codes#update
+                                    DELETE /yamato_handling_type_codes/:id(.:format)           yamato_handling_type_codes#destroy
+          yamato_packing_item_codes GET    /yamato_packing_item_codes(.:format)                yamato_packing_item_codes#index
+                                    POST   /yamato_packing_item_codes(.:format)                yamato_packing_item_codes#create
+       new_yamato_packing_item_code GET    /yamato_packing_item_codes/new(.:format)            yamato_packing_item_codes#new
+      edit_yamato_packing_item_code GET    /yamato_packing_item_codes/:id/edit(.:format)       yamato_packing_item_codes#edit
+           yamato_packing_item_code GET    /yamato_packing_item_codes/:id(.:format)            yamato_packing_item_codes#show
+                                    PATCH  /yamato_packing_item_codes/:id(.:format)            yamato_packing_item_codes#update
+                                    PUT    /yamato_packing_item_codes/:id(.:format)            yamato_packing_item_codes#update
+                                    DELETE /yamato_packing_item_codes/:id(.:format)            yamato_packing_item_codes#destroy
+             yamato_size_item_codes GET    /yamato_size_item_codes(.:format)                   yamato_size_item_codes#index
+                                    POST   /yamato_size_item_codes(.:format)                   yamato_size_item_codes#create
+          new_yamato_size_item_code GET    /yamato_size_item_codes/new(.:format)               yamato_size_item_codes#new
+         edit_yamato_size_item_code GET    /yamato_size_item_codes/:id/edit(.:format)          yamato_size_item_codes#edit
+              yamato_size_item_code GET    /yamato_size_item_codes/:id(.:format)               yamato_size_item_codes#show
+                                    PATCH  /yamato_size_item_codes/:id(.:format)               yamato_size_item_codes#update
+                                    PUT    /yamato_size_item_codes/:id(.:format)               yamato_size_item_codes#update
+                                    DELETE /yamato_size_item_codes/:id(.:format)               yamato_size_item_codes#destroy
+                        accessories GET    /accessories(.:format)                              accessories#index
+                                    POST   /accessories(.:format)                              accessories#create
+                      new_accessory GET    /accessories/new(.:format)                          accessories#new
+                     edit_accessory GET    /accessories/:id/edit(.:format)                     accessories#edit
+                          accessory GET    /accessories/:id(.:format)                          accessories#show
+                                    PATCH  /accessories/:id(.:format)                          accessories#update
+                                    PUT    /accessories/:id(.:format)                          accessories#update
+                                    DELETE /accessories/:id(.:format)                          accessories#destroy
+                              items GET    /items(.:format)                                    items#index
+                                    POST   /items(.:format)                                    items#create
+                           new_item GET    /items/new(.:format)                                items#new
+                          edit_item GET    /items/:id/edit(.:format)                           items#edit
+                               item GET    /items/:id(.:format)                                items#show
+                                    PATCH  /items/:id(.:format)                                items#update
+                                    PUT    /items/:id(.:format)                                items#update
+                                    DELETE /items/:id(.:format)                                items#destroy
+              additional_conditions GET    /additional_conditions(.:format)                    additional_conditions#index
+                                    POST   /additional_conditions(.:format)                    additional_conditions#create
+           new_additional_condition GET    /additional_conditions/new(.:format)                additional_conditions#new
+          edit_additional_condition GET    /additional_conditions/:id/edit(.:format)           additional_conditions#edit
+               additional_condition GET    /additional_conditions/:id(.:format)                additional_conditions#show
+                                    PATCH  /additional_conditions/:id(.:format)                additional_conditions#update
+                                    PUT    /additional_conditions/:id(.:format)                additional_conditions#update
+                                    DELETE /additional_conditions/:id(.:format)                additional_conditions#destroy
+                              users GET    /users(.:format)                                    users#index
+                                    POST   /users(.:format)                                    users#create
+                           new_user GET    /users/new(.:format)                                users#new
+                          edit_user GET    /users/:id/edit(.:format)                           users#edit
+                               user GET    /users/:id(.:format)                                users#show
+                                    PATCH  /users/:id(.:format)                                users#update
+                                    PUT    /users/:id(.:format)                                users#update
+                                    DELETE /users/:id(.:format)                                users#destroy
+                         attributes GET    /attributes(.:format)                               attributes#index
+                                    POST   /attributes(.:format)                               attributes#create
+                      new_attribute GET    /attributes/new(.:format)                           attributes#new
+                     edit_attribute GET    /attributes/:id/edit(.:format)                      attributes#edit
+                          attribute GET    /attributes/:id(.:format)                           attributes#show
+                                    PATCH  /attributes/:id(.:format)                           attributes#update
+                                    PUT    /attributes/:id(.:format)                           attributes#update
+                                    DELETE /attributes/:id(.:format)                           attributes#destroy
+                      display_units GET    /display_units(.:format)                            display_units#index
+                                    POST   /display_units(.:format)                            display_units#create
+                   new_display_unit GET    /display_units/new(.:format)                        display_units#new
+                  edit_display_unit GET    /display_units/:id/edit(.:format)                   display_units#edit
+                       display_unit GET    /display_units/:id(.:format)                        display_units#show
+                                    PATCH  /display_units/:id(.:format)                        display_units#update
+                                    PUT    /display_units/:id(.:format)                        display_units#update
+                                    DELETE /display_units/:id(.:format)                        display_units#destroy
+                               tags GET    /tags(.:format)                                     tags#index
+                                    POST   /tags(.:format)                                     tags#create
+                            new_tag GET    /tags/new(.:format)                                 tags#new
+                           edit_tag GET    /tags/:id/edit(.:format)                            tags#edit
+                                tag GET    /tags/:id(.:format)                                 tags#show
+                                    PATCH  /tags/:id(.:format)                                 tags#update
+                                    PUT    /tags/:id(.:format)                                 tags#update
+                                    DELETE /tags/:id(.:format)                                 tags#destroy
+                   hello_page_hello GET    /hello_page/hello(.:format)                         hello_page#hello
+                               root GET    /                                                   hello_page#hello

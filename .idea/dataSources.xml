@@ -9,5 +9,19 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:product_db_development</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="postgres@production" uuid="c05901bc-189d-4618-be31-f039af9dc0e1">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://aanwibx2zgfmi0.cenly0cn8afd.ap-northeast-1.rds.amazonaws.com:5432/product_db</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Rails product-db: test" uuid="d25111ad-8275-4211-8ae1-1ebab6b98f7e">
+      <driver-ref>eb140b51-8642-4a80-bb5b-e123c129f370</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:products_test</jdbc-url>
+    </data-source>
   </component>
 </project>

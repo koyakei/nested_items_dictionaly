@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321104452) do
+ActiveRecord::Schema.define(version: 20180322145707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,8 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.bigint "logistic_order_template_type_id"
+    t.bigint "creator_id", default: 1, null: false
+    t.index ["creator_id"], name: "index_logistic_order_templates_on_creator_id"
     t.index ["item_id"], name: "index_logistic_order_templates_on_item_id"
     t.index ["logistic_order_templatable_type", "logistic_order_templatable_id"], name: "index_logistic_templates_on_type_and_template"
     t.index ["logistic_order_template_type_id"], name: "index_logistic_templates_on_logistic_template_type_id"
@@ -165,6 +167,8 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.text "name", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.bigint "creator_id", default: 1, null: false
+    t.index ["creator_id"], name: "index_maker_aliases_on_creator_id"
     t.index ["maker_id"], name: "index_maker_aliases_on_maker_id"
   end
 
@@ -222,6 +226,8 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.bigint "yamato_handling_type_code_id", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.bigint "creator_id", default: 1, null: false
+    t.index ["creator_id"], name: "index_yamato_logistic_order_templates_on_creator_id"
     t.index ["yamato_handling_type_code_id"], name: "index_yamato_templates_on_yamato_handling_code_id"
     t.index ["yamato_packing_item_code_id"], name: "index_yamato_templates_on_yamato_packing_code_id"
     t.index ["yamato_size_item_code_id"], name: "index_yamato_templates_on_yamato_item_code_id"
@@ -266,12 +272,15 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   add_foreign_key "items", "makers"
   add_foreign_key "items", "users", column: "creator_id"
   add_foreign_key "logistic_order_templates", "items"
+  add_foreign_key "logistic_order_templates", "users", column: "creator_id"
   add_foreign_key "maker_aliases", "makers"
+  add_foreign_key "maker_aliases", "users", column: "creator_id"
   add_foreign_key "makers", "maker_aliases"
   add_foreign_key "tag_items", "items"
   add_foreign_key "tag_items", "tags"
   add_foreign_key "tag_items", "users", column: "creator_id"
   add_foreign_key "tags", "users", column: "creator_id"
+  add_foreign_key "yamato_logistic_order_templates", "users", column: "creator_id"
   add_foreign_key "yamato_logistic_order_templates", "yamato_handling_type_codes"
   add_foreign_key "yamato_logistic_order_templates", "yamato_packing_item_codes"
   add_foreign_key "yamato_logistic_order_templates", "yamato_size_item_codes"

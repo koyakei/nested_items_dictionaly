@@ -49,4 +49,8 @@ end
 
 group :test do
   gem 'rspec'
+  gem 'database_rewinder'
+  gem 'rspec-request_describer'
+  gem 'autodoc'
+  gem 'json_spec'
 end

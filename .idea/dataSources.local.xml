@@ -9,5 +9,31 @@
       <user-name>koyanagi</user-name>
       <introspection-schemas>product_db_development:public</introspection-schemas>
     </data-source>
+    <data-source name="postgres@production" uuid="c05901bc-189d-4618-be31-f039af9dc0e1">
+      <database-info product="PostgreSQL" version="9.6.6" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.1">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <first-sync>true</first-sync>
+      <user-name>makxas</user-name>
+      <introspection-schemas>product_db:*</introspection-schemas>
+      <ssh-properties>
+        <enabled>false</enabled>
+        <proxy-host>54.250.54.113</proxy-host>
+        <proxy-port>22</proxy-port>
+        <user>ec2-user</user>
+        <use-password>false</use-password>
+        <auth-type>KEY_PAIR</auth-type>
+        <private-key-path>~/.ssh/products-db.pem</private-key-path>
+      </ssh-properties>
+    </data-source>
+    <data-source name="Rails product-db: test" uuid="d25111ad-8275-4211-8ae1-1ebab6b98f7e">
+      <database-info product="PostgreSQL" version="9.6.3" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.1">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <introspection-schemas>products_test:public</introspection-schemas>
+    </data-source>
   </component>
 </project>
