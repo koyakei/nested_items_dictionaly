@@ -97,9 +97,9 @@ default: &default
     AuthType:
       example:
         method: POST
-        provider: viron-example-email
-        type: email
-        url: '/signin'
+        provider: google
+        type: oauth
+        url: '/googlesignin'
       properties:
         method:
           description: リクエストメソッド
@@ -642,6 +642,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
+        security:
+        - jwt:
+          - api:access
 
 
         summary: ユーザー権限一覧
@@ -946,7 +949,9 @@ default: &default
             description: OK
             schema:
               $ref: '#/definitions/Viron'
-
+        security:
+        - jwt:
+          - api:access
 
         summary: エンドポイント全体情報取得
         tags:
@@ -966,39 +971,63 @@ default: &default
         tags:
         - auth_type
 
-    /signin:
-      post:
+    /googleoauth2callback:
+      get:
         x-swagger-router-controller: viron_auth
-        description: サインイン
-        operationId: viron_auth#signin
+        description: GoogleOAuth2コールバックパス
+        operationId: viron_auth#googleoauth2callback
         parameters:
-        - in: body
-          name: payload
-          required: true
-          schema:
-            $ref: '#/definitions/SigninAuthPayload'
+        - description: 認証コード
+          in: query
+          name: code
+          required: false
+          type: string
+        - description: ステータスチェック
+          in: query
+          name: state
+          required: false
+          type: string
         responses:
-          "204":
-            description: No Content
+          "301":
+            description: Moved Permanently
             headers:
               Authorization:
                 description: Generated JWT
                 type: string
+              Content-Type:
+                description: content type
+                type: string
+              Location:
+                description: redirect url
+                type: string
           "307":
             description: Temporary Redirect
-          "401":
-            description: Unauthorized
-            schema:
-              $ref: '#/definitions/Error'
-          "404":
-            description: Not Found
-            schema:
-              $ref: '#/definitions/Error'
-          "500":
-            description: Internal Server Error
-            schema:
-              $ref: '#/definitions/Error'
-        summary: サインイン
+        summary: GoogleOAuth2 リダイレクトパス
+        tags:
+        - auth
+
+    https://makxastest.auth.ap-northeast-1.amazoncognito.com/login?response_type=code&client_id=196fbvmncvl8crgf2bf0lbu8hf:
+      get:
+        x-swagger-router-controller: viron_auth
+        description: GoogleOAuth2認証
+        operationId: viron_auth#googlesignin
+        parameters:
+        - description: リダイレクトURL
+          in: query
+          name: redirect_url
+          required: false
+          type: string
+        responses:
+          "301":
+            description: Moved Permanently
+            headers:
+              Content-Type:
+                description: content type
+                type: string
+              Location:
+                description: redirect url
+                type: string
+        summary: GoogleOAuth2 認証
         tags:
         - auth
 
@@ -1160,6 +1189,9 @@ default: &default
             description: Not Found
             schema:
               $ref: '#/definitions/Error'
+        security:
+        - jwt:
+          - api:access
     /users:
       get:
         x-swagger-router-controller: user
@@ -1371,6 +1403,13 @@ default: &default
         summary: ユーザー更新
         tags:
         - user
+  securityDefinitions:
+  jwt:
+    type: oauth2
+    authorizationUrl: /signin
+    flow: implicit
+    scopes:
+      api:access: API access
   produces:
     - application/json
     - text/plain
