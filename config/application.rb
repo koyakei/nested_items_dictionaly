@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module RailsWebApp
   class Application < Rails::Application
+    config.api_only = true
+    config.debug_exception_response_format = :api
+
     config.generators do |g|
       g.api true
       g.test_framework :rspec
