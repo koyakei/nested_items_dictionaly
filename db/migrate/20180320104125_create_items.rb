@@ -1,8 +1,8 @@
 class CreateItems < ActiveRecord::Migration[5.1]
   def change
     create_table :items do |t|
-      t.integer :max_threshold_price, null: false
-      t.integer :min_threshold_price, null: false, default: 0
+      t.integer :max_threshold_price
+      t.integer :min_threshold_price, default: 0
       t.text :description
       t.integer :prospected_price
       t.boolean :has_child, null: false, default: true

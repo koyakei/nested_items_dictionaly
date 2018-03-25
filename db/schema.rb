@@ -136,7 +136,6 @@ ActiveRecord::Schema.define(version: 2018_03_23_034113) do
 
   create_table "item_images", force: :cascade do |t|
     t.bigint "item_id", null: false
-    t.text "image_path", null: false
     t.text "name"
     t.text "description"
     t.datetime "created_at", default: -> { "now()" }, null: false
@@ -145,8 +144,8 @@ ActiveRecord::Schema.define(version: 2018_03_23_034113) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer "max_threshold_price", null: false
-    t.integer "min_threshold_price", default: 0, null: false
+    t.integer "max_threshold_price"
+    t.integer "min_threshold_price", default: 0
     t.text "description"
     t.integer "prospected_price"
     t.boolean "has_child", default: true, null: false
