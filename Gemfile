@@ -64,4 +64,4 @@ gem 'grape-active_model_serializers'
 gem 'grape_on_rails_routes'
 gem 'grape_logging'
 
-gem 'aws-sdk'
+# gem 'aws-sdk'
