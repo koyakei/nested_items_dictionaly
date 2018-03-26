@@ -9,6 +9,17 @@ maker = Maker.first
 maker.maker_alias = maker_alias
 maker.save
 
+maker = Maker.new(id: 2, description: "Apple")
+maker.save
+maker_alias = MakerAlias.new(name: "Apple")
+maker_alias.maker = Maker.first
+maker_alias.creator = User.first
+maker_alias.save!
+maker.maker_alias = maker_alias
+maker.save
+
+
+
 item_alias = ItemAlias.new
 item_alias.name = "ALL"
 item_alias.creator = User.first
@@ -62,7 +73,7 @@ item_alias.name = "iPhone"
 item_alias.creator = User.first
 item_alias.save!
 
-item = Item.new(id: 3, maker_id: Maker.first.id, parent_item_id: 2)
+item = Item.new(id: 3, maker_id: 2, parent_item_id: 2)
 item.creator = User.first
 item.item_alias_id = item_alias.id
 item.save!(validate: false)
