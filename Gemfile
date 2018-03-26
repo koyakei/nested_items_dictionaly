@@ -26,7 +26,6 @@ gem 'jbuilder'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '3.1.7'
 gem 'csv'
-gem 'rubocop'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -45,6 +44,7 @@ group :development do
   gem 'annotate'
   gem 'migration_comments'
   gem 'squasher'
+  gem 'rubocop'
 end
 
 group :test do
@@ -54,14 +54,14 @@ group :test do
   gem 'json_spec'
 end
 
-gem 'grape'                   # Grapeを使うときのGem
-gem 'grape-entity'            # 1対多のデータ構造を書くときに使う
-gem 'grape-swagger'           # Grapeで定義したAPIをSwagger形式でドキュメント化するために使う
-gem 'grape-swagger-ui'
-gem 'grape-swagger-entity'    # レスポンスモデルをSwaggerで見られる形式にするときに使う
-gem 'grape-swagger-rails'
-gem 'grape-active_model_serializers'
-gem 'grape_on_rails_routes'
-gem 'grape_logging'
+# gem 'grape'                   # Grapeを使うときのGem
+# gem 'grape-entity'            # 1対多のデータ構造を書くときに使う
+# gem 'grape-swagger'           # Grapeで定義したAPIをSwagger形式でドキュメント化するために使う
+# gem 'grape-swagger-ui'
+# gem 'grape-swagger-entity'    # レスポンスモデルをSwaggerで見られる形式にするときに使う
+# gem 'grape-swagger-rails'
+# gem 'grape-active_model_serializers'
+# gem 'grape_on_rails_routes'
+# gem 'grape_logging'
 
 # gem 'aws-sdk'
