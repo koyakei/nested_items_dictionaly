@@ -12,34 +12,45 @@ class Item < ApplicationRecord
 
   def set_values(id)
     ActiveRecord::Base.connection.select_one(<<-SQL,
-      WITH RECURSIVE rec(id, parent_item_id, description, depth, start_id, maker_name,name, category_path) 
+      WITH RECURSIVE rec(id, parent_item_id, description,
+ depth, start_id, maker_id ,maker_name, name,
+  category_path
+  ) 
       AS (
         SELECT
          t1.id,
          t1.parent_item_id,
          t1.description,
-         1,
+         1 ,
          t1.id,
-         m1.description as maker_name,
+         t1.maker_id,
+         ma1.name as maker_name,
          t2.name,
          t2.name
-        FROM (items t1 inner join item_aliases as t2 on (t1.id = t2.item_id)) inner join makers m1 on (m1.id = t1.maker_id)
-        WHERE t1.id = #{id}
+        FROM ((items t1 inner join item_aliases as t2 on (t1.id = t2.item_id)) 
+        inner join makers m1 on (m1.id = t1.maker_id)) inner join maker_aliases ma1 on (m1.maker_alias_id = ma1.id)
+        WHERE t1.id = 1
         UNION ALL
-        SELECT t1.id, t1.parent_item_id, COALESCE (rec.description, t1.description), rec.depth+1, rec.start_id,
-        COALESCE (rec.maker_name, m2.description),
+        SELECT 
+        t1.id,
+        t1.parent_item_id, 
+        COALESCE ( t1.description, rec.description) as description,
+         rec.depth - 1,
+         rec.start_id,
+         t1.maker_id,
+         COALESCE (ma2.name, rec.maker_name ) as maker_name,
         t2.name,
-        t2.name || ','|| rec.category_path AS category_path
-        FROM (items t1 inner join item_aliases as t2 on (t1.id = t2.item_id)) inner join makers m2 on (m2.id = t1.maker_id), rec
-        WHERE t1.id = rec.parent_item_id AND rec.parent_item_id > 0
-      )
+         rec.category_path || ','|| t2.name AS category_path
+        FROM (items t1 inner join item_aliases as t2 on (t1.id = t2.item_id)) 
+        inner join makers m2 on (m2.id = t1.maker_id)  inner join maker_aliases ma2 on (m2.maker_alias_id = ma2.id), rec
+        WHERE t1.parent_item_id = rec.id AND rec.id <= 3)
       SELECT
-        start_id,
+        id,
         name,
         description,
         category_path,
-        maker_name
-      FROM rec
+        maker_id
+      FROM rec order by depth
       limit 1
                                                  SQL
     )

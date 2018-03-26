@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2018_03_23_034113) do
     t.integer "prospected_price"
     t.boolean "has_child", default: true, null: false
     t.boolean "is_visible", default: true, null: false
-    t.bigint "maker_id", default: 1, null: false
+    t.bigint "maker_id", default: 1
     t.text "maker_model_number_full"
     t.text "maker_model_number"
     t.text "asin_isbn13"
