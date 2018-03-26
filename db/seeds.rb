@@ -64,7 +64,7 @@ item_alias.save!
 
 item = Item.new(id: 3, maker_id: Maker.first.id, parent_item_id: 2)
 item.creator = User.first
-item.item_alias = item_alias
+item.item_alias_id = item_alias.id
 item.save!(validate: false)
 
 item_alias = ItemAlias.new
@@ -74,5 +74,5 @@ item_alias.save!
 
 item = Item.new(id: 4, maker_id: Maker.first.id, parent_item_id: 3, has_child: false)
 item.creator = User.first
-item.item_alias = item_alias
+item.item_alias_id = item_alias.id
 item.save!(validate: false)
