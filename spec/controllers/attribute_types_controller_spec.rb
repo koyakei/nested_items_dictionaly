@@ -23,10 +23,10 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe AttributesController, type: :controller do
+RSpec.describe AttributeTypesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # Attribute. As you add validations to Attribute, be sure to
+  # AttributeType. As you add validations to AttributeType, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -38,12 +38,12 @@ RSpec.describe AttributesController, type: :controller do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # AttributesController. Be sure to keep this updated too.
+  # AttributeTypesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
     it "returns a success response" do
-      attribute = Attribute.create! valid_attributes
+      attribute_type = AttributeType.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_success
     end
@@ -51,33 +51,33 @@ RSpec.describe AttributesController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      attribute = Attribute.create! valid_attributes
-      get :show, params: {id: attribute.to_param}, session: valid_session
+      attribute_type = AttributeType.create! valid_attributes
+      get :show, params: {id: attribute_type.to_param}, session: valid_session
       expect(response).to be_success
     end
   end
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new Attribute" do
+      it "creates a new AttributeType" do
         expect {
-          post :create, params: {attribute: valid_attributes}, session: valid_session
-        }.to change(Attribute, :count).by(1)
+          post :create, params: {attribute_type: valid_attributes}, session: valid_session
+        }.to change(AttributeType, :count).by(1)
       end
 
-      it "renders a JSON response with the new attribute" do
+      it "renders a JSON response with the new attribute_type" do
 
-        post :create, params: {attribute: valid_attributes}, session: valid_session
+        post :create, params: {attribute_type: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(attribute_url(Attribute.last))
+        expect(response.location).to eq(attribute_type_url(AttributeType.last))
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the new attribute" do
+      it "renders a JSON response with errors for the new attribute_type" do
 
-        post :create, params: {attribute: invalid_attributes}, session: valid_session
+        post :create, params: {attribute_type: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -87,30 +87,30 @@ RSpec.describe AttributesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        skip("Add a hash of attribute_types valid for your model")
       }
 
-      it "updates the requested attribute" do
-        attribute = Attribute.create! valid_attributes
-        put :update, params: {id: attribute.to_param, attribute: new_attributes}, session: valid_session
-        attribute.reload
+      it "updates the requested attribute_type" do
+        attribute_type = AttributeType.create! valid_attributes
+        put :update, params: {id: attribute_type.to_param, attribute_type: new_attributes}, session: valid_session
+        attribute_type.reload
         skip("Add assertions for updated state")
       end
 
-      it "renders a JSON response with the attribute" do
-        attribute = Attribute.create! valid_attributes
+      it "renders a JSON response with the attribute_type" do
+        attribute_type = AttributeType.create! valid_attributes_type
 
-        put :update, params: {id: attribute.to_param, attribute: valid_attributes}, session: valid_session
+        put :update, params: {id: attribute_type.to_param, attribute_type: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the attribute" do
-        attribute = Attribute.create! valid_attributes
+      it "renders a JSON response with errors for the attribute_type" do
+        attribute_type = AttributeType.create! valid_attributes
 
-        put :update, params: {id: attribute.to_param, attribute: invalid_attributes}, session: valid_session
+        put :update, params: {id: attribute_type.to_param, attribute_type: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -118,11 +118,11 @@ RSpec.describe AttributesController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested attribute" do
-      attribute = Attribute.create! valid_attributes
+    it "destroys the requested attribute_type" do
+      attribute_type = AttributeType.create! valid_attributes
       expect {
-        delete :destroy, params: {id: attribute.to_param}, session: valid_session
-      }.to change(Attribute, :count).by(-1)
+        delete :destroy, params: {id: attribute_type.to_param}, session: valid_session
+      }.to change(AttributeType, :count).by(-1)
     end
   end
 

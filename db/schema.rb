@@ -30,12 +30,12 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.datetime "updated_at", default: -> { "now()" }, null: false
   end
 
-  create_table "attributes", force: :cascade do |t|
+  create_table "attribute_types", force: :cascade do |t|
     t.bigint "standard_unit_id", null: false
     t.text "name", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.index ["standard_unit_id"], name: "index_attributes_on_standard_unit_id"
+    t.index ["standard_unit_id"], name: "index_attribute_types_on_standard_unit_id"
   end
 
   create_table "costs_for_items", force: :cascade do |t|
@@ -89,16 +89,16 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.index ["item_id"], name: "index_item_aliases_on_item_id"
   end
 
-  create_table "item_attributes", force: :cascade do |t|
+  create_table "item_attribute_types", force: :cascade do |t|
     t.bigint "item_id", null: false
-    t.bigint "attribute_id", null: false
+    t.bigint "attribute_type_id", null: false
     t.bigint "display_unit_id", null: false
     t.float "value", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.index ["attribute_id"], name: "index_item_attributes_on_attribute_id"
-    t.index ["display_unit_id"], name: "index_item_attributes_on_display_unit_id"
-    t.index ["item_id"], name: "index_item_attributes_on_item_id"
+    t.index ["attribute_type_id"], name: "index_item_attribute_types_on_attribute_type_id"
+    t.index ["display_unit_id"], name: "index_item_attribute_types_on_display_unit_id"
+    t.index ["item_id"], name: "index_item_attribute_types_on_item_id"
   end
 
   create_table "item_grades_discounts", force: :cascade do |t|
@@ -246,7 +246,7 @@ ActiveRecord::Schema.define(version: 20180321104452) do
 
   add_foreign_key "accessories", "items", column: "accessory_item_id"
   add_foreign_key "accessories", "items", column: "base_item_id"
-  add_foreign_key "attributes", "standard_units"
+  add_foreign_key "attribute_types", "standard_units"
   add_foreign_key "costs_for_items", "items"
   add_foreign_key "costs_for_items", "users"
   add_foreign_key "display_units", "standard_units"
@@ -254,9 +254,9 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   add_foreign_key "item_additional_conditions", "items"
   add_foreign_key "item_aliases", "items"
   add_foreign_key "item_aliases", "users", column: "creator_id"
-  add_foreign_key "item_attributes", "attributes"
-  add_foreign_key "item_attributes", "display_units"
-  add_foreign_key "item_attributes", "items"
+  add_foreign_key "item_attribute_types", "attribute_types"
+  add_foreign_key "item_attribute_types", "display_units"
+  add_foreign_key "item_attribute_types", "items"
   add_foreign_key "item_grades_discounts", "grades"
   add_foreign_key "item_grades_discounts", "items"
   add_foreign_key "item_grades_discounts", "users"

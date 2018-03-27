@@ -124,14 +124,14 @@ create_table "display_units", id: :serial, force: :cascade do |t|
   t.float       "display_ratio", :limit => 53, :null => false
 end
 
-create_table "attributes", id: :serial, force: :cascade do |t|
+create_table "attribute_types", id: :serial, force: :cascade do |t|
   t.text        "name", :null => false, :limit => 45
   t.references  :standard_unit, :null => false, :foreign_key => true
 end
 
-create_table "item_attributes", id: :serial, force: :cascade do |t|
+create_table "item_attribute_types", id: :serial, force: :cascade do |t|
   t.references  :item, :null => false, :foreign_key => true
-  t.references  :attribute, :null => false, :foreign_key => true
+  t.references  :attribute_type, :null => false, :foreign_key => true
   t.references  :display_unit, :null => false, :foreign_key => true
   t.float       "value", :limit => 53, :null => false
   t.integer     "effective_digit", :null => false

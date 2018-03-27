@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :item_grades_discounts
   resources :costs_for_items
   resources :grades
-  resources :item_attributes
+  resources :item_attribute_types
   resources :item_additional_conditions
   resources :logistic_order_templates
   resources :yamato_logistic_order_templates
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :items
   resources :additional_conditions
   resources :users
-  resources :attributes
+  resources :attribute_types
   resources :display_units
   resources :tags
   get 'hello_page/hello'
