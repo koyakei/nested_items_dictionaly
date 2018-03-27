@@ -3,7 +3,7 @@ maker.save
 maker_alias = MakerAlias.new(name: '不明')
 maker_alias.maker = Maker.first
 maker_alias.save
-maker.maker_alias = maker_alias
+maker.maker_alias_id = maker_alias.id
 maker.save
 User.new(id: 1).save
 item_alias = ItemAlias.new
@@ -14,7 +14,7 @@ item_alias.save!
 item = Item.new(id: 1)
 item.maker = Maker.first
 item.creator = User.first
-item.item_alias = ItemAlias.first
+item.item_alias_id = ItemAlias.first.id
 
 item.max_threshold_price = 2_147_483_647
 item.min_threshold_price = 0

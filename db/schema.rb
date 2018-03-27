@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321104452) do
+ActiveRecord::Schema.define(version: 20180323034113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,18 +24,39 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.index ["base_item_id"], name: "index_accessories_on_base_item_id"
   end
 
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
   create_table "additional_conditions", force: :cascade do |t|
     t.text "name", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
   end
 
-  create_table "attribute_types", force: :cascade do |t|
+  create_table "attributes", force: :cascade do |t|
     t.bigint "standard_unit_id", null: false
     t.text "name", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.index ["standard_unit_id"], name: "index_attribute_types_on_standard_unit_id"
+    t.index ["standard_unit_id"], name: "index_attributes_on_standard_unit_id"
   end
 
   create_table "costs_for_items", force: :cascade do |t|
@@ -89,16 +110,16 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.index ["item_id"], name: "index_item_aliases_on_item_id"
   end
 
-  create_table "item_attribute_types", force: :cascade do |t|
+  create_table "item_attributes", force: :cascade do |t|
     t.bigint "item_id", null: false
-    t.bigint "attribute_type_id", null: false
+    t.bigint "attribute_id", null: false
     t.bigint "display_unit_id", null: false
     t.float "value", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.index ["attribute_type_id"], name: "index_item_attribute_types_on_attribute_type_id"
-    t.index ["display_unit_id"], name: "index_item_attribute_types_on_display_unit_id"
-    t.index ["item_id"], name: "index_item_attribute_types_on_item_id"
+    t.index ["attribute_id"], name: "index_item_attributes_on_attribute_id"
+    t.index ["display_unit_id"], name: "index_item_attributes_on_display_unit_id"
+    t.index ["item_id"], name: "index_item_attributes_on_item_id"
   end
 
   create_table "item_grades_discounts", force: :cascade do |t|
@@ -115,7 +136,6 @@ ActiveRecord::Schema.define(version: 20180321104452) do
 
   create_table "item_images", force: :cascade do |t|
     t.bigint "item_id", null: false
-    t.text "image_path", null: false
     t.text "name"
     t.text "description"
     t.datetime "created_at", default: -> { "now()" }, null: false
@@ -124,13 +144,13 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer "max_threshold_price", null: false
-    t.integer "min_threshold_price", default: 0, null: false
+    t.integer "max_threshold_price"
+    t.integer "min_threshold_price", default: 0
     t.text "description"
     t.integer "prospected_price"
     t.boolean "has_child", default: true, null: false
     t.boolean "is_visible", default: true, null: false
-    t.bigint "maker_id", default: 1, null: false
+    t.bigint "maker_id", default: 1
     t.text "maker_model_number_full"
     t.text "maker_model_number"
     t.text "asin_isbn13"
@@ -155,6 +175,8 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.bigint "logistic_order_template_type_id"
+    t.bigint "creator_id", default: 1, null: false
+    t.index ["creator_id"], name: "index_logistic_order_templates_on_creator_id"
     t.index ["item_id"], name: "index_logistic_order_templates_on_item_id"
     t.index ["logistic_order_templatable_type", "logistic_order_templatable_id"], name: "index_logistic_templates_on_type_and_template"
     t.index ["logistic_order_template_type_id"], name: "index_logistic_templates_on_logistic_template_type_id"
@@ -165,6 +187,8 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.text "name", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.bigint "creator_id", default: 1, null: false
+    t.index ["creator_id"], name: "index_maker_aliases_on_creator_id"
     t.index ["maker_id"], name: "index_maker_aliases_on_maker_id"
   end
 
@@ -222,6 +246,8 @@ ActiveRecord::Schema.define(version: 20180321104452) do
     t.bigint "yamato_handling_type_code_id", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.bigint "creator_id", default: 1, null: false
+    t.index ["creator_id"], name: "index_yamato_logistic_order_templates_on_creator_id"
     t.index ["yamato_handling_type_code_id"], name: "index_yamato_templates_on_yamato_handling_code_id"
     t.index ["yamato_packing_item_code_id"], name: "index_yamato_templates_on_yamato_packing_code_id"
     t.index ["yamato_size_item_code_id"], name: "index_yamato_templates_on_yamato_item_code_id"
@@ -246,7 +272,7 @@ ActiveRecord::Schema.define(version: 20180321104452) do
 
   add_foreign_key "accessories", "items", column: "accessory_item_id"
   add_foreign_key "accessories", "items", column: "base_item_id"
-  add_foreign_key "attribute_types", "standard_units"
+  add_foreign_key "attributes", "standard_units"
   add_foreign_key "costs_for_items", "items"
   add_foreign_key "costs_for_items", "users"
   add_foreign_key "display_units", "standard_units"
@@ -254,9 +280,9 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   add_foreign_key "item_additional_conditions", "items"
   add_foreign_key "item_aliases", "items"
   add_foreign_key "item_aliases", "users", column: "creator_id"
-  add_foreign_key "item_attribute_types", "attribute_types"
-  add_foreign_key "item_attribute_types", "display_units"
-  add_foreign_key "item_attribute_types", "items"
+  add_foreign_key "item_attributes", "attributes"
+  add_foreign_key "item_attributes", "display_units"
+  add_foreign_key "item_attributes", "items"
   add_foreign_key "item_grades_discounts", "grades"
   add_foreign_key "item_grades_discounts", "items"
   add_foreign_key "item_grades_discounts", "users"
@@ -266,12 +292,15 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   add_foreign_key "items", "makers"
   add_foreign_key "items", "users", column: "creator_id"
   add_foreign_key "logistic_order_templates", "items"
+  add_foreign_key "logistic_order_templates", "users", column: "creator_id"
   add_foreign_key "maker_aliases", "makers"
+  add_foreign_key "maker_aliases", "users", column: "creator_id"
   add_foreign_key "makers", "maker_aliases"
   add_foreign_key "tag_items", "items"
   add_foreign_key "tag_items", "tags"
   add_foreign_key "tag_items", "users", column: "creator_id"
   add_foreign_key "tags", "users", column: "creator_id"
+  add_foreign_key "yamato_logistic_order_templates", "users", column: "creator_id"
   add_foreign_key "yamato_logistic_order_templates", "yamato_handling_type_codes"
   add_foreign_key "yamato_logistic_order_templates", "yamato_packing_item_codes"
   add_foreign_key "yamato_logistic_order_templates", "yamato_size_item_codes"
