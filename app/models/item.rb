@@ -11,11 +11,12 @@ class Item < ApplicationRecord
   has_many :item_images
 
   def set_values(id)
-    ActiveRecord::Base.connection.select_one(<<-SQL,
+    ActiveRecord::Base.connection.select_one(
+      <<-SQL,
       WITH RECURSIVE rec(id, item_alias_id , parent_item_id, description,
- depth, start_id, maker_id ,maker_name, name,
-  category_path
-  )
+       depth, start_id, maker_id ,maker_name, name,
+        category_path
+        )
       AS (
         SELECT
          t1.id,
@@ -53,23 +54,7 @@ class Item < ApplicationRecord
         ia3.name
       FROM rec inner join item_aliases ia3 on (rec.item_alias_id = ia3.id ) order by depth desc
       limit 1
-                                                 SQL
+      SQL
     )
-    Category.grades.keys.each do |grade|
-      eval("self.#{grade}_name ||= r['#{grade}_name']")
-      eval("self.#{grade}_description ||= r['#{grade}_description']")
-      eval("self.#{grade}_deprecation_ratio ||= r['#{grade}_deprecation_ratio']")
-    end
-    # self.attributes.each do |key ,val|
-    #   if !["price_n", "price_a", "price_b", "price_c", "price_d", "price_e", "price_f", "price_",
-    #       "prospected_price","prospected_price_investigated_n",
-    #       "prospected_price_investigated_a","prospected_price_investigated_c" ,
-    #       "text_3","text_1","text_2","name_hiragana","name","name_katakana",
-    #       "scraped_domain","inversion","scraped_at","memo",'url',
-    #       "manufacturer_part_number","manufacturer_part_number_full","asin_isbn13","ean",
-    #       "grade","assessment_price","prospected_price","description"].include?(key)
-    #     raise "nil #{key}" if val.nil?
-    #   end
-    # end
   end
 end
