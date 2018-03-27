@@ -25,7 +25,7 @@ item_alias.name = "ALL"
 item_alias.creator = User.first
 item_alias.save!
 
-item = Item.new(id: 1, maker_id: Maker.first.id)
+item = Item.new(id: 1, maker_id: Maker.first.id,description: "zenbu")
 item.creator = User.first
 item.item_alias = ItemAlias.first
 item.max_threshold_price = 2_147_483_647
