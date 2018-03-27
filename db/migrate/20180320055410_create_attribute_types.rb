@@ -1,6 +1,6 @@
-class CreateAttributeTypes < ActiveRecord::Migration[5.1]
+class CreateAttributes < ActiveRecord::Migration[5.1]
   def change
-    create_table :attribute_types do |t|
+    create_table :attributes do |t|
       t.references :standard_unit, foreign_key: true, null: false
       t.text :name, null: false
 
