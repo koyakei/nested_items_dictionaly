@@ -5,7 +5,7 @@ class YamatoLogisticOrderTemplate < ApplicationRecord
   has_one :logistic_order_template, as: :logistic_order_templatable
   belongs_to :creator, class_name: User.to_s
 
-  def set_values(id)
+  def set_values(item_id)
     ActiveRecord::Base.connection.select_one(<<-SQL,
       WITH RECURSIVE rec(id, parent_item_id,
  depth, start_id
@@ -20,7 +20,7 @@ class YamatoLogisticOrderTemplate < ApplicationRecord
                  y1.yamato_handling_type_code_id
         FROM (items t1 left join logistic_order_templates on (t1.id = logistic_order_templates.item_id)) 
       left join yamato_logistic_order_templates  y1 on (y1.id = logistic_order_templates.logistic_order_templatable_id )
-        WHERE t1.id = #{id}
+        WHERE t1.id = #{item_id}
         UNION ALL
         SELECT
         t1.id,
