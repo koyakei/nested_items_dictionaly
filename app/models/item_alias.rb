@@ -1,4 +1,4 @@
 class ItemAlias < ApplicationRecord
   belongs_to :item, optional: true
-  belongs_to :creator, class_name: User
+  belongs_to :creator, class_name: User.to_s
 end
