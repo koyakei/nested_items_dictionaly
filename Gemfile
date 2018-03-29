@@ -26,6 +26,7 @@ gem 'jbuilder'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '3.1.7'
 gem 'csv'
+gem 'rubocop'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -44,7 +45,6 @@ group :development do
   gem 'annotate'
   gem 'migration_comments'
   gem 'squasher'
-  gem 'rubocop'
 end
 
 group :test do
