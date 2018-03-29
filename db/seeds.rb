@@ -1,20 +1,20 @@
+# User.new(id: 1).save
 maker = Maker.new(id: 1, description: 'unknown')
-maker.save
+maker.save!
 maker_alias = MakerAlias.new(name: '不明')
 maker_alias.maker = Maker.first
 maker_alias.save
-maker.maker_alias_id = maker_alias.id
+maker.name = maker_alias.name
 maker.save
-User.new(id: 1).save
 item_alias = ItemAlias.new
 item_alias.name = 'ALL'
 item_alias.creator = User.first
 item_alias.save!
 
 item = Item.new(id: 1)
-item.maker = Maker.first
-item.creator = User.first
-item.item_alias_id = ItemAlias.first.id
+item.maker_id = 1
+item.creator_id = 1
+item.name = item_alias.name
 
 item.max_threshold_price = 2_147_483_647
 item.min_threshold_price = 0

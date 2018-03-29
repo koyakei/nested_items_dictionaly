@@ -13,8 +13,8 @@ default: &default
 
 development:
   <<: *default
-  url: <%= ENV['DATABASE_DEVELOPMENT_URL'] %>
-  database: product_db_development # for ridgepole gem
+  url: postgres://makxas:fasddddjkasiwgewio8u302238@aaxy5bhfzsjbzw.cenly0cn8afd.ap-northeast-1.rds.amazonaws.com/product_db
+  database: product_db # for ridgepole gem
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -25,4 +25,4 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  url: postgres://makxas:fasddddjkasiwgewio8u302238@aaxy5bhfzsjbzw.cenly0cn8afd.ap-northeast-1.rds.amazonaws.com/product_db
