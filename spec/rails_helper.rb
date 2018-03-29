@@ -54,4 +54,28 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  #
+  config.before(:suite) do
+    DatabaseRewinder.clean_all
+    Rails.application.load_seed
+  end
+
+  config.after(:each) do
+    DatabaseRewinder.clean
+  end
+
+  # config.before(:all, type: :worker) do
+  #   Sidekiq::Testing.inline! # perform_asyncを即時実行にする
+  # end
+  #
+  # if Bullet.enable?
+  #   config.before(:each) do
+  #     Bullet.start_request
+  #   end
+  #
+  #   config.after(:each) do
+  #     Bullet.perform_out_of_channel_notifications if Bullet.notification?
+  #     Bullet.end_request
+  #   end
+  # end
 end

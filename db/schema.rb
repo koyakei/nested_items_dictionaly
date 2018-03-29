@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321104452) do
+ActiveRecord::Schema.define(version: 2018_03_21_104452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,8 +140,8 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer "max_threshold_price", null: false
-    t.integer "min_threshold_price", default: 0, null: false
+    t.integer "max_threshold_price"
+    t.integer "min_threshold_price", default: 0
     t.text "description"
     t.text "name", null: false
     t.integer "prospected_price"
