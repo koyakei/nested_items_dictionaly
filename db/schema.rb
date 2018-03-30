@@ -118,13 +118,13 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   create_table "item_grades_discounts", force: :cascade do |t|
     t.bigint "item_id", null: false
     t.bigint "grade_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "creator_id", default: 1, null: false
     t.float "discount_ration", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["creator_id"], name: "index_item_grades_discounts_on_creator_id"
     t.index ["grade_id"], name: "index_item_grades_discounts_on_grade_id"
     t.index ["item_id"], name: "index_item_grades_discounts_on_item_id"
-    t.index ["user_id"], name: "index_item_grades_discounts_on_user_id"
   end
 
   create_table "item_images", force: :cascade do |t|
@@ -294,7 +294,7 @@ ActiveRecord::Schema.define(version: 20180321104452) do
   add_foreign_key "item_attribute_types", "users", column: "creator_id"
   add_foreign_key "item_grades_discounts", "grades"
   add_foreign_key "item_grades_discounts", "items"
-  add_foreign_key "item_grades_discounts", "users"
+  add_foreign_key "item_grades_discounts", "users", column: "creator_id"
   add_foreign_key "item_images", "items"
   add_foreign_key "item_images", "users", column: "creator_id"
   add_foreign_key "items", "items", column: "parent_item_id"
