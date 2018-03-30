@@ -1058,7 +1058,9 @@ default: &default
             schema:
               $ref: '#/definitions/Error'
 
-
+        security:
+        - jwt:
+          - api:access
         summary: swagger.json取得
         tags:
         - swagger
@@ -1231,7 +1233,9 @@ default: &default
             schema:
               $ref: '#/definitions/Error'
 
-
+        security:
+        - jwt:
+          - api:access
         summary: ユーザー一覧
         tags:
         - user
