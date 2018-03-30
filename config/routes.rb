@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   resources :attribute_types
   resources :display_units
   resources :tags
+  get 'viron'
+  get 'viron_authtype'
+  get 'swagger'
   get 'hello_page/hello'
   root 'hello_page#hello'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
