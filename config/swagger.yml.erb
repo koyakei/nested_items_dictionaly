@@ -1,7 +1,7 @@
 default: &default
   swagger: "2.0"
   info:
-    title: Viron example for EMail Auth
+    title: Viron example for GoogleOAuth
     description: Design-based Management Console.
     version: 0.0.1
   schemes:
@@ -144,7 +144,7 @@ default: &default
     CreateAdminUserPayload:
       example:
         email: user@sample.com
-        password: koyakei
+        password: XXXXXXXXXXXXXXXX
         role_id: viewer
       properties:
         email:
@@ -171,7 +171,7 @@ default: &default
       example:
         color: white
         theme: standard
-        name: Viron Example for EMail Auth
+        name: Viron Example for Google OAuth
         pages:
         - components:
           - api:
@@ -458,17 +458,6 @@ default: &default
       - components
       type: object
 
-    SigninAuthPayload:
-      example:
-        email: user1@example.com
-        password: XXXXXXXXXXXX
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      type: object
-
     StatsNumber:
       example:
         value: 12345678
@@ -674,8 +663,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: ユーザー権限作成
         tags:
         - admin_role
@@ -706,8 +696,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: ユーザー権限削除
         tags:
         - admin_role
@@ -744,8 +735,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: ユーザー権限更新
         tags:
         - admin_role
@@ -764,8 +756,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: 管理ユーザー一覧
         tags:
         - admin_user
@@ -797,8 +790,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: 管理ユーザー作成
         tags:
         - admin_user
@@ -829,8 +823,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: 管理ユーザー削除
         tags:
         - admin_user
@@ -867,8 +862,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: 管理ユーザー更新
         tags:
         - admin_user
@@ -933,8 +929,9 @@ default: &default
             description: Bad Request
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: 監査ログ一覧
         tags:
         - audit_log
@@ -952,7 +949,6 @@ default: &default
         security:
         - jwt:
           - api:access
-
         summary: エンドポイント全体情報取得
         tags:
         - viron
@@ -1006,7 +1002,7 @@ default: &default
         tags:
         - auth
 
-    https://makxastest.auth.ap-northeast-1.amazoncognito.com/login?response_type=code&client_id=196fbvmncvl8crgf2bf0lbu8hf:
+    /googlesignin:
       get:
         x-swagger-router-controller: viron_auth
         description: GoogleOAuth2認証
@@ -1057,7 +1053,6 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
         security:
         - jwt:
           - api:access
@@ -1079,8 +1074,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: アカウント設定
         tags:
         - account
@@ -1118,8 +1114,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: アカウント情報 更新
         tags:
         - account
@@ -1232,7 +1229,6 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
         security:
         - jwt:
           - api:access
@@ -1300,8 +1296,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: ユーザー作成
         tags:
         - user
@@ -1332,8 +1329,9 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: ユーザー削除
         tags:
         - user
@@ -1402,18 +1400,20 @@ default: &default
             description: Internal Server Error
             schema:
               $ref: '#/definitions/Error'
-
-
+        security:
+        - jwt:
+          - api:access
         summary: ユーザー更新
         tags:
         - user
+
   securityDefinitions:
-  jwt:
-    type: oauth2
-    authorizationUrl: /signin
-    flow: implicit
-    scopes:
-      api:access: API access
+    jwt:
+      type: oauth2
+      authorizationUrl: /signin
+      flow: implicit
+      scopes:
+        api:access: API access
   produces:
     - application/json
     - text/plain

@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   resources :viron
   resources :viron_authtype
   resources :swagger
+  resources :googlesignin
+  resources :googleoauth
   # get 'hello_page/hello'
   root 'hello_page#hello'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
