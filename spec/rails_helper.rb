@@ -54,7 +54,10 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+<<<<<<< HEAD
   #
+=======
+>>>>>>> items_sql
   config.before(:suite) do
     DatabaseRewinder.clean_all
     Rails.application.load_seed
@@ -63,6 +66,7 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseRewinder.clean
   end
+<<<<<<< HEAD
 
   # config.before(:all, type: :worker) do
   #   Sidekiq::Testing.inline! # perform_asyncを即時実行にする
@@ -78,4 +82,7 @@ RSpec.configure do |config|
   #     Bullet.end_request
   #   end
   # end
+=======
+  config.render_views
+>>>>>>> items_sql
 end
