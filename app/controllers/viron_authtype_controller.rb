@@ -6,6 +6,11 @@ class VironAuthtypeController < ApplicationController
     url: '/googlesignin',
       method: 'POST',
     },{
+                    type: 'oauth', # OAuth認証を利用する場合のtype
+                    provider: 'cognito', # OAuthを提供するプロバイダ。
+                    url: '/cognitosignin',
+                    method: 'POST',
+                  },{
                     type: 'signout',
                     provider: '',
                     url: '/signout',

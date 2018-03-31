@@ -1001,7 +1001,30 @@ default: &default
         summary: GoogleOAuth2 リダイレクトパス
         tags:
         - auth
-
+    /cognitosignin:
+      get:
+        x-swagger-router-controller: viron_auth
+        description: CognitoOAuth2認証
+        operationId: viron_auth#cognitosignin
+        parameters:
+        - description: リダイレクトURL
+          in: query
+          name: redirect_url
+          required: false
+          type: string
+        responses:
+          "301":
+            description: Moved Permanently
+            headers:
+              Content-Type:
+                description: content type
+                type: string
+              Location:
+                description: redirect url
+                type: string
+        summary: CognitoOAuth2 認証
+        tags:
+        - auth
     /googlesignin:
       get:
         x-swagger-router-controller: viron_auth
