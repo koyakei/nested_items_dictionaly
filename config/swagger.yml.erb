@@ -1001,6 +1001,40 @@ default: &default
         summary: GoogleOAuth2 リダイレクトパス
         tags:
         - auth
+    /cognitooauth2callback:
+      get:
+        x-swagger-router-controller: viron_auth
+        description: GoogleOAuth2コールバックパス
+        operationId: viron_auth#googleoauth2callback
+        parameters:
+        - description: 認証コード
+          in: query
+          name: code
+          required: false
+          type: string
+        - description: ステータスチェック
+          in: query
+          name: state
+          required: false
+          type: string
+        responses:
+          "301":
+            description: Moved Permanently
+            headers:
+              Authorization:
+                description: Generated JWT
+                type: string
+              Content-Type:
+                description: content type
+                type: string
+              Location:
+                description: redirect url
+                type: string
+          "307":
+            description: Temporary Redirect
+        summary: GoogleOAuth2 リダイレクトパス
+        tags:
+        - auth
     /cognitosignin:
       get:
         x-swagger-router-controller: viron_auth
