@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :swagger
   resources :googlesignin
   resources :googleoauth
+  resources :signin
   # get 'hello_page/hello'
   root 'hello_page#hello'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
