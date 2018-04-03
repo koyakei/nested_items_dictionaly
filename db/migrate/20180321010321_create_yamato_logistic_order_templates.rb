@@ -9,7 +9,7 @@ class CreateYamatoLogisticOrderTemplates < ActiveRecord::Migration[5.1]
                    index: {name: :index_yamato_templates_on_yamato_handling_code1_id}, null: false
       t.references :yamato_handling_type_code2, foreign_key: {to_table: :yamato_handling_type_codes},
                    index: {name: :index_yamato_templates_on_yamato_handling_code2_id}, null: false
-      t.references :creator, foreign_key: {to_table: :users}, null: false, default: 1
+      t.references :creator, foreign_key: {to_table: :users}, null: false, default: 0
       t.timestamps default: -> { 'NOW()' }
     end
   end

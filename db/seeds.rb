@@ -1,12 +1,10 @@
-User.new(id: 1).save
-maker = Maker.new(id: 1, description: "unknown", name: "不明")
+user = User.new(id: 0)
+user.save!
+maker = Maker.new(description: "unknown", name: "不明", creator: User.first)
 maker.save!
 
-maker = Maker.new(id: 2, name: "Apple")
-maker.save!
-
-item = Item.new(id: 1, maker_id: Maker.first.id, description: "全部")
-item.creator = User.first!
+item = Item.new(id: 0, maker: maker, description: "全部")
+item.creator = user
 item.name = "全部"
 item.max_threshold_price = 2_147_483_647
 item.min_threshold_price = 0
@@ -47,38 +45,3 @@ logistic_order_template.logistic_order_templatable = yamato_logistic_order_templ
 logistic_order_template.creator = User.first
 logistic_order_template.save!
 
-item = Item.new(id: 2, name: "mobile", maker_id: Maker.first.id, parent_item_id: 1)
-item.creator = User.first
-item.save!
-
-yamato_logistic_order_template =
-  LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new
-yamato_logistic_order_template.yamato_packing_item_code =
-  LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.first!
-yamato_logistic_order_template.yamato_size_item_code =
-  LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
-yamato_logistic_order_template.yamato_handling_type_code1 =
-  LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
-yamato_logistic_order_template.yamato_handling_type_code2 =
-  LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
-yamato_logistic_order_template.creator = User.first
-yamato_logistic_order_template.save!
-
-logistic_order_template = LogisticOrderTemplate.new
-logistic_order_template.item = Item.first
-logistic_order_template.logistic_order_templatable =
-  yamato_logistic_order_template
-logistic_order_template.creator = User.first
-logistic_order_template.save!
-
-item = Item.new(id: 3, name: "iPhone", maker_id: 2, parent_item_id: 2)
-item.creator = User.first
-item.save!(validate: false)
-
-item = Item.new(id: 4, name: "iPhone 6", maker_id: Maker.first.id, parent_item_id: 3, has_child: false)
-item.creator = User.first
-item.save!
-
-item = Item.new(id: 5, name: "Android", maker_id: 2, parent_item_id: 2, has_child: false)
-item.creator = User.first
-item.save!
