@@ -8,8 +8,7 @@ class Item < ApplicationRecord
   has_many :logistic_order_templates
   has_many :accessories
   has_many :item_images
-  # attribute :maker, Maker, default_
-  #
+
   validates :asin, length: {is: 10,
                             too_short: "最小%{count}文字まで使用できます",
                             too_long: "最大%{count}文字まで使用できます"}
@@ -22,6 +21,8 @@ class Item < ApplicationRecord
 
   validates :url, format: {with: /\A#{URI::regexp(%w(http https))}\z/,
                            message: "URLのみが使用できます" }
+  validates :parent_item, :name, presence: true
+  validates :name, uniqueness: true
 
   def set_values
     ActiveRecord::Base.connection.select_one(
