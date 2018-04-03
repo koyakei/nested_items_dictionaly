@@ -8,13 +8,14 @@ Fabricator(:item) do
   has_child                 false
   is_visible                false
   is_sync_novasto           false
-  creator                      User.first
+  creator User.first
   maker                     Maker.first
   maker_model_number_full   "MyText"
   maker_model_number        "MyText"
-  asin_isbn13               "MyText"
+  asin "B078WPGJW7"
+  isbn13 "978-4047293564"
   amazon_category_id        nil
-  ean                       "MyText"
-  url                       "MyText"
+  ean                       "MyTextaaaaa"
+  url                       "http://makxas.com"
   automatic_assessment_type 1
 end

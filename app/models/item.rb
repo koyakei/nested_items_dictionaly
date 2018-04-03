@@ -9,6 +9,19 @@ class Item < ApplicationRecord
   has_many :accessories
   has_many :item_images
   # attribute :maker, Maker, default_
+  #
+  validates :asin, length: {is: 10,
+                            too_short: "最小%{count}文字まで使用できます",
+                            too_long: "最大%{count}文字まで使用できます"}
+  validates :isbn13, length: {is: 14,
+                              too_short: "最小%{count}文字まで使用できます ISBN13に変換してください",
+                              too_long: "最大%{count}文字まで使用できます"}
+  validates :ean, length: {minimum: 8, maximum: 13,
+                          too_short: "最小%{count}文字まで使用できます",
+                          too_long: "最大%{count}文字まで使用できます"}
+
+  validates :url, format: {with: /\A#{URI::regexp(%w(http https))}\z/,
+                           message: "URLのみが使用できます" }
 
   def set_values
     ActiveRecord::Base.connection.select_one(
@@ -28,7 +41,7 @@ class Item < ApplicationRecord
          t1.maker_id,
          m2.name as maker_name,
          t1.name,
-         t1.name
+         cast(t1.id as text)
         FROM items t1 left join makers m2 on (t1.maker_id = m2.id)
         WHERE t1.id = #{id}
         UNION ALL
@@ -42,7 +55,7 @@ class Item < ApplicationRecord
          COALESCE ( rec.maker_id,t1.maker_id ),
          COALESCE (m2.name, rec.maker_name ) as maker_name,
         t1.name,
-         t1.name || ','|| rec.category_path AS category_path
+         cast(t1.id as text) || ','|| rec.category_path AS category_path
         FROM items t1 left join makers m2 on (t1.maker_id = m2.id), rec
         WHERE rec.parent_item_id = t1.id )
       SELECT
