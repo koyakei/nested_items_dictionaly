@@ -30,8 +30,8 @@ class Item < ApplicationRecord
     ActiveRecord::Base.connection.select_one(
       <<-SQL,
       WITH RECURSIVE rec(id, item_alias_id , parent_item_id, description,
-       depth, start_id, maker_id ,maker_name, max_threshold_price, name,
-        category_path
+       depth, start_id, maker_id ,maker_name, min_threshold_price, max_threshold_price, name,
+        category_path, is_visible
         )
       AS (
         SELECT
@@ -43,33 +43,39 @@ class Item < ApplicationRecord
          t1.id,
          t1.maker_id,
          m2.name as maker_name,
-          t1.max_threshold_price,
+         t1.min_threshold_price,
+         t1.max_threshold_price,
          t1.name,
-         cast(t1.id as text)
+         cast(t1.id as text),
+          t1.is_visible
         FROM items t1 left join makers m2 on (t1.maker_id = m2.id)
         WHERE t1.id = #{id}
         UNION ALL
         SELECT
-        t1.id,
+        t2.id,
         rec.item_alias_id,
-        t1.parent_item_id,
-        (CASE WHEN rec.description is not null THEN rec.description ELSE t1.description END) as description,
+        t2.parent_item_id,
+        (CASE WHEN rec.description is not null THEN rec.description ELSE t2.description END) as description,
          rec.depth + 1,
          rec.start_id,
-         COALESCE ( rec.maker_id,t1.maker_id ),
+         COALESCE ( rec.maker_id,t2.maker_id ),
          COALESCE (m2.name, rec.maker_name ) as maker_name,
-         COALESCE (t1.max_threshold_price, rec.max_threshold_price ) as max_threshold_price,
-        t1.name,
-         cast(t1.id as text) || ','|| rec.category_path AS category_path
-        FROM items t1 left join makers m2 on (t1.maker_id = m2.id), rec
-        WHERE rec.parent_item_id = t1.id )
+         COALESCE ( rec.min_threshold_price ,t2.min_threshold_price ),
+         COALESCE (t2.max_threshold_price, rec.max_threshold_price ),
+        t2.name,
+         cast(t2.id as text) || ','|| rec.category_path AS category_path,
+        t2.is_visible
+        FROM items t2 left join makers m2 on (t2.maker_id = m2.id), rec
+        WHERE rec.parent_item_id = t2.id )
       SELECT
         rec.description,
         rec.category_path,
         rec.maker_id,
         rec.name,
-        rec.max_threshold_price
-      FROM rec order by depth desc
+        rec.max_threshold_price,
+        rec.min_threshold_price,
+        rec.is_visible
+      FROM rec order by depth  desc
       limit 1
       SQL
     )
