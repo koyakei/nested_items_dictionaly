@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_02_092425) do
+ActiveRecord::Schema.define(version: 2018_04_03_013039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2018_04_02_092425) do
     t.bigint "parent_item_id"
     t.boolean "is_sync_novasto", default: false, null: false
     t.bigint "amazon_category_id"
-    t.index ["amazon_category_id"], name: "index_items_on_amazon_category_id"
+    t.index ["amazon_category_id"], name: "index_items_on_amazon_category_id", unique: true
     t.index ["asin_isbn13"], name: "index_items_on_asin_isbn13"
     t.index ["creator_id"], name: "index_items_on_creator_id"
     t.index ["maker_id"], name: "index_items_on_maker_id"
