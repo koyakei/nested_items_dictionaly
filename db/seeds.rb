@@ -3,8 +3,7 @@ user.save!
 maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first)
 maker.save!
 
-item = Item.new(id: 0, maker: maker, description: "全部")
-item.creator = user
+item = Item.new(id: 0, maker: maker, description: "全部", creator: User.first)
 item.name = "全部"
 item.max_threshold_price = 2_147_483_647
 item.min_threshold_price = 0
