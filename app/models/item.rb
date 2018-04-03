@@ -10,6 +10,7 @@ class Item < ApplicationRecord
   has_many :item_images
 
   validates :max_threshold_price, numericality: :only_integer, if: :nil?
+  validates :min_threshold_price, numericality: :only_integer, if: :nil?
 
   validates :asin, length: {is: 10,
                             too_short: "最小%{count}文字まで使用できます",
