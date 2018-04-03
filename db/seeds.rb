@@ -1,6 +1,6 @@
 user = User.new(id: 0)
 user.save!
-maker = Maker.new(description: "unknown", name: "不明", creator: User.first)
+maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first)
 maker.save!
 
 item = Item.new(id: 0, maker: maker, description: "全部")
