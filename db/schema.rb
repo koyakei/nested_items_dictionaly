@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "accessories", force: :cascade do |t|
     t.bigint "base_item_id", null: false
     t.bigint "accessory_item_id", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["accessory_item_id"], name: "index_accessories_on_accessory_item_id"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
 
   create_table "additional_conditions", force: :cascade do |t|
     t.text "name", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_additional_conditions_on_creator_id"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "attribute_types", force: :cascade do |t|
     t.bigint "standard_unit_id", null: false
     t.text "name", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_attribute_types_on_creator_id"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   end
 
   create_table "costs_for_items", force: :cascade do |t|
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.bigint "item_id", null: false
     t.float "cost_ratio"
     t.integer "selling_cost"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.bigint "standard_unit_id", null: false
     t.text "name", null: false
     t.float "display_ratio", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_display_units_on_creator_id"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "grades", force: :cascade do |t|
     t.text "name", null: false
     t.text "description"
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_grades_on_creator_id"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.bigint "item_id"
     t.bigint "additional_condition_id"
     t.float "discount_ratio"
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["additional_condition_id"], name: "index_item_additional_conditions_on_additional_condition_id"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "item_aliases", force: :cascade do |t|
     t.bigint "item_id"
     t.text "name"
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_item_aliases_on_creator_id"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.bigint "attribute_type_id", null: false
     t.bigint "display_unit_id", null: false
     t.float "value", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["attribute_type_id"], name: "index_item_attribute_types_on_attribute_type_id"
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "item_grades_discounts", force: :cascade do |t|
     t.bigint "item_id", null: false
     t.bigint "grade_id", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.float "discount_ration", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.text "image_path", null: false
     t.text "name"
     t.text "description"
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_item_images_on_creator_id"
@@ -168,14 +168,14 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.integer "prospected_price"
     t.boolean "has_child", default: true, null: false
     t.boolean "is_visible", default: true, null: false
-    t.bigint "maker_id", default: 1, null: false
+    t.bigint "maker_id"
     t.text "maker_model_number_full"
     t.text "maker_model_number"
     t.text "asin_isbn13"
     t.text "ean"
     t.text "url"
     t.integer "automatic_assessment_type", limit: 2
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.bigint "parent_item_id"
@@ -192,7 +192,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.bigint "item_id", null: false
     t.string "logistic_order_templatable_type", null: false
     t.bigint "logistic_order_templatable_id", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.bigint "logistic_order_template_type_id"
@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "maker_aliases", force: :cascade do |t|
     t.bigint "maker_id", null: false
     t.text "name", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_maker_aliases_on_creator_id"
@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.text "description"
     t.text "url"
     t.text "name", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_makers_on_creator_id"
@@ -224,7 +224,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
 
   create_table "standard_units", force: :cascade do |t|
     t.text "name", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.index ["creator_id"], name: "index_standard_units_on_creator_id"
     t.index ["name"], name: "index_standard_units_on_name", unique: true
   end
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "tag_items", force: :cascade do |t|
     t.bigint "tag_id", null: false
     t.bigint "item_id", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_tag_items_on_creator_id"
@@ -243,7 +243,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   create_table "tags", force: :cascade do |t|
     t.text "name", null: false
     t.text "description"
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_tags_on_creator_id"
@@ -268,7 +268,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.bigint "yamato_packing_item_code_id", null: false
     t.bigint "yamato_handling_type_code1_id", null: false
     t.bigint "yamato_handling_type_code2_id", null: false
-    t.bigint "creator_id", default: 1, null: false
+    t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_yamato_logistic_order_templates_on_creator_id"
