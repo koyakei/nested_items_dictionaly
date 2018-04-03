@@ -11,7 +11,8 @@ class CreateItems < ActiveRecord::Migration[5.1]
       t.references :maker, foreign_key: true
       t.text :maker_model_number_full
       t.text :maker_model_number
-      t.text :asin_isbn13, limit: 15
+      t.text :asin, limit: 15
+      t.text :isbn13, limit: 13
       t.text :ean, limit: 15
       t.text :url
       t.integer :automatic_assessment_type, limit: 1

@@ -171,7 +171,8 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.bigint "maker_id"
     t.text "maker_model_number_full"
     t.text "maker_model_number"
-    t.text "asin_isbn13"
+    t.text "asin"
+    t.text "isbn13"
     t.text "ean"
     t.text "url"
     t.integer "automatic_assessment_type", limit: 2
@@ -182,8 +183,9 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.boolean "is_sync_novasto", default: false, null: false
     t.bigint "amazon_category_id"
     t.index ["amazon_category_id"], name: "index_items_on_amazon_category_id", unique: true
-    t.index ["asin_isbn13"], name: "index_items_on_asin_isbn13"
+    t.index ["asin"], name: "index_items_on_asin"
     t.index ["creator_id"], name: "index_items_on_creator_id"
+    t.index ["isbn13"], name: "index_items_on_isbn13"
     t.index ["maker_id"], name: "index_items_on_maker_id"
     t.index ["parent_item_id"], name: "index_items_on_parent_item_id"
   end
