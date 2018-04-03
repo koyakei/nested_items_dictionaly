@@ -9,21 +9,21 @@ class Item < ApplicationRecord
   has_many :accessories
   has_many :item_images
 
-  validates :max_threshold_price, numericality: :only_integer, if: :nil?
+  validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
 
   validates :asin, length: {is: 10,
                             too_short: "最小%{count}文字まで使用できます",
-                            too_long: "最大%{count}文字まで使用できます"}
+                            too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
   validates :isbn13, length: {is: 14,
                               too_short: "最小%{count}文字まで使用できます ISBN13に変換してください",
-                              too_long: "最大%{count}文字まで使用できます"}
+                              too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
   validates :ean, length: {minimum: 8, maximum: 13,
                           too_short: "最小%{count}文字まで使用できます",
-                          too_long: "最大%{count}文字まで使用できます"}
+                          too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
 
   validates :url, format: {with: /\A#{URI::regexp(%w(http https))}\z/,
-                           message: "URLのみが使用できます" }
+                           message: "URLのみが使用できます" }, allow_blank: true
   validates :parent_item, :name, presence: true
   validates :name, uniqueness: true
 
