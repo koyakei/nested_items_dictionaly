@@ -3,10 +3,9 @@ user.save!
 maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first)
 maker.save!
 
-item = Item.new(id: 0, maker: maker, description: "全部", creator: User.first)
-item.name = "全部"
-item.max_threshold_price = 2_147_483_647
-item.min_threshold_price = 0
+item = Item.new(id: 0, name: "全部", maker: maker, description: "全部",
+                max_threshold_price: 2_147_483_647,
+                min_threshold_price: 0, creator: User.first)
 item.save!(validate: false)
 
 CSV.foreach("db/seeds/csv/yamato_packing_item_codes.csv") do |row|
