@@ -9,6 +9,8 @@ class Item < ApplicationRecord
   has_many :accessories
   has_many :item_images
 
+  validates :max_threshold_price, numericality: :only_integer, if: :nil?
+
   validates :asin, length: {is: 10,
                             too_short: "最小%{count}文字まで使用できます",
                             too_long: "最大%{count}文字まで使用できます"}
@@ -28,7 +30,7 @@ class Item < ApplicationRecord
     ActiveRecord::Base.connection.select_one(
       <<-SQL,
       WITH RECURSIVE rec(id, item_alias_id , parent_item_id, description,
-       depth, start_id, maker_id ,maker_name, name,
+       depth, start_id, maker_id ,maker_name, max_threshold_price, name,
         category_path
         )
       AS (
@@ -41,6 +43,7 @@ class Item < ApplicationRecord
          t1.id,
          t1.maker_id,
          m2.name as maker_name,
+          t1.max_threshold_price,
          t1.name,
          cast(t1.id as text)
         FROM items t1 left join makers m2 on (t1.maker_id = m2.id)
@@ -55,6 +58,7 @@ class Item < ApplicationRecord
          rec.start_id,
          COALESCE ( rec.maker_id,t1.maker_id ),
          COALESCE (m2.name, rec.maker_name ) as maker_name,
+         COALESCE (t1.max_threshold_price, rec.max_threshold_price ) as max_threshold_price,
         t1.name,
          cast(t1.id as text) || ','|| rec.category_path AS category_path
         FROM items t1 left join makers m2 on (t1.maker_id = m2.id), rec
@@ -64,7 +68,7 @@ class Item < ApplicationRecord
         rec.category_path,
         rec.maker_id,
         rec.name,
-        rec.id
+        rec.max_threshold_price
       FROM rec order by depth desc
       limit 1
       SQL

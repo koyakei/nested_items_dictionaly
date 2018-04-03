@@ -1,8 +1,8 @@
 Fabricator(:item) do
   name                      "name test"
   parent_item               Item.first
-  max_threshold_price       10_000_000
-  min_threshold_price       1
+  max_threshold_price       nil
+  min_threshold_price       nil
   description               "description"
   prospected_price          100
   has_child                 false

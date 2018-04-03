@@ -50,6 +50,7 @@ RSpec.describe Item, type: :model do
       item4_set = item4.set_values
       # it { expect(item2.maker.id).to eq Maker.where(name: "不明").first.id }
       # it { expect(item3.maker.id).to eq Maker.where(name: apple_name).first.id }
+      it { expect(item4_set["max_threshold_price"]).to eq 2_147_483_647 }
       it { expect(item4_set["maker_id"]).to eq apple.id }
       # it { expect(item4_set["name"]).to eq item4_name }
       # it { item2.logistic_order_templates.first.}
