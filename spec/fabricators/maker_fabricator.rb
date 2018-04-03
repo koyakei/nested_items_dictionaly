@@ -1,5 +1,6 @@
 Fabricator(:maker) do
-  maker_alias nil
-  remarks     "MyText"
+  name        "MyText"
+  description     "MyText"
   url         "MyText"
+  creator     User.first
 end
