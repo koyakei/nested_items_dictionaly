@@ -46,8 +46,8 @@ logistic_order_template.save!
 gram = StandardUnit.new(name: "g")
 gram.save!
 
-centimeter = StandardUnit.new(name: "cm")
-centimeter.save!
+meter = StandardUnit.new(name: "m")
+meter.save!
 
 # http://www.calc-site.com/units/weight
 DisplayUnit.create!(standard_unit: gram, name: 'μg', display_ratio: 1_000_000, creator: user)
@@ -60,17 +60,17 @@ DisplayUnit.create!(standard_unit: gram, name: 'lb', display_ratio: 0.002_204_62
 DisplayUnit.create!(standard_unit: gram, name: 'ct', display_ratio: 5, creator: user)
 
 # http://www.calc-site.com/units/length
-DisplayUnit.create!(standard_unit: centimeter, name: 'μm', display_ratio: 10_000, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'mm', display_ratio: 10, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'cm', display_ratio: 1, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'm',  display_ratio: 0.01, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'km', display_ratio: 0.000_01, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'yd', display_ratio: 0.010_936_132_983_377, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'ft', display_ratio: 0.032_808_398_950_131, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'in', display_ratio: 0.393_700_787_401_57, creator: user)
-DisplayUnit.create!(standard_unit: centimeter, name: 'mi', display_ratio: 0.000_006_213_711_922_373_3, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'μm', display_ratio: 1_000_000, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'mm', display_ratio: 1_000, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'cm', display_ratio: 100, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'm',  display_ratio: 1, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'km', display_ratio: 0.001, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'yd', display_ratio: 1.093_613_298_337_7, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'ft', display_ratio: 3.280_839_895_013_1, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'in', display_ratio: 39.370_078_740_157, creator: user)
+DisplayUnit.create!(standard_unit: meter, name: 'mi', display_ratio: 0.000_621_371_192_237_33, creator: user)
 
 AttributeType.create!(standard_unit: gram, name:'重さ', creator: user)
-AttributeType.create!(standard_unit: centimeter, name:'幅', creator: user)
-AttributeType.create!(standard_unit: centimeter, name:'奥行', creator: user)
-AttributeType.create!(standard_unit: centimeter, name:'高さ', creator: user)
+AttributeType.create!(standard_unit: meter, name:'幅', creator: user)
+AttributeType.create!(standard_unit: meter, name:'奥行', creator: user)
+AttributeType.create!(standard_unit: meter, name:'高さ', creator: user)
