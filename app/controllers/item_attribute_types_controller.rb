@@ -1,3 +1,19 @@
+# 商品の属性情報を管理する
+#
+# SQLによる特定商品に属する情報の検索の仕方
+# SELECT
+#     attribute_types.name AS attribute_name,
+#     ROUND(CAST(value * display_ratio AS NUMERIC), 1) AS value,
+#     display_units.name AS unit_name
+# FROM
+#    (SELECT * FROM item_attribute_types WHERE item_id = 4) AS base
+#     LEFT OUTER JOIN
+#         display_units
+#         ON base.display_unit_id = display_units.id
+#     LEFT OUTER JOIN
+#         attribute_types
+#         ON base.attribute_type_id = attribute_types.id
+#
 class ItemAttributeTypesController < ApplicationController
   before_action :set_item_attribute_type, only: [:show, :update, :destroy]
 
