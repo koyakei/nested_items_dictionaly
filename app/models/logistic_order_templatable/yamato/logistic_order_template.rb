@@ -19,6 +19,11 @@ module LogisticOrderTemplatable
 
       belongs_to :creator, class_name: User.to_s
 
+      validates_presence_of :creator, :yamato_size_item_code,
+                            :yamato_packing_item_code,
+                            :yamato_handling_type_code1,
+                            :yamato_handling_type_code2
+
       def get_size
         {from: LogisticSize.new(
           code: yamato_size_item_code.code_from,
