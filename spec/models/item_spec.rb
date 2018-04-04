@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  # , name: "mobile", maker: Maker.first!, creator: User.first!, parent_item: Item.first!
   apple_name = "Apple"
   apple = Maker.new(name: apple_name, creator: User.first)
   apple.save!
@@ -55,7 +54,6 @@ RSpec.describe Item, type: :model do
       it { expect(item3_set["maker_id"]).to eq apple.id }
       it { expect(item4_set["max_threshold_price"]).to eq 2_147_483_647 }
       it { expect(item3_set["is_visible"]).to eq true}
-
       it { expect(item4_set["maker_id"]).to eq apple.id }
     end
   end

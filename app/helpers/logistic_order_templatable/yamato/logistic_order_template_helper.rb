@@ -1,0 +1,2 @@
+module LogisticOrderTemplatable::Yamato::LogisticOrderTemplateHelper
+end

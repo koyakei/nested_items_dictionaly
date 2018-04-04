@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe YamatoLogisticOrderTemplate, type: :model do
+RSpec.describe LogisticOrderTemplatable::Yamato::LogisticOrderTemplate, type: :model do
   apple_name = "Apple"
   apple = Maker.new(name: apple_name, creator: User.first)
   apple.save!
