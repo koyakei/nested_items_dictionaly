@@ -43,12 +43,8 @@ RSpec.describe Item, type: :model do
   describe "#get nested items" do
     subject { item.set_values }
     context "ルートとその直下の関係性の取得がかのうであるかどうか？" do
-      # 直下のitem を作成
-      # let(:item2) { Fabricate(:item, parent_item: Item.first, name: "second") }
       item3_set = item3.set_values
       item4_set = item4.set_values
-      # it { expect(item2.maker.id).to eq Maker.where(name: "不明").first.id }
-      # it { expect(item3.maker.id).to eq Maker.where(name: apple_name).first.id }
       it { expect(item3_set["min_threshold_price"]).to eq 1 }
       it { expect(item4_set["min_threshold_price"]).to eq 1 }
       it { expect(item3_set["maker_id"]).to eq apple.id }
