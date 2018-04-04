@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe YamatoLogisticOrderTemplate, type: :model do
+RSpec.describe LogisticOrderTemplatable::Yamato::LogisticOrderTemplate, type: :model do
   apple_name = "Apple"
   apple = Maker.new(name: apple_name, creator: User.first)
   apple.save!
-  item2 = Fabricate.build(:item)
+  item2 = Fabricate.build(:item, name: :moblie)
   item2.save!
-
+  item2_size =
+    LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
   yamato_logistic_order_template =
     LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new
   yamato_logistic_order_template.yamato_packing_item_code =
     LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.first!
-  yamato_logistic_order_template.yamato_size_item_code =
-    LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
+  yamato_logistic_order_template.yamato_size_item_code = item2_size
   yamato_logistic_order_template.yamato_handling_type_code1 =
     LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
   yamato_logistic_order_template.yamato_handling_type_code2 =
@@ -21,7 +21,7 @@ RSpec.describe YamatoLogisticOrderTemplate, type: :model do
   yamato_logistic_order_template.save!
 
   logistic_order_template = LogisticOrderTemplate.new
-  logistic_order_template.item = Item.first
+  logistic_order_template.item = item2
   logistic_order_template.logistic_order_templatable =
     yamato_logistic_order_template
   logistic_order_template.creator = User.first
@@ -40,6 +40,12 @@ RSpec.describe YamatoLogisticOrderTemplate, type: :model do
   item5.creator = User.first
   item5.save!
   describe "ネスト" do
-    subject { yamato_logistic_order_template.set_values }
+    context "一階層目の取得" do
+      template = item2.logistic_order_templates.find_by(
+        logistic_order_templatable_type:
+          LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.to_s)
+      table = template.logistic_order_templatable.yamato_size_item_code
+      it { expect(table).to eq item2_size }
+    end
   end
 end
