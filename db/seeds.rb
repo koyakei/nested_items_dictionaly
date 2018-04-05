@@ -87,10 +87,10 @@ DisplayUnit.create!(standard_unit: count, name: '台', display_ratio: 1, creator
 DisplayUnit.create!(standard_unit: mb, name: 'B',  display_ratio: 1024 * 1024, creator: user)
 DisplayUnit.create!(standard_unit: mb, name: 'KB', display_ratio: 1024, creator: user)
 DisplayUnit.create!(standard_unit: mb, name: 'MB', display_ratio: 1, creator: user)
-DisplayUnit.create!(standard_unit: mb, name: 'GB', display_ratio: 1 / 1024, creator: user)
-DisplayUnit.create!(standard_unit: mb, name: 'TB', display_ratio: 1 / 1024 / 1024, creator: user)
-DisplayUnit.create!(standard_unit: mb, name: 'PB', display_ratio: 1 / 1024 / 1024 / 1024, creator: user)
-DisplayUnit.create!(standard_unit: mb, name: 'EB', display_ratio: 1 / 1024 / 1024 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'GB', display_ratio: 1.0 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'TB', display_ratio: 1.0 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'PB', display_ratio: 1.0 / 1024 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'EB', display_ratio: 1.0 / 1024 / 1024 / 1024 / 1024, creator: user)
 
 # 体積・容量
 DisplayUnit.create(standard_unit: litre, name: 'mL', display_ratio: 1000, creator: user)
