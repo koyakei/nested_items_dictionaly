@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Item, type: :model do
-
-
   describe "#get nested items" do
     apple_name = "Apple"
     apple = Maker.new(name: apple_name, creator: User.first)
@@ -42,7 +40,7 @@ RSpec.describe Item, type: :model do
     item5 = Fabricate.build(:item, name: "Android", maker: nil, parent_item: item2, has_child: false)
     item5.creator = User.first
     item5.save!
-    subject { item.set_values }
+
     context "ルートとその直下の関係性の取得がかのうであるかどうか？" do
       item3_set = item3.set_values
       item4_set = item4.set_values
@@ -66,11 +64,6 @@ RSpec.describe Item, type: :model do
       item4.name = after_changed_name
       item4.save!
       it{ expect(item4.name).to eq after_changed_name}
-    end
-    #動作をどうしようか？
-    #継承されてきた要素が各行からわかれば、普通のupdate でいいのでは。
-    context "継承update" do
-
     end
 
     context "cascading destroy" do
