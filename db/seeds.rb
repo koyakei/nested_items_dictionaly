@@ -49,6 +49,9 @@ gram.save!
 metre = StandardUnit.new(name: "m")
 metre.save!
 
+count = StandardUnit.new(name: "個")
+count.save!
+
 # http://www.calc-site.com/units/weight
 DisplayUnit.create!(standard_unit: gram, name: 'μg', display_ratio: 1_000_000, creator: user)
 DisplayUnit.create!(standard_unit: gram, name: 'mg', display_ratio: 1_000, creator: user)
@@ -70,7 +73,13 @@ DisplayUnit.create!(standard_unit: metre, name: 'ft', display_ratio: 3.280_839_8
 DisplayUnit.create!(standard_unit: metre, name: 'in', display_ratio: 39.370_078_740_157, creator: user)
 DisplayUnit.create!(standard_unit: metre, name: 'mi', display_ratio: 0.000_621_371_192_237_33, creator: user)
 
+# 個数
+DisplayUnit.create!(standard_unit: count, name: '個', display_ratio: 1, creator: user)
+DisplayUnit.create!(standard_unit: count, name: '台', display_ratio: 1, creator: user)
+
 AttributeType.create!(standard_unit: gram, name:'重さ', creator: user)
 AttributeType.create!(standard_unit: metre, name:'幅', creator: user)
 AttributeType.create!(standard_unit: metre, name:'奥行', creator: user)
 AttributeType.create!(standard_unit: metre, name:'高さ', creator: user)
+
+AttributeType.create!(standard_unit: count, name:'個数', creator: user)
