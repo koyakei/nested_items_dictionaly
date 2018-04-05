@@ -52,6 +52,9 @@ metre.save!
 count = StandardUnit.new(name: "個")
 count.save!
 
+mb = StandardUnit.new(name: "MB")
+mb.save!
+
 # http://www.calc-site.com/units/weight
 DisplayUnit.create!(standard_unit: gram, name: 'μg', display_ratio: 1_000_000, creator: user)
 DisplayUnit.create!(standard_unit: gram, name: 'mg', display_ratio: 1_000, creator: user)
@@ -77,9 +80,19 @@ DisplayUnit.create!(standard_unit: metre, name: 'mi', display_ratio: 0.000_621_3
 DisplayUnit.create!(standard_unit: count, name: '個', display_ratio: 1, creator: user)
 DisplayUnit.create!(standard_unit: count, name: '台', display_ratio: 1, creator: user)
 
+# バイト数
+DisplayUnit.create!(standard_unit: bytes, name: 'B',  display_ratio: 1024 * 1024, creator: user)
+DisplayUnit.create!(standard_unit: bytes, name: 'KB', display_ratio: 1024, creator: user)
+DisplayUnit.create!(standard_unit: bytes, name: 'MB', display_ratio: 1, creator: user)
+DisplayUnit.create!(standard_unit: bytes, name: 'GB', display_ratio: 1 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: bytes, name: 'TB', display_ratio: 1 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: bytes, name: 'PB', display_ratio: 1 / 1024 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: bytes, name: 'EB', display_ratio: 1 / 1024 / 1024 / 1024 / 1024, creator: user)
+
 AttributeType.create!(standard_unit: gram, name:'重さ', creator: user)
 AttributeType.create!(standard_unit: metre, name:'幅', creator: user)
 AttributeType.create!(standard_unit: metre, name:'奥行', creator: user)
 AttributeType.create!(standard_unit: metre, name:'高さ', creator: user)
 
 AttributeType.create!(standard_unit: count, name:'個数', creator: user)
+AttributeType.create!(standard_unit: bytes, name:'データ容量', creator: user)
