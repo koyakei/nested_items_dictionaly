@@ -1,13 +1,14 @@
 class Item < ApplicationRecord
+  class HasChildrenError < StandardError; end
   has_many :children_items, class_name: Item.to_s, foreign_key: :parent_item_id
   belongs_to :creator, class_name: User.to_s
   belongs_to :maker, optional: true
-  has_many :item_aliases
+  has_many :item_aliases, dependent: :delete_all
   belongs_to :parent_item, class_name: Item.to_s, optional: false
-  has_many :costs_for_items
-  has_many :logistic_order_templates
+  has_many :costs_for_items, dependent: :delete_all
+  has_many :logistic_order_templates, dependent: :delete_all
   has_many :accessories
-  has_many :item_images
+  has_many :item_images, dependent: :delete_all
 
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
@@ -26,6 +27,11 @@ class Item < ApplicationRecord
                            message: "URLのみが使用できます" }, allow_blank: true
   validates :parent_item, :name, presence: true
   validates :name, uniqueness: true
+
+  def destroy
+    raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
+    super
+  end
 
   def set_values
     ActiveRecord::Base.connection.select_one(
