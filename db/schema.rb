@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.index ["attribute_type_id"], name: "index_item_attribute_types_on_attribute_type_id"
     t.index ["creator_id"], name: "index_item_attribute_types_on_creator_id"
     t.index ["display_unit_id"], name: "index_item_attribute_types_on_display_unit_id"
+    t.index ["item_id", "attribute_type_id"], name: "index_item_attribute_types_on_item_id_and_attribute_type_id", unique: true
     t.index ["item_id"], name: "index_item_attribute_types_on_item_id"
   end
 
