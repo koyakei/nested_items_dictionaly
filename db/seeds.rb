@@ -61,6 +61,8 @@ litre.save!
 area = StandardUnit.new(name: "㎡")#機種依存文字だぜ
 area.save!
 
+time = StandardUnit.new(name: "second")
+time.save!
 # http://www.calc-site.com/units/weight
 CSV.foreach("db/seeds/csv/display_units/weight_display_units.csv") do |row|
   DisplayUnit.create!(standard_unit: gram, name: row[0], display_ratio: row[1].to_f, creator: user)
@@ -91,12 +93,18 @@ CSV.foreach("db/seeds/csv/display_units/area_units.csv") do |row|
   DisplayUnit.create(standard_unit: area, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
+# 時間
+CSV.foreach("db/seeds/csv/display_units/time_units.csv") do |row|
+  DisplayUnit.create(standard_unit: time, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
 AttributeType.create!(standard_unit: gram, name: "重さ", creator: user)
 AttributeType.create!(standard_unit: metre, name: "幅", creator: user)
 AttributeType.create!(standard_unit: metre, name: "奥行", creator: user)
 AttributeType.create!(standard_unit: metre, name: "高さ", creator: user)
 AttributeType.create!(standard_unit: metre, name: "サイズ", creator: user)
 AttributeType.create!(standard_unit: area, name: "面積", creator: user)
+AttributeType.create!(standard_unit: time, name: "時間", creator: user)
 
 AttributeType.create!(standard_unit: basic_japanese_counter_word, name: "個数", creator: user)
 AttributeType.create!(standard_unit: mb, name: "データ容量", creator: user)
