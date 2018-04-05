@@ -4,15 +4,15 @@ RSpec.describe LogisticOrderTemplatable::Yamato::LogisticOrderTemplate, type: :m
   apple_name = "Apple"
   apple = Maker.new(name: apple_name, creator: User.first)
   apple.save!
-  item2 = Fabricate.build(:item)
+  item2 = Fabricate.build(:item, name: :moblie)
   item2.save!
-
+  item2_size =
+    LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
   yamato_logistic_order_template =
     LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new
   yamato_logistic_order_template.yamato_packing_item_code =
     LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.first!
-  yamato_logistic_order_template.yamato_size_item_code =
-    LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
+  yamato_logistic_order_template.yamato_size_item_code = item2_size
   yamato_logistic_order_template.yamato_handling_type_code1 =
     LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
   yamato_logistic_order_template.yamato_handling_type_code2 =
@@ -21,7 +21,7 @@ RSpec.describe LogisticOrderTemplatable::Yamato::LogisticOrderTemplate, type: :m
   yamato_logistic_order_template.save!
 
   logistic_order_template = LogisticOrderTemplate.new
-  logistic_order_template.item = Item.first
+  logistic_order_template.item = item2
   logistic_order_template.logistic_order_templatable =
     yamato_logistic_order_template
   logistic_order_template.creator = User.first
@@ -40,6 +40,29 @@ RSpec.describe LogisticOrderTemplatable::Yamato::LogisticOrderTemplate, type: :m
   item5.creator = User.first
   item5.save!
   describe "ネスト" do
-    subject { yamato_logistic_order_template.set_values }
+    context "一階層目の取得" do
+      template = item2.logistic_order_templates.find_by(
+        logistic_order_templatable_type:
+          LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.to_s)
+      table = template.logistic_order_templatable.yamato_size_item_code
+      it { expect(table).to eq item2_size }
+    end
+
+    context "親までのcategory_path 取得" do
+      item3_set = item3.set_values
+      it{ expect(item3_set["category_path"]).to eq "#{Item.first.id},#{item2.id},#{item3.id}"}
+    end
+
+    context "2層目の取得" do
+      item3_set = item3.set_values
+      item3tmp = LogisticOrderTemplate.where(
+        logistic_order_templatable_type:
+          LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.to_s,
+        item_id: item3_set["category_path"].split(","))
+      item3tmp.first.id
+      yr = LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new.set_values(item3.id)
+
+      it{ expect(yr["size"]).to eq item2_size.size}
+    end
   end
 end
