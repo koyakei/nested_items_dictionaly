@@ -198,11 +198,9 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.bigint "logistic_order_template_type_id"
     t.index ["creator_id"], name: "index_logistic_order_templates_on_creator_id"
     t.index ["item_id"], name: "index_logistic_order_templates_on_item_id"
     t.index ["logistic_order_templatable_type", "logistic_order_templatable_id"], name: "index_logistic_templates_on_type_and_template"
-    t.index ["logistic_order_template_type_id"], name: "index_logistic_templates_on_logistic_template_type_id"
   end
 
   create_table "maker_aliases", force: :cascade do |t|
