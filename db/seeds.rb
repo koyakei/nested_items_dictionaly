@@ -46,8 +46,17 @@ logistic_order_template.save!
 gram = StandardUnit.new(name: "g")
 gram.save!
 
-meter = StandardUnit.new(name: "m")
-meter.save!
+metre = StandardUnit.new(name: "m")
+metre.save!
+
+count = StandardUnit.new(name: "個")
+count.save!
+
+mb = StandardUnit.new(name: "MB")
+mb.save!
+
+litre = StandardUnit.new(name: "L")
+litre.save!
 
 # http://www.calc-site.com/units/weight
 DisplayUnit.create!(standard_unit: gram, name: 'μg', display_ratio: 1_000_000, creator: user)
@@ -60,17 +69,51 @@ DisplayUnit.create!(standard_unit: gram, name: 'lb', display_ratio: 0.002_204_62
 DisplayUnit.create!(standard_unit: gram, name: 'ct', display_ratio: 5, creator: user)
 
 # http://www.calc-site.com/units/length
-DisplayUnit.create!(standard_unit: meter, name: 'μm', display_ratio: 1_000_000, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'mm', display_ratio: 1_000, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'cm', display_ratio: 100, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'm',  display_ratio: 1, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'km', display_ratio: 0.001, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'yd', display_ratio: 1.093_613_298_337_7, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'ft', display_ratio: 3.280_839_895_013_1, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'in', display_ratio: 39.370_078_740_157, creator: user)
-DisplayUnit.create!(standard_unit: meter, name: 'mi', display_ratio: 0.000_621_371_192_237_33, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'μm', display_ratio: 1_000_000, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'mm', display_ratio: 1_000, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'cm', display_ratio: 100, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'm',  display_ratio: 1, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'km', display_ratio: 0.001, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'yd', display_ratio: 1.093_613_298_337_7, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'ft', display_ratio: 3.280_839_895_013_1, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'in', display_ratio: 39.370_078_740_157, creator: user)
+DisplayUnit.create!(standard_unit: metre, name: 'mi', display_ratio: 0.000_621_371_192_237_33, creator: user)
+
+# 個数
+DisplayUnit.create!(standard_unit: count, name: '個', display_ratio: 1, creator: user)
+DisplayUnit.create!(standard_unit: count, name: '台', display_ratio: 1, creator: user)
+
+# バイト数
+DisplayUnit.create!(standard_unit: mb, name: 'B',  display_ratio: 1024 * 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'KB', display_ratio: 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'MB', display_ratio: 1, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'GB', display_ratio: 1.0 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'TB', display_ratio: 1.0 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'PB', display_ratio: 1.0 / 1024 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'EB', display_ratio: 1.0 / 1024 / 1024 / 1024 / 1024, creator: user)
+
+# 体積・容量
+DisplayUnit.create(standard_unit: litre, name: 'mL', display_ratio: 1000, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'cc', display_ratio: 1000, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'cL', display_ratio: 100, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'dL', display_ratio: 10, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'L',  display_ratio: 1, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'gal', display_ratio: 0.264172037284185, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'bu',  display_ratio: 0.028377593258402, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'fl oz',  display_ratio: 0.033814022701843, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'gi',  display_ratio: 8.4535056754607, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'pt',  display_ratio: 2.1133764188652, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'qt',  display_ratio: 1.0566882094326, creator: user)
+DisplayUnit.create(standard_unit: litre, name: 'bl',  display_ratio: 0.0083864143605761, creator: user)
+DisplayUnit.create(standard_unit: litre, name: '合',  display_ratio: 5.5435235318617, creator: user)
+DisplayUnit.create(standard_unit: litre, name: '升',  display_ratio: 0.55435235318617, creator: user)
 
 AttributeType.create!(standard_unit: gram, name:'重さ', creator: user)
-AttributeType.create!(standard_unit: meter, name:'幅', creator: user)
-AttributeType.create!(standard_unit: meter, name:'奥行', creator: user)
-AttributeType.create!(standard_unit: meter, name:'高さ', creator: user)
+AttributeType.create!(standard_unit: metre, name:'幅', creator: user)
+AttributeType.create!(standard_unit: metre, name:'奥行', creator: user)
+AttributeType.create!(standard_unit: metre, name:'高さ', creator: user)
+AttributeType.create!(standard_unit: metre, name:'サイズ', creator: user)
+
+AttributeType.create!(standard_unit: count, name:'個数', creator: user)
+AttributeType.create!(standard_unit: mb, name:'データ容量', creator: user)
+AttributeType.create!(standard_unit: litre, name:'容量', creator: user)
