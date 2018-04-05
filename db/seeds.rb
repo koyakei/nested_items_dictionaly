@@ -112,6 +112,7 @@ AttributeType.create!(standard_unit: gram, name:'重さ', creator: user)
 AttributeType.create!(standard_unit: metre, name:'幅', creator: user)
 AttributeType.create!(standard_unit: metre, name:'奥行', creator: user)
 AttributeType.create!(standard_unit: metre, name:'高さ', creator: user)
+AttributeType.create!(standard_unit: metre, name:'サイズ', creator: user)
 
 AttributeType.create!(standard_unit: count, name:'個数', creator: user)
 AttributeType.create!(standard_unit: bytes, name:'データ容量', creator: user)
