@@ -37,7 +37,7 @@ class Item < ApplicationRecord
     ActiveRecord::Base.connection.select_one(
       <<-SQL,
       WITH RECURSIVE rec(id, item_alias_id , parent_item_id, description,
-       depth, start_id, maker_id ,maker_name, min_threshold_price, max_threshold_price, name,
+       depth, start_id, maker_id ,maker_root_id,maker_name, min_threshold_price, max_threshold_price, name,
         category_path, is_visible
         )
       AS (
@@ -49,6 +49,7 @@ class Item < ApplicationRecord
          1 ,
          t1.id,
          t1.maker_id,
+         t1.id,
          m2.name as maker_name,
          t1.min_threshold_price,
          t1.max_threshold_price,
@@ -66,6 +67,7 @@ class Item < ApplicationRecord
          rec.depth + 1,
          rec.start_id,
          COALESCE ( rec.maker_id,t2.maker_id ),
+         (CASE WHEN rec.maker_id is null THEN t2.id ELSE rec.maker_root_id end) as maker_root_id,
          COALESCE (m2.name, rec.maker_name ) as maker_name,
          COALESCE ( rec.min_threshold_price ,t2.min_threshold_price ),
          COALESCE (t2.max_threshold_price, rec.max_threshold_price ),
@@ -78,11 +80,12 @@ class Item < ApplicationRecord
         rec.description,
         rec.category_path,
         rec.maker_id,
+        rec.maker_root_id,
         rec.name,
         rec.max_threshold_price,
         rec.min_threshold_price,
         rec.is_visible
-      FROM rec order by depth  desc
+      FROM rec order by depth desc
       limit 1
       SQL
     )

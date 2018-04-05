@@ -9,7 +9,7 @@ Fabricator(:item) do
   is_visible                false
   is_sync_novasto           false
   creator User.first
-  maker                     Maker.first
+  maker                     nil
   maker_model_number_full   "MyText"
   maker_model_number        "MyText"
   asin "B078WPGJW7"

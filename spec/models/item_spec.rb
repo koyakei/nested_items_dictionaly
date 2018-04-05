@@ -46,10 +46,13 @@ RSpec.describe Item, type: :model do
     context "ルートとその直下の関係性の取得がかのうであるかどうか？" do
       item3_set = item3.set_values
       item4_set = item4.set_values
+      item5_set = item5.set_values
       it { expect(item3_set["min_threshold_price"]).to eq 1 }
       it { expect(item4_set["min_threshold_price"]).to eq 1 }
       it { expect(item3_set["maker_id"]).to eq apple.id }
       it { expect(item4_set["max_threshold_price"]).to eq 2_147_483_647 }
+      it { expect(item4_set["maker_root_id"]).to eq item3.id }
+      it { expect(item5_set["maker_root_id"]).to eq Item.first.id }
       it { expect(item3_set["is_visible"]).to eq true}
       it { expect(item4_set["maker_id"]).to eq apple.id }
     end
@@ -63,6 +66,11 @@ RSpec.describe Item, type: :model do
       item4.name = after_changed_name
       item4.save!
       it{ expect(item4.name).to eq after_changed_name}
+    end
+    #動作をどうしようか？
+    #継承されてきた要素が各行からわかれば、普通のupdate でいいのでは。
+    context "継承update" do
+
     end
 
     context "cascading destroy" do
