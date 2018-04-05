@@ -84,13 +84,13 @@ DisplayUnit.create!(standard_unit: count, name: '個', display_ratio: 1, creator
 DisplayUnit.create!(standard_unit: count, name: '台', display_ratio: 1, creator: user)
 
 # バイト数
-DisplayUnit.create!(standard_unit: bytes, name: 'B',  display_ratio: 1024 * 1024, creator: user)
-DisplayUnit.create!(standard_unit: bytes, name: 'KB', display_ratio: 1024, creator: user)
-DisplayUnit.create!(standard_unit: bytes, name: 'MB', display_ratio: 1, creator: user)
-DisplayUnit.create!(standard_unit: bytes, name: 'GB', display_ratio: 1 / 1024, creator: user)
-DisplayUnit.create!(standard_unit: bytes, name: 'TB', display_ratio: 1 / 1024 / 1024, creator: user)
-DisplayUnit.create!(standard_unit: bytes, name: 'PB', display_ratio: 1 / 1024 / 1024 / 1024, creator: user)
-DisplayUnit.create!(standard_unit: bytes, name: 'EB', display_ratio: 1 / 1024 / 1024 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'B',  display_ratio: 1024 * 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'KB', display_ratio: 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'MB', display_ratio: 1, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'GB', display_ratio: 1 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'TB', display_ratio: 1 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'PB', display_ratio: 1 / 1024 / 1024 / 1024, creator: user)
+DisplayUnit.create!(standard_unit: mb, name: 'EB', display_ratio: 1 / 1024 / 1024 / 1024 / 1024, creator: user)
 
 # 体積・容量
 DisplayUnit.create(standard_unit: litre, name: 'mL', display_ratio: 1000, creator: user)
@@ -115,5 +115,5 @@ AttributeType.create!(standard_unit: metre, name:'高さ', creator: user)
 AttributeType.create!(standard_unit: metre, name:'サイズ', creator: user)
 
 AttributeType.create!(standard_unit: count, name:'個数', creator: user)
-AttributeType.create!(standard_unit: bytes, name:'データ容量', creator: user)
+AttributeType.create!(standard_unit: mb, name:'データ容量', creator: user)
 AttributeType.create!(standard_unit: litre, name:'容量', creator: user)
