@@ -5,7 +5,7 @@ class CreateItemAliases < ActiveRecord::Migration[5.1]
       t.text :name
       t.references :creator, foreign_key: {to_table: :users}, null: false, default: 0
 
-      t.timestamps default: -> { 'NOW()' }
+      t.timestamps default: -> { "NOW()" }
     end
   end
 end
