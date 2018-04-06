@@ -123,7 +123,7 @@ end
 
 # 助数詞
 CSV.foreach("db/seeds/csv/display_units/japanese_counter_words.csv") do |row|
-  DisplayUnit.create!(standard_unit: basic_japanese_counter_word, name: row[0], display_ratio: row[1].to_f, creator: user)
+  DisplayUnit.create!(standard_unit: basic_japanese_counter_word, name: row[0], display_ratio: 1, creator: user)
 end
 
 # バイト数
