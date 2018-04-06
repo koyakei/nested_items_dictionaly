@@ -287,10 +287,10 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
   end
 
   create_table "yamato_logistic_order_templates", force: :cascade do |t|
-    t.bigint "yamato_size_item_code_id", null: false
-    t.bigint "yamato_packing_item_code_id", null: false
-    t.bigint "yamato_handling_type_code1_id", null: false
-    t.bigint "yamato_handling_type_code2_id", null: false
+    t.bigint "yamato_size_item_code_id"
+    t.bigint "yamato_packing_item_code_id"
+    t.bigint "yamato_handling_type_code1_id"
+    t.bigint "yamato_handling_type_code2_id"
     t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
