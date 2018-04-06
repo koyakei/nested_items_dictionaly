@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_03_013039) do
+ActiveRecord::Schema.define(version: 2018_04_06_063500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -251,6 +251,18 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.index ["creator_id"], name: "index_tag_order_types_on_creator_id"
   end
 
+  create_table "tag_orders", force: :cascade do |t|
+    t.text "name", null: false
+    t.bigint "tag_order_type_id", null: false
+    t.bigint "creator_id", default: 0, null: false
+    t.integer "order", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["creator_id"], name: "index_tag_orders_on_creator_id"
+    t.index ["tag_order_type_id", "name"], name: "index_tag_orders_on_tag_order_type_id_and_name", unique: true
+    t.index ["tag_order_type_id"], name: "index_tag_orders_on_tag_order_type_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.text "name", null: false
     t.text "description"
@@ -345,6 +357,9 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
   add_foreign_key "tag_items", "items"
   add_foreign_key "tag_items", "tags"
   add_foreign_key "tag_items", "users", column: "creator_id"
+  add_foreign_key "tag_order_types", "users", column: "creator_id"
+  add_foreign_key "tag_orders", "tag_order_types"
+  add_foreign_key "tag_orders", "users", column: "creator_id"
   add_foreign_key "tags", "users", column: "creator_id"
   add_foreign_key "yamato_logistic_order_templates", "users", column: "creator_id"
   add_foreign_key "yamato_logistic_order_templates", "yamato_handling_type_codes", column: "yamato_handling_type_code1_id"

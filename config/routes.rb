@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :tag_order_types
+  resources :tag_orders
   resources :item_aliases
   resources :tag_items
   resources :item_images
