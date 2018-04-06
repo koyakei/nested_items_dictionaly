@@ -241,6 +241,16 @@ ActiveRecord::Schema.define(version: 2018_04_03_013039) do
     t.index ["tag_id"], name: "index_tag_items_on_tag_id"
   end
 
+  create_table "tag_order_types", force: :cascade do |t|
+    t.text "name", null: false
+    t.bigint "creator_id", default: 0, null: false
+    t.text "description"
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["creator_id", "name"], name: "index_tag_order_types_on_creator_id_and_name", unique: true
+    t.index ["creator_id"], name: "index_tag_order_types_on_creator_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.text "name", null: false
     t.text "description"
