@@ -27,6 +27,7 @@ gem 'jbuilder'
 # gem 'bcrypt', '3.1.7'
 gem 'csv'
 gem 'rubocop'
+gem 'searchkick'
 
 group :development, :test do
   gem 'rspec-rails'
