@@ -238,3 +238,6 @@ AttributeType.create!(standard_unit: candela, name: "カンデラ", creator: use
 AttributeType.create!(standard_unit: basic_japanese_counter_word, name: "個数", creator: user)
 AttributeType.create!(standard_unit: mb, name: "データ容量", creator: user)
 AttributeType.create!(standard_unit: litre, name: "容量", creator: user)
+
+puts "\n== Create Elasticsearch indexes =="
+Rake::Task["elasticsearch:reindex"].invoke
