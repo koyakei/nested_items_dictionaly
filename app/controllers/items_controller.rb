@@ -4,7 +4,13 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @items = Item.search(
+      params[:keyword].presence || "*",
+      fields: [:name, :maker_name],
+      match: :word_start,
+      page: params[:page],
+      per_page: 20 # TODO: 本番では100。開発時のテストのしやすさのため、小さい値に仮置き中
+    )
   end
 
   # GET /items/1

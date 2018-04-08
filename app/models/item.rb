@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  searchkick word_start: [:name, :maker_name]
   class HasChildrenError < StandardError; end
   has_many :children_items, class_name: Item.to_s, foreign_key: :parent_item_id
   belongs_to :creator, class_name: User.to_s
@@ -13,20 +14,27 @@ class Item < ApplicationRecord
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
 
-  validates :asin, length: {is: 10,
-                            too_short: "最小%{count}文字まで使用できます",
-                            too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
-  validates :isbn13, length: {is: 14,
-                              too_short: "最小%{count}文字まで使用できます ISBN13に変換してください",
-                              too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
-  validates :ean, length: {minimum: 8, maximum: 13,
-                          too_short: "最小%{count}文字まで使用できます",
-                          too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
+  validates :asin, length: { is: 10, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
+  validates :isbn13, length: { is: 14, too_short: "最小%{count}文字まで使用できます ISBN13に変換してください", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
+  validates :ean, length: { minimum: 8, maximum: 13, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
 
-  validates :url, format: {with: /\A#{URI::regexp(%w(http https))}\z/,
-                           message: "URLのみが使用できます" }, allow_blank: true
+  validates :url, format: { with: /\A#{URI::regexp(%w(http https))}\z/, message: "URLのみが使用できます" }, allow_blank: true
   validates :parent_item, :name, presence: true
   validates :name, uniqueness: true
+
+  def search_data
+    result = set_values
+    { id: id, name: name, maker_name: maker.name, creator_id: creator.id, parent_item_id: parent_item&.id, maker_aliases: maker.maker_aliases.map(&:name), item_aliases: item_aliases.map(&:name), category_path_id: result["category_path"], maker_root_id: result["maker_root_id"], max_threshold_price: result["max_threshold_price"], min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
+    }
+  end
+
+  def maker_aliases
+    # {
+    #   maker_aliases: {name: maker.maker_aliases.name}
+    # }
+    { conversions: Rails.cache.read("search_conversions:#{self.class.name}:#{id}") || {}
+    }
+  end
 
   def destroy
     raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
@@ -34,8 +42,7 @@ class Item < ApplicationRecord
   end
 
   def set_values
-    ActiveRecord::Base.connection.select_one(
-      <<-SQL,
+    ActiveRecord::Base.connection.select_one(<<-SQL,
       WITH RECURSIVE rec(id, item_alias_id , parent_item_id, description,
        depth, start_id, maker_id ,maker_root_id,maker_name, min_threshold_price, max_threshold_price, name,
         category_path, is_visible
@@ -87,7 +94,7 @@ class Item < ApplicationRecord
         rec.is_visible
       FROM rec order by depth desc
       limit 1
-      SQL
+                                             SQL
     )
   end
 end

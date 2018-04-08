@@ -29,6 +29,10 @@ gem 'csv'
 gem 'rubocop'
 gem 'searchkick'
 
+group :production do
+  gem 'faraday_middleware-aws-sigv4'
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'fabrication'

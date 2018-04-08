@@ -1,12 +1,15 @@
 user = User.new(id: 0)
 user.save!
-maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first)
+maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first!)
 maker.save!
+MakerAlias.new(name: :わからん, creator: User.first!, maker: maker).save!
 
 item = Item.new(id: 0, name: "全部", maker: maker, description: "全部",
                 max_threshold_price: 2_147_483_647,
                 min_threshold_price: 0, creator: User.first)
 item.save!(validate: false)
+
+ItemAlias.new(name: :すべて, creator: User.first!, item: item).save!
 
 CSV.foreach("db/seeds/csv/yamato_packing_item_codes.csv") do |row|
   LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.new(
