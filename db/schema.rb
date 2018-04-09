@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_06_063500) do
+ActiveRecord::Schema.define(version: 2018_04_09_063722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,16 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
     t.index ["display_unit_id"], name: "index_item_attribute_types_on_display_unit_id"
     t.index ["item_id", "attribute_type_id"], name: "index_item_attribute_types_on_item_id_and_attribute_type_id", unique: true
     t.index ["item_id"], name: "index_item_attribute_types_on_item_id"
+  end
+
+  create_table "item_feature_data", force: :cascade do |t|
+    t.bigint "item_id"
+    t.integer "number"
+    t.text "feature"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id", "number"], name: "index_item_feature_data_on_item_id_and_number", unique: true
+    t.index ["item_id"], name: "index_item_feature_data_on_item_id"
   end
 
   create_table "item_grades_discounts", force: :cascade do |t|
@@ -340,6 +350,7 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
   add_foreign_key "item_attribute_types", "display_units"
   add_foreign_key "item_attribute_types", "items"
   add_foreign_key "item_attribute_types", "users", column: "creator_id"
+  add_foreign_key "item_feature_data", "items"
   add_foreign_key "item_grades_discounts", "grades"
   add_foreign_key "item_grades_discounts", "items"
   add_foreign_key "item_grades_discounts", "users", column: "creator_id"

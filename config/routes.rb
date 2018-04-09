@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :item_feature_data
   resources :tag_order_types
   resources :tag_orders
   resources :item_aliases

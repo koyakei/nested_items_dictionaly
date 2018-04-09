@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @item_feature_datum.item %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @item_feature_datum.number %>
+</p>
+
+<p>
+  <strong>Feature:</strong>
+  <%= @item_feature_datum.feature %>
+</p>
+
+<%= link_to 'Edit', edit_item_feature_datum_path(@item_feature_datum) %> |
+<%= link_to 'Back', item_feature_data_path %>

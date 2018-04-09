@@ -1,0 +1,32 @@
+<%= form_with(model: item_feature_datum, local: true) do |form| %>
+  <% if item_feature_datum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item_feature_datum.errors.count, "error") %> prohibited this item_feature_datum from being saved:</h2>
+
+      <ul>
+      <% item_feature_datum.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :item_id %>
+    <%= form.text_field :item_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.number_field :number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :feature %>
+    <%= form.text_area :feature %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
