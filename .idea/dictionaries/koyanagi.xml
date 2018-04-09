@@ -2,9 +2,16 @@
   <dictionary name="koyanagi">
     <words>
       <w>candela</w>
+      <w>cors</w>
+      <w>jbuilder</w>
       <w>rewinder</w>
+      <w>rubocop</w>
       <w>searchkick</w>
+      <w>sigv</w>
+      <w>squasher</w>
       <w>templatable</w>
+      <w>turbolinks</w>
+      <w>uglifier</w>
       <w>viron</w>
       <w>yamato</w>
     </words>
