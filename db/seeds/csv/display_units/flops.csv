@@ -1,0 +1,4 @@
+MFLOPS, 1
+GFLOPS, 1.0 / (10 ** 3)
+TFLOPS, 1.0 / (10 ** 6)
+PFLOPS, 1.0 / (10 ** 9)

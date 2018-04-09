@@ -114,6 +114,15 @@ lux.save!
 candela = StandardUnit.new(name: "cd")
 candela.save!
 
+mflops = StandardUnit.new(name: "MFLOPS")
+mflops.save!
+
+liter_per_hour = StandardUnit.new(name: "L/h")
+liter_per_hour.save!
+
+kg_per_sec = StandardUnit.new(name: "kg/s")
+kg_per_sec.save!
+
 # http://www.calc-site.com/units/weight
 CSV.foreach("db/seeds/csv/display_units/weight.csv") do |row|
   DisplayUnit.create!(standard_unit: gram, name: row[0], display_ratio: row[1].to_f, creator: user)
@@ -211,6 +220,18 @@ CSV.foreach("db/seeds/csv/display_units/lux.csv") do |row|
   DisplayUnit.create(standard_unit: lux, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
+CSV.foreach("db/seeds/csv/display_units/flops.csv") do |row|
+  DisplayUnit.create(standard_unit: mflops, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/volume_flow_rate.csv") do |row|
+  DisplayUnit.create(standard_unit: liter_per_hour, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/mass_flow_rate.csv") do |row|
+  DisplayUnit.create(standard_unit: kg_per_sec, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
 AttributeType.create!(standard_unit: gram, name: "重さ", creator: user)
 AttributeType.create!(standard_unit: metre, name: "幅", creator: user)
 AttributeType.create!(standard_unit: metre, name: "奥行", creator: user)
@@ -218,22 +239,36 @@ AttributeType.create!(standard_unit: metre, name: "高さ", creator: user)
 AttributeType.create!(standard_unit: metre, name: "サイズ", creator: user)
 AttributeType.create!(standard_unit: area, name: "面積", creator: user)
 AttributeType.create!(standard_unit: time, name: "時間", creator: user)
+AttributeType.create!(standard_unit: time, name: "定格使用時間", creator: user)
+AttributeType.create!(standard_unit: time, name: "連続使用可能時間", creator: user)
+AttributeType.create!(standard_unit: time, name: "充電時間", creator: user)
 AttributeType.create!(standard_unit: hertz, name: "周波数", creator: user)
+AttributeType.create!(standard_unit: hertz, name: "電源周波数", creator: user)
+AttributeType.create!(standard_unit: hertz, name: "クロック周波数", creator: user)
 AttributeType.create!(standard_unit: transport_speed_byte, name: "転送速度", creator: user)
 AttributeType.create!(standard_unit: voltage, name: "電圧", creator: user)
-AttributeType.create!(standard_unit: ampere, name: "電流", creator: user)
+AttributeType.create!(standard_unit: voltage, name: "電源電圧", creator: user)
+AttributeType.create!(standard_unit: voltage, name: "動作電源電圧", creator: user)
+AttributeType.create!(standard_unit: voltage, name: "耐電圧", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "定格入力電流", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "定格出力電流", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "定格最大出力電流", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "電源電流", creator: user)
 AttributeType.create!(standard_unit: ohm, name: "電気抵抗", creator: user)
 AttributeType.create!(standard_unit: speed, name: "速度", creator: user)
 AttributeType.create!(standard_unit: farad, name: "静電容量", creator: user)
-AttributeType.create!(standard_unit: tesla, name: "磁力", creator: user)
-AttributeType.create!(standard_unit: pascal, name: "Pa", creator: user)
-AttributeType.create!(standard_unit: celsius, name: "℃", creator: user)
+AttributeType.create!(standard_unit: tesla, name: "磁束密度", creator: user)
+AttributeType.create!(standard_unit: pascal, name: "最大許容圧力", creator: user)
+AttributeType.create!(standard_unit: celsius, name: "耐熱温度", creator: user)
+AttributeType.create!(standard_unit: celsius, name: "耐冷温度", creator: user)
 AttributeType.create!(standard_unit: rotational_speed, name: "rpm", creator: user)
 AttributeType.create!(standard_unit: decibel, name: "dB", creator: user)
 AttributeType.create!(standard_unit: watt, name: "ワット", creator: user)
 AttributeType.create!(standard_unit: watt_hour, name: "ワット時", creator: user)
 AttributeType.create!(standard_unit: lux, name: "ルクス", creator: user)
 AttributeType.create!(standard_unit: candela, name: "カンデラ", creator: user)
+AttributeType.create!(standard_unit: mflops, name: "浮動小数点演算速度", creator: user)
+AttributeType.create!(standard_unit: liter_per_hour, name: "最大吐水流量", creator: user)
 
 AttributeType.create!(standard_unit: basic_japanese_counter_word, name: "個数", creator: user)
 AttributeType.create!(standard_unit: mb, name: "データ容量", creator: user)
