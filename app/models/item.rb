@@ -10,6 +10,7 @@ class Item < ApplicationRecord
   has_many :logistic_order_templates, dependent: :delete_all
   has_many :accessories
   has_many :item_images, dependent: :delete_all
+  scope :top_level, where(parent_id: nil)
 
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
@@ -25,14 +26,6 @@ class Item < ApplicationRecord
   def search_data
     result = set_values
     { id: id, name: name, maker_name: maker.name, creator_id: creator.id, parent_item_id: parent_item&.id, maker_aliases: maker.maker_aliases.map(&:name), item_aliases: item_aliases.map(&:name), category_path_id: result["category_path"], maker_root_id: result["maker_root_id"], max_threshold_price: result["max_threshold_price"], min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
-    }
-  end
-
-  def maker_aliases
-    # {
-    #   maker_aliases: {name: maker.maker_aliases.name}
-    # }
-    { conversions: Rails.cache.read("search_conversions:#{self.class.name}:#{id}") || {}
     }
   end
 
