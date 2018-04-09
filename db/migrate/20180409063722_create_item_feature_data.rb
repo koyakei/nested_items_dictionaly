@@ -5,7 +5,7 @@ class CreateItemFeatureData < ActiveRecord::Migration[5.2]
       t.integer :number
       t.text :feature
 
-      t.timestamps
+      t.timestamps default: -> { "NOW()" }
     end
     add_index :item_feature_data, [:item_id, :number], unique: true
   end
