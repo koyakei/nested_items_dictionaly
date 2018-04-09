@@ -105,8 +105,8 @@ decibel.save!
 watt = StandardUnit.new(name: "W")
 watt.save!
 
-watt_hour = StandardUnit.new(name: "W/h")
-watt_hour.save!
+joule = StandardUnit.new(name: "J")
+joule.save!
 
 lux = StandardUnit.new(name: "lx")
 lux.save!
@@ -212,8 +212,8 @@ CSV.foreach("db/seeds/csv/display_units/watt.csv") do |row|
   DisplayUnit.create(standard_unit: watt, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
-CSV.foreach("db/seeds/csv/display_units/watt_hour.csv") do |row|
-  DisplayUnit.create(standard_unit: watt_hour, name: row[0], display_ratio: eval(row[1]), creator: user)
+CSV.foreach("db/seeds/csv/display_units/energy.csv") do |row|
+  DisplayUnit.create(standard_unit: joule, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
 CSV.foreach("db/seeds/csv/display_units/lux.csv") do |row|
@@ -264,7 +264,7 @@ AttributeType.create!(standard_unit: celsius, name: "耐冷温度", creator: use
 AttributeType.create!(standard_unit: rotational_speed, name: "rpm", creator: user)
 AttributeType.create!(standard_unit: decibel, name: "dB", creator: user)
 AttributeType.create!(standard_unit: watt, name: "ワット", creator: user)
-AttributeType.create!(standard_unit: watt_hour, name: "ワット時", creator: user)
+AttributeType.create!(standard_unit: joule, name: "ワット時", creator: user)
 AttributeType.create!(standard_unit: lux, name: "ルクス", creator: user)
 AttributeType.create!(standard_unit: candela, name: "カンデラ", creator: user)
 AttributeType.create!(standard_unit: mflops, name: "浮動小数点演算速度", creator: user)
