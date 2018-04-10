@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2018_04_09_063722) do
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_display_units_on_creator_id"
-    t.index ["name"], name: "index_display_units_on_name", unique: true
+    t.index ["name", "standard_unit_id"], name: "index_display_units_on_name_and_standard_unit_id", unique: true
     t.index ["standard_unit_id"], name: "index_display_units_on_standard_unit_id"
   end
 
@@ -141,8 +141,8 @@ ActiveRecord::Schema.define(version: 2018_04_09_063722) do
     t.bigint "item_id"
     t.integer "number"
     t.text "feature"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["item_id", "number"], name: "index_item_feature_data_on_item_id_and_number", unique: true
     t.index ["item_id"], name: "index_item_feature_data_on_item_id"
   end
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 2018_04_09_063722) do
 
   create_table "item_images", force: :cascade do |t|
     t.bigint "item_id", null: false
-    t.text "image_path", null: false
+    t.text "url"
     t.text "name"
     t.text "description"
     t.bigint "creator_id", default: 0, null: false
