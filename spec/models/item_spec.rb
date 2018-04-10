@@ -3,28 +3,26 @@ require "rails_helper"
 RSpec.describe Item, type: :model do
   describe "#get nested items" do
     apple_name = "Apple"
-    apple = Maker.new(name: apple_name, creator: User.first)
+    apple = Maker.new(name: apple_name, creator: User.first!)
     apple.save!
-    item2 = Fabricate.build(:item)
+    item2 = Fabricate.build(:item, name: "test 2", parent_item: Item.first!)
     item2.save!
 
-    yamato_logistic_order_template =
-      LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new
-    yamato_logistic_order_template.yamato_packing_item_code =
-      LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.first!
-    yamato_logistic_order_template.yamato_size_item_code =
-      LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
-    yamato_logistic_order_template.yamato_handling_type_code1 =
-      LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
-    yamato_logistic_order_template.yamato_handling_type_code2 =
-      LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
+    sony_name = "sony"
+    sony = Maker.new(name: sony_name, creator: User.first!)
+    sony.save!
+
+    yamato_logistic_order_template = LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new
+    yamato_logistic_order_template.yamato_packing_item_code = LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.first!
+    yamato_logistic_order_template.yamato_size_item_code = LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
+    yamato_logistic_order_template.yamato_handling_type_code1 = LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
+    yamato_logistic_order_template.yamato_handling_type_code2 = LogisticOrderTemplatable::Yamato::Elements::HandlingTypeCode.first!
     yamato_logistic_order_template.creator = User.first
     yamato_logistic_order_template.save!
 
     logistic_order_template = LogisticOrderTemplate.new
     logistic_order_template.item = Item.first
-    logistic_order_template.logistic_order_templatable =
-      yamato_logistic_order_template
+    logistic_order_template.logistic_order_templatable = yamato_logistic_order_template
     logistic_order_template.creator = User.first
     logistic_order_template.save!
 
@@ -51,9 +49,33 @@ RSpec.describe Item, type: :model do
       it { expect(item4_set["max_threshold_price"]).to eq 2_147_483_647 }
       it { expect(item4_set["maker_root_id"]).to eq item3.id }
       it { expect(item5_set["maker_root_id"]).to eq Item.first.id }
-      it { expect(item3_set["is_visible"]).to eq true}
+      it { expect(item3_set["is_visible"]).to eq true }
       it { expect(item4_set["maker_id"]).to eq apple.id }
     end
+
+    context "find children" do
+      Timeout.timeout(30){
+        res = Item.find(item3.id)
+        it { expect(res.children_items).not_to be_nil }
+        it { expect(res.children_items).to eq item3.children_items }
+      }
+
+    end
+
+    context "find parent" do
+      it { expect(item3.parent_item).to be item2 }
+    end
+
+    context "reindex" do
+      item2.maker = sony
+      item2.save!
+      item5.reindex
+      data = item5.search_data
+      sleep(10)
+      it { expect(data).not_to be_nil }
+      it { expect(data[:maker_id]).to eq sony.id }
+    end
+
     context "親までのcategory_path 取得" do
       item3_set = item3.set_values
       it { expect(item3_set["category_path"]).to eq "#{Item.first.id},#{item2.id},#{item3.id}" }
@@ -63,7 +85,7 @@ RSpec.describe Item, type: :model do
       after_changed_name = "Andriod2"
       item4.name = after_changed_name
       item4.save!
-      it{ expect(item4.name).to eq after_changed_name}
+      it { expect(item4.name).to eq after_changed_name }
     end
 
     context "cascading destroy" do

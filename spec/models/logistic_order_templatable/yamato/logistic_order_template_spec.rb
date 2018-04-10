@@ -6,7 +6,7 @@ RSpec.describe LogisticOrderTemplatable::Yamato::LogisticOrderTemplate, type: :m
     apple_name = "Apple"
     apple = Maker.new(name: apple_name, creator: User.first)
     apple.save!
-    item2 = Fabricate.build(:item, name: :moblie)
+    item2 = Fabricate.build(:item, name: "test", parent_item: Item.first!)
     item2.save!
     item2_size = LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
     yamato_logistic_order_template = LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new

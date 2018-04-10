@@ -285,5 +285,6 @@ AttributeType.create!(standard_unit: watt, name: "消費電力", creator: user)
 AttributeType.create!(standard_unit: watt, name: "最大消費電力", creator: user)
 AttributeType.create!(standard_unit: liter_per_hour, name: "最大吐水流量", creator: user)
 
-puts "\n== Create Elasticsearch indexes =="
-Rake::Task["elasticsearch:reindex"].invoke
+# puts "\n== Create Elasticsearch indexes =="
+# Rake::Task["elasticsearch:reindex"].invoke
+Item.reindex
