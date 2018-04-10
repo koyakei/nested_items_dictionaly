@@ -60,7 +60,7 @@ mb.save!
 litre = StandardUnit.new(name: "L")
 litre.save!
 
-area = StandardUnit.new(name: "㎡") # 機種依存文字だぜ
+area = StandardUnit.new(name: "m&sup2;") # 機種依存文字だぜ
 area.save!
 
 time = StandardUnit.new(name: "second")
@@ -122,6 +122,18 @@ liter_per_hour.save!
 
 kg_per_sec = StandardUnit.new(name: "kg/s")
 kg_per_sec.save!
+
+deg = StandardUnit.new(name: "&deg;")
+deg.save!
+
+age = StandardUnit.new(name: "歳")
+age.save!
+
+ratio = StandardUnit.new(name: "比")
+ratio.save!
+
+screen_size = StandardUnit.new(name: "型")
+screen_size.save!
 
 # http://www.calc-site.com/units/weight
 CSV.foreach("db/seeds/csv/display_units/weight.csv") do |row|
@@ -232,6 +244,18 @@ CSV.foreach("db/seeds/csv/display_units/mass_flow_rate.csv") do |row|
   DisplayUnit.create(standard_unit: kg_per_sec, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
+CSV.foreach("db/seeds/csv/display_units/deg.csv") do |row|
+  DisplayUnit.create(standard_unit: deg, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/age.csv") do |row|
+  DisplayUnit.create(standard_unit: age, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/ratio.csv") do |row|
+  DisplayUnit.create(standard_unit: ratio, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
 # 単位からの逆引きにも使用する標準属性
 AttributeType.create!(standard_unit: gram, name: "重さ", creator: user)
 AttributeType.create!(standard_unit: metre, name: "サイズ", creator: user)
@@ -259,6 +283,10 @@ AttributeType.create!(standard_unit: candela, name: "光度", creator: user)
 AttributeType.create!(standard_unit: mflops, name: "浮動小数点演算速度", creator: user)
 AttributeType.create!(standard_unit: liter_per_hour, name: "体積流量", creator: user)
 AttributeType.create!(standard_unit: kg_per_sec, name: "質量流量", creator: user)
+AttributeType.create!(standard_unit: deg, name: "度", creator: user)
+AttributeType.create!(standard_unit: age, name: "年齢", creator: user)
+AttributeType.create!(standard_unit: ratio, name: "比", creator: user)
+AttributeType.create!(standard_unit: screen_size, name: "画面サイズ", creator: user)
 
 # それ以外の詳細な属性
 AttributeType.create!(standard_unit: gram, name: "積載重量", creator: user)
