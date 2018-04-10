@@ -4,6 +4,7 @@
       <w>candela</w>
       <w>cors</w>
       <w>jbuilder</w>
+      <w>plpgsql</w>
       <w>rewinder</w>
       <w>rubocop</w>
       <w>searchkick</w>
