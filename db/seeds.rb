@@ -1,5 +1,10 @@
 user = User.new(id: 0)
 user.save!
+
+con = ActiveRecord::Base.connection
+
+con.execute("ALTER SEQUENCE items_id_seq RESTART WITH 500000")
+
 maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first!)
 maker.save!
 MakerAlias.new(name: :わからん, creator: User.first!, maker: maker).save!
