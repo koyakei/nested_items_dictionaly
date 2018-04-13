@@ -1,7 +1,7 @@
 class CreateCostsForItems < ActiveRecord::Migration[5.1]
   def change
     create_table :costs_for_items do |t|
-      t.references :creator, foreign_key: {to_table: :users}, null: false, default: 0
+      t.references :creator, foreign_key: { to_table: :users, on_update: :cascade }, null: false, default: 0
       t.references :item, foreign_key: true, null: false
       t.float :cost_ratio, limit: 53
       t.integer :selling_cost

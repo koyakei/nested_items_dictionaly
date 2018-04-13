@@ -2,7 +2,7 @@ class CreateTagOrderTypes < ActiveRecord::Migration[5.2]
   def change
     create_table :tag_order_types do |t|
       t.text :name, limit: 20, null: false
-      t.references :creator, foreign_key: { to_table: :users }, null: false, default: 0
+      t.references :creator, foreign_key: { to_table: :users, on_update: :cascade }, null: false, default: 0
       t.text :description, limit: 200
 
       t.timestamps default: -> { "NOW()" }

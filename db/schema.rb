@@ -332,50 +332,50 @@ ActiveRecord::Schema.define(version: 2018_04_09_063722) do
 
   add_foreign_key "accessories", "items", column: "accessory_item_id"
   add_foreign_key "accessories", "items", column: "base_item_id"
-  add_foreign_key "accessories", "users", column: "creator_id"
-  add_foreign_key "additional_conditions", "users", column: "creator_id"
-  add_foreign_key "attribute_types", "standard_units"
-  add_foreign_key "attribute_types", "users", column: "creator_id"
+  add_foreign_key "accessories", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "additional_conditions", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "attribute_types", "standard_units", on_update: :cascade
+  add_foreign_key "attribute_types", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "costs_for_items", "items"
-  add_foreign_key "costs_for_items", "users", column: "creator_id"
-  add_foreign_key "display_units", "standard_units"
-  add_foreign_key "display_units", "users", column: "creator_id"
-  add_foreign_key "grades", "users", column: "creator_id"
+  add_foreign_key "costs_for_items", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "display_units", "standard_units", on_update: :cascade
+  add_foreign_key "display_units", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "grades", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "item_additional_conditions", "additional_conditions"
   add_foreign_key "item_additional_conditions", "items"
-  add_foreign_key "item_additional_conditions", "users", column: "creator_id"
+  add_foreign_key "item_additional_conditions", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "item_aliases", "items"
-  add_foreign_key "item_aliases", "users", column: "creator_id"
-  add_foreign_key "item_attribute_types", "attribute_types"
-  add_foreign_key "item_attribute_types", "display_units"
-  add_foreign_key "item_attribute_types", "items"
-  add_foreign_key "item_attribute_types", "users", column: "creator_id"
-  add_foreign_key "item_feature_data", "items"
-  add_foreign_key "item_grades_discounts", "grades"
-  add_foreign_key "item_grades_discounts", "items"
-  add_foreign_key "item_grades_discounts", "users", column: "creator_id"
-  add_foreign_key "item_images", "items"
-  add_foreign_key "item_images", "users", column: "creator_id"
-  add_foreign_key "items", "items", column: "parent_item_id"
-  add_foreign_key "items", "makers"
-  add_foreign_key "items", "users", column: "creator_id"
-  add_foreign_key "logistic_order_templates", "items"
-  add_foreign_key "logistic_order_templates", "users", column: "creator_id"
-  add_foreign_key "maker_aliases", "makers"
-  add_foreign_key "maker_aliases", "users", column: "creator_id"
-  add_foreign_key "makers", "users", column: "creator_id"
-  add_foreign_key "standard_units", "users", column: "creator_id"
+  add_foreign_key "item_aliases", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "item_attribute_types", "attribute_types", on_update: :cascade
+  add_foreign_key "item_attribute_types", "display_units", on_update: :cascade
+  add_foreign_key "item_attribute_types", "items", on_update: :cascade
+  add_foreign_key "item_attribute_types", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "item_feature_data", "items", on_update: :cascade
+  add_foreign_key "item_grades_discounts", "grades", on_update: :cascade
+  add_foreign_key "item_grades_discounts", "items", on_update: :cascade
+  add_foreign_key "item_grades_discounts", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "item_images", "items", on_update: :cascade
+  add_foreign_key "item_images", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "items", "items", column: "parent_item_id", on_update: :cascade
+  add_foreign_key "items", "makers", on_update: :cascade
+  add_foreign_key "items", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "logistic_order_templates", "items", on_update: :cascade
+  add_foreign_key "logistic_order_templates", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "maker_aliases", "makers", on_update: :cascade
+  add_foreign_key "maker_aliases", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "makers", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "standard_units", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "tag_items", "items"
   add_foreign_key "tag_items", "tags"
-  add_foreign_key "tag_items", "users", column: "creator_id"
-  add_foreign_key "tag_order_types", "users", column: "creator_id"
+  add_foreign_key "tag_items", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "tag_order_types", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "tag_orders", "tag_order_types"
-  add_foreign_key "tag_orders", "users", column: "creator_id"
-  add_foreign_key "tags", "users", column: "creator_id"
-  add_foreign_key "yamato_logistic_order_templates", "users", column: "creator_id"
+  add_foreign_key "tag_orders", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "tags", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "yamato_logistic_order_templates", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "yamato_logistic_order_templates", "yamato_handling_type_codes", column: "yamato_handling_type_code1_id"
   add_foreign_key "yamato_logistic_order_templates", "yamato_handling_type_codes", column: "yamato_handling_type_code2_id"
-  add_foreign_key "yamato_logistic_order_templates", "yamato_packing_item_codes"
-  add_foreign_key "yamato_logistic_order_templates", "yamato_size_item_codes"
-  add_foreign_key "yamato_packing_item_codes", "items"
+  add_foreign_key "yamato_logistic_order_templates", "yamato_packing_item_codes", on_update: :cascade
+  add_foreign_key "yamato_logistic_order_templates", "yamato_size_item_codes", on_update: :cascade
+  add_foreign_key "yamato_packing_item_codes", "items", on_update: :cascade
 end

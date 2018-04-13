@@ -3,7 +3,7 @@ class CreateTagOrders < ActiveRecord::Migration[5.2]
     create_table :tag_orders do |t|
       t.text :name, limit: 20, null: false
       t.references :tag_order_type, null: false, foreign_key: true
-      t.references :creator, foreign_key: { to_table: :users }, null: false, default: 0
+      t.references :creator, foreign_key: { to_table: :users, on_update: :cascade }, null: false, default: 0
       t.integer :order, null: false
 
       t.timestamps default: -> { "NOW()" }
