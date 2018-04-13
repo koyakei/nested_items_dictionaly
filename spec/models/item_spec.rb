@@ -11,7 +11,8 @@ RSpec.describe Item, type: :model do
     sony_name = "sony"
     sony = Maker.new(name: sony_name, creator: User.first!)
     sony.save!
-
+    tag = Tag.new(name: :test)
+    tag.save!
     yamato_logistic_order_template = LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new
     yamato_logistic_order_template.yamato_packing_item_code = LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.first!
     yamato_logistic_order_template.yamato_size_item_code = LogisticOrderTemplatable::Yamato::Elements::SizeItemCode.second!
@@ -27,7 +28,10 @@ RSpec.describe Item, type: :model do
     logistic_order_template.save!
 
 
-    item3 = Fabricate.build(:item, name: "iPhone", maker: apple, parent_item: item2, min_threshold_price: 1)
+    item3 = Fabricate.build(:item, name: "iPhone", maker: apple,
+                            parent_item: item2,
+                            min_threshold_price: 1)
+    item3.tags << tag
     item3.creator = User.first
     item3.save!(validate: false)
     item4_name = "iPhone 6"
@@ -38,6 +42,10 @@ RSpec.describe Item, type: :model do
     item5 = Fabricate.build(:item, name: "Android", maker: nil, parent_item: item2, has_child: false)
     item5.creator = User.first
     item5.save!
+
+    context "tag 付与" do
+      it { expect(item3.tags.first).to eq tag }
+    end
 
     context "ルートとその直下の関係性の取得がかのうであるかどうか？" do
       item3_set = item3.set_values
@@ -54,12 +62,9 @@ RSpec.describe Item, type: :model do
     end
 
     context "find children" do
-      Timeout.timeout(30){
-        res = Item.find(item3.id)
-        it { expect(res.children_items).not_to be_nil }
-        it { expect(res.children_items).to eq item3.children_items }
-      }
-
+      res = Item.find(item3.id)
+      it { expect(res.children_items).not_to be_nil }
+      it { expect(res.children_items).to eq item3.children_items }
     end
 
     context "find parent" do
