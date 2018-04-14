@@ -13,8 +13,8 @@ class Item < ApplicationRecord
   has_many :item_images, dependent: :delete_all
   has_many :tag_items
   has_many :tags, through: :tag_items
-  scope :top_level, where(parent_item_id: nil)
-  scope :search_import, -> { includes(:maker)}
+  scope :top_level, -> { where(parent_item_id: nil) }
+  scope :search_import, -> { includes(:maker) }
 
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
@@ -31,25 +31,11 @@ class Item < ApplicationRecord
     result = set_values
     return if result.nil?
     maker_aliases_name = ""
-    maker_aliases_name = maker&.maker_aliases.map{
-      |al|
-      next "" if al.nil?
-      al.name} unless maker.nil? || maker.maker_aliases.nil?
+    maker_aliases_name = maker&.maker_aliases.map { |al| next "" if al.nil?
+    al.name } unless maker.nil? || maker.maker_aliases.nil?
     category_path = ""
     category_path = result["category_path"] if result.key?("category_path")
-    { id: id,
-      name: name,
-      maker_name: maker&.name,
-      creator_id: creator.id,
-      parent_item_id: parent_item&.id,
-      maker_aliases: maker_aliases_name,
-      item_aliases: item_aliases&.map(&:name),
-      category_path_id: category_path,
-      maker_root_id: result["maker_root_id"],
-      maker_id: result["maker_id"],
-      max_threshold_price: result["max_threshold_price"],
-      min_threshold_price: result["min_threshold_price"],
-      is_visible: result["is_visible"]
+    { id: id, name: name, maker_name: maker&.name, creator_id: creator.id, parent_item_id: parent_item&.id, maker_aliases: maker_aliases_name, item_aliases: item_aliases&.map(&:name), category_path_id: category_path, maker_root_id: result["maker_root_id"], maker_id: result["maker_id"], max_threshold_price: result["max_threshold_price"], min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
     }
   end
 
@@ -58,15 +44,12 @@ class Item < ApplicationRecord
     descendants(children_items) if children_items.present?
   end
 
-  def reindex_descendant2(children_items)
-    descendants(children_items) if children_items.present?
+  def reindex_descendant2(children_items) descendants(children_items) if children_items.present?
   end
 
-  def descendants(children_items)
-    children_items.map { |child|
-      child.reindex
-      reindex_descendant2(child.children_items) if child.children_items.present?
-    }
+  def descendants(children_items) children_items.map { |child| child.reindex
+  reindex_descendant2(child.children_items) if child.children_items.present?
+  }
   end
 
   def destroy
