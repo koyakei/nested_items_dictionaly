@@ -13,7 +13,7 @@ class Item < ApplicationRecord
   has_many :item_images, dependent: :delete_all
   has_many :tag_items
   has_many :tags, through: :tag_items
-  # scope :top_level, where(parent_item_id: nil)
+  scope :top_level, where(parent_item_id: nil)
   scope :search_import, -> { includes(:maker)}
 
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
