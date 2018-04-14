@@ -14,6 +14,7 @@ class Item < ApplicationRecord
   has_many :tag_items
   has_many :tags, through: :tag_items
   # scope :top_level, where(parent_item_id: nil)
+  scope :search_import, -> { includes(:maker)}
 
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
@@ -47,7 +48,8 @@ class Item < ApplicationRecord
       maker_root_id: result["maker_root_id"],
       maker_id: result["maker_id"],
       max_threshold_price: result["max_threshold_price"],
-      min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
+      min_threshold_price: result["min_threshold_price"],
+      is_visible: result["is_visible"]
     }
   end
 
@@ -68,7 +70,7 @@ class Item < ApplicationRecord
   end
 
   def destroy
-    raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
+    # raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
     super
   end
 
