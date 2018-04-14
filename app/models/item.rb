@@ -44,12 +44,15 @@ class Item < ApplicationRecord
     descendants(children_items) if children_items.present?
   end
 
-  def reindex_descendant2(children_items) descendants(children_items) if children_items.present?
+  def reindex_descendant2(children_items)
+    descendants(children_items) if children_items.present?
   end
 
-  def descendants(children_items) children_items.map { |child| child.reindex
-  reindex_descendant2(child.children_items) if child.children_items.present?
-  }
+  def descendants(children_items)
+    children_items.map { |child|
+      child.reindex
+      reindex_descendant2(child.children_items) if child.children_items.present?
+    }
   end
 
   def destroy
