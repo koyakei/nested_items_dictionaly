@@ -322,3 +322,4 @@ AttributeType.create!(standard_unit: liter_per_hour, name: "最大吐水流量",
 # puts "\n== Create Elasticsearch indexes =="
 # Rake::Task["elasticsearch:reindex"].invoke
 Item.reindex
+Maker.reindex
