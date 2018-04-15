@@ -35,7 +35,12 @@ class Item < ApplicationRecord
     al.name } unless maker.nil? || maker.maker_aliases.nil?
     category_path = ""
     category_path = result["category_path"] if result.key?("category_path")
-    { id: id, name: name, maker_name: maker&.name, creator_id: creator.id, parent_item_id: parent_item&.id, maker_aliases: maker_aliases_name, item_aliases: item_aliases&.map(&:name), category_path_id: category_path, maker_root_id: result["maker_root_id"], maker_id: result["maker_id"], max_threshold_price: result["max_threshold_price"], min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
+    {
+      id: id, name: name, maker_name: maker&.name, creator_id: creator.id, parent_item_id: parent_item&.id,
+      maker_aliases: maker_aliases_name, item_aliases: item_aliases&.map(&:name),
+      category_path_id: category_path, maker_root_id: result["maker_root_id"],
+      maker_id: result["maker_id"], max_threshold_price: result["max_threshold_price"],
+      min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
     }
   end
 
