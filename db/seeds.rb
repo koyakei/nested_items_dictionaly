@@ -78,6 +78,9 @@ hertz.save!
 transport_speed_byte = StandardUnit.new(name: "MB/s")
 transport_speed_byte.save!
 
+byte = StandardUnit.new(name: "B")
+byte.save!
+
 voltage = StandardUnit.new(name: "V")
 voltage.save!
 
@@ -158,7 +161,7 @@ end
 
 # バイト数
 CSV.foreach("db/seeds/csv/display_units/byte.csv") do |row|
-  DisplayUnit.create!(standard_unit: basic_japanese_counter_word, name: row[0], display_ratio: eval(row[1]).to_f, creator: user)
+  DisplayUnit.create!(standard_unit: byte, name: row[0], display_ratio: eval(row[1]).to_f, creator: user)
 end
 
 # 体積・容量
@@ -263,9 +266,9 @@ CSV.foreach("db/seeds/csv/display_units/ratio.csv") do |row|
 end
 
 # 単位からの逆引きにも使用する標準属性
+AttributeType.create!(id: 0, standard_unit: basic_japanese_counter_word, name: "個数", creator: user)
 AttributeType.create!(standard_unit: gram, name: "重さ", creator: user)
 AttributeType.create!(standard_unit: metre, name: "サイズ", creator: user)
-AttributeType.create!(standard_unit: basic_japanese_counter_word, name: "個数", creator: user)
 AttributeType.create!(standard_unit: mb, name: "データ容量", creator: user)
 AttributeType.create!(standard_unit: litre, name: "容量", creator: user)
 AttributeType.create!(standard_unit: time, name: "時間", creator: user)
