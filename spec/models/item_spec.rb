@@ -7,11 +7,17 @@ RSpec.describe Item, type: :model do
     apple.save!
     item2 = Fabricate.build(:item, name: "test 2", parent_item: Item.first!)
     item2.save!
-
+    item2_value = 10
+    second_display_unit = DisplayUnit.find_by_standard_unit_id(StandardUnit.second!.id)
+    item_attribute_type = ItemAttributeType.new(value: item2_value, item: item2, attribute_type: AttributeType.find_by_standard_unit_id(StandardUnit.second!.id),
+                                                display_unit: second_display_unit, creator: User.first!)
+    item_attribute_type.save!
+    ItemAttributeType.new(value: 20, item: item2, attribute_type: AttributeType.find_by_standard_unit_id(StandardUnit.first!.id),
+                          display_unit: DisplayUnit.find_by_standard_unit_id(StandardUnit.first!.id), creator: User.first!).save!
     sony_name = "sony"
     sony = Maker.new(name: sony_name, creator: User.first!)
     sony.save!
-    tag = Tag.new(name: :test)
+    tag = Tag.new(name: :test_tag)
     tag.save!
     yamato_logistic_order_template = LogisticOrderTemplatable::Yamato::LogisticOrderTemplate.new
     yamato_logistic_order_template.yamato_packing_item_code = LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.first!
@@ -27,13 +33,12 @@ RSpec.describe Item, type: :model do
     logistic_order_template.creator = User.first
     logistic_order_template.save!
 
-
-    item3 = Fabricate.build(:item, name: "iPhone", maker: apple,
-                            parent_item: item2,
-                            min_threshold_price: 1)
+    item3 = Fabricate.build(:item, name: "iPhone", maker: apple, parent_item: item2, min_threshold_price: 1)
     item3.tags << tag
-    item3.creator = User.first
+    item3.creator = User.first!
     item3.save!(validate: false)
+    ItemAttributeType.new(value: 30, item: item3, attribute_type: AttributeType.find_by_standard_unit_id(StandardUnit.second!.id),
+                          display_unit: DisplayUnit.find_by_standard_unit_id(StandardUnit.second!.id), creator: User.first!).save!
     item4_name = "iPhone 6"
     item4 = Fabricate.build(:item, name: item4_name, maker: nil, parent_item: item3, has_child: false)
     item4.creator = User.first
@@ -42,6 +47,15 @@ RSpec.describe Item, type: :model do
     item5 = Fabricate.build(:item, name: "Android", maker: nil, parent_item: item2, has_child: false)
     item5.creator = User.first
     item5.save!
+
+    context "商品情報検索 with searchkick" do
+      Item.reindex
+      sleep(20)
+      # {"query":{"bool":{"must":[{"term":{"unit.サイズ":"0.0062137119223733"}}],"must_not":[],"should":[]}},"from":0,"size":10,"sort":[],"aggs":{}}
+      items = Item.search("*", where: { "unit.#{AttributeType.find_by_standard_unit_id(StandardUnit.second!.id).name}" => 30000000 }.compact)
+
+      it { expect(items.size).to eq 1 }
+    end
 
     context "tag 付与" do
       it { expect(item3.tags.first).to eq tag }

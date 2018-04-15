@@ -1,5 +1,10 @@
 class Item < ApplicationRecord
   searchkick word_start: [:name, :maker_name]
+  # , merge_mappings: true, mappings: {item: {
+  #   "unit.*": {
+  #     name: {type: "float"}
+  #   }
+  # }}
   after_commit :reindex_descendant
   class HasChildrenError < StandardError; end
   has_many :children_items, class_name: Item.to_s, foreign_key: :parent_item_id, primary_key: :id
@@ -11,8 +16,11 @@ class Item < ApplicationRecord
   has_many :logistic_order_templates, dependent: :delete_all
   has_many :accessories
   has_many :item_images, dependent: :delete_all
-  has_many :tag_items
-  has_many :tags, through: :tag_items
+  has_many :tag_items, dependent: :delete_all
+  has_many :tags, through: :tag_items, dependent: :delete_all
+  has_many :item_attribute_types, dependent: :delete_all
+  has_many :attribute_types, through: :item_attribute_types
+  has_many :display_units, through: :item_attribute_types
   scope :top_level, -> { where(parent_item_id: nil) }
   scope :search_import, -> { includes(:maker) }
 
@@ -35,13 +43,21 @@ class Item < ApplicationRecord
     al.name } unless maker.nil? || maker.maker_aliases.nil?
     category_path = ""
     category_path = result["category_path"] if result.key?("category_path")
+
     {
       id: id, name: name, maker_name: maker&.name, creator_id: creator.id, parent_item_id: parent_item&.id,
       maker_aliases: maker_aliases_name, item_aliases: item_aliases&.map(&:name),
       category_path_id: category_path, maker_root_id: result["maker_root_id"],
       maker_id: result["maker_id"], max_threshold_price: result["max_threshold_price"],
       min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
-    }
+    }.merge(units)
+  end
+
+  def units
+    item_attribute_types&.map {
+      |item_attribute|
+      ["unit.#{item_attribute.attribute_type.name}",  item_attribute.display_unit.display_ratio * item_attribute.value]
+    }.to_h
   end
 
   def reindex_descendant
@@ -60,10 +76,10 @@ class Item < ApplicationRecord
     }
   end
 
-  def destroy
-    # raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
-    super
-  end
+  # def destroy
+  #   # raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
+  #   super
+  # end
 
   def set_values
     ActiveRecord::Base.connection.select_one(<<-SQL,
