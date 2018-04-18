@@ -1,6 +1,6 @@
 class CreateItems < ActiveRecord::Migration[5.1]
   def change
-    create_table :items do |t|
+    create_table :items, force: :cascade do |t|
       t.integer :max_threshold_price
       t.integer :min_threshold_price, default: 0
       t.text :description

@@ -1,6 +1,6 @@
 class CreateAdditionalConditions < ActiveRecord::Migration[5.1]
   def change
-    create_table :additional_conditions do |t|
+    create_table :additional_conditions, force: :cascade do |t|
       t.text :name, null: false
       t.references :creator, foreign_key: { to_table: :users, on_update: :cascade }, null: false, default: 0
       t.timestamps default: -> { "NOW()" }

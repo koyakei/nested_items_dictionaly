@@ -100,10 +100,11 @@ ActiveRecord::Schema.define(version: 2018_04_18_030009) do
     t.index ["creator_id"], name: "index_grades_on_creator_id"
   end
 
-  create_table "item_additional_conditions", force: :cascade do |t|
+  create_table "item_additional_conditions", comment: "itemこのテーブルもfallbackの対象", force: :cascade do |t|
     t.bigint "item_id"
     t.bigint "additional_condition_id"
-    t.float "discount_ratio"
+    t.float "discount_ratio", default: 0.0, null: false
+    t.integer "discount_price", default: 0, null: false
     t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -151,7 +152,7 @@ ActiveRecord::Schema.define(version: 2018_04_18_030009) do
     t.bigint "item_id", null: false
     t.bigint "grade_id", null: false
     t.bigint "creator_id", default: 0, null: false
-    t.float "discount_ration", null: false
+    t.float "discount_ratio", default: 0.0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_item_grades_discounts_on_creator_id"

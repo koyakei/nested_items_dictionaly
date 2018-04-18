@@ -1,6 +1,6 @@
 class CreateItemFeatureData < ActiveRecord::Migration[5.2]
   def change
-    create_table :item_feature_data do |t|
+    create_table :item_feature_data, force: :cascade do |t|
       t.references :item, foreign_key: { on_update: :cascade }
       t.integer :number
       t.text :feature

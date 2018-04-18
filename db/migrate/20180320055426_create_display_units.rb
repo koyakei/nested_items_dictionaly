@@ -1,6 +1,6 @@
 class CreateDisplayUnits < ActiveRecord::Migration[5.1]
   def change
-    create_table :display_units do |t|
+    create_table :display_units, force: :cascade do |t|
       t.references :standard_unit, foreign_key: { on_update: :cascade }, null: false
       t.text :name, limit: 5, null: false
       t.float :display_ratio, limit: 53, null: false
