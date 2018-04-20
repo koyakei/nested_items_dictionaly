@@ -6,7 +6,8 @@ class Item < ApplicationRecord
   #   }
   # }}
   after_commit :reindex_descendant
-  class HasChildrenError < StandardError; end
+  class HasChildrenError < StandardError;
+  end
   has_many :children_items, class_name: Item.to_s, foreign_key: :parent_item_id, primary_key: :id
   belongs_to :creator, class_name: User.to_s
   belongs_to :maker, optional: true
@@ -54,10 +55,12 @@ class Item < ApplicationRecord
   end
 
   def units
+    units = []
     item_attribute_types&.map {
       |item_attribute|
-      ["unit.#{item_attribute.attribute_type.name}",  item_attribute.display_unit.display_ratio * item_attribute.value]
-    }.to_h
+      units << { id: item_attribute.id, name: item_attribute.attribute_type.name, value: item_attribute.display_unit.display_ratio * item_attribute.value }
+    }
+    { units: units }
   end
 
   def reindex_descendant
