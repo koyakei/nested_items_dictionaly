@@ -58,7 +58,17 @@ class Item < ApplicationRecord
     units = []
     item_attribute_types&.map {
       |item_attribute|
-      units << { id: item_attribute.id, name: item_attribute.attribute_type.name, value: item_attribute.display_unit.display_ratio * item_attribute.value }
+      units << {
+        item_attribute_id: item_attribute.id,
+        attribute_type_id: item_attribute.attribute_type.id,
+        display_unit_id: item_attribute.display_unit.id,
+        standard_unit_id: item_attribute.display_unit.standard_unit.id,
+        attribute_type_name: item_attribute.attribute_type.name,
+        display_value: item_attribute.display_unit.display_ratio * item_attribute.value,
+        value: item_attribute.value,
+        display_unit_name: item_attribute.display_unit.name,
+        standard_unit_name: item_attribute.display_unit.standard_unit.name
+      }
     }
     { units: units }
   end
