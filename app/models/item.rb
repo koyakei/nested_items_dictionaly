@@ -43,7 +43,7 @@ class Item < ApplicationRecord
     maker_aliases_name = maker&.maker_aliases.map { |al| next "" if al.nil?
     al.name } unless maker.nil? || maker.maker_aliases.nil?
     category_path = ""
-    category_path = result["category_path"] if result.key?("category_path")
+    category_path = result["category_path"].to_s.split(",") if result.key?("category_path")
 
     {
       id: id, name: name, maker_name: maker&.name, creator_id: creator.id, parent_item_id: parent_item&.id,
