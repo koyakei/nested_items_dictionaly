@@ -327,3 +327,6 @@ AttributeType.create!(standard_unit: liter_per_hour, name: "最大吐水流量",
 Item.reindex
 Maker.reindex
 AttributeType.reindex
+StandardUnit.reindex
+DisplayUnit.reindex
+ItemAttributeType.reindex
