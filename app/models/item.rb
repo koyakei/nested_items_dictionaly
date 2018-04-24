@@ -50,7 +50,16 @@ class Item < ApplicationRecord
       maker_aliases: maker_aliases_name, item_aliases: item_aliases&.map(&:name),
       category_path_id: category_path, maker_root_id: result["maker_root_id"],
       maker_id: result["maker_id"], max_threshold_price: result["max_threshold_price"],
-      min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"]
+      min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"],
+      maker_model_number: maker_model_number,
+      maker_model_number_full: maker_model_number_full,
+      asin: asin,
+      isbn13: isbn13,
+      prospected_price: prospected_price,
+      ean: ean,
+      url: url,
+      amazon_category_id: amazon_category_id,
+      description: description
     }.merge(units)
   end
 
