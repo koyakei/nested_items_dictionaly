@@ -70,7 +70,7 @@ class Item < ApplicationRecord
         standard_unit_name: item_attribute.display_unit.standard_unit.name
       }
     }
-    { unit: units }
+    { units: units }
   end
 
   def reindex_descendant
