@@ -1,4 +1,4 @@
-class SigninController < ApplicationController
+class Admin::SigninController < ApplicationController
   def create
     key = Aws::CognitoIdentityProvider::Client.new(region: 'ap-northeast-1').admin_initiate_auth({
                                                                                                    user_pool_id: "ap-northeast-1_jowo5eFfa", # required
