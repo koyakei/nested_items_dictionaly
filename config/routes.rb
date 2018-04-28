@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   resources :swagger
   resources :googlesignin
   resources :googleoauth
-  namespace admin do
+  namespace :admin do
     resources :signin
     resources :tags
   end
