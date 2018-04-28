@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :users
   resources :attribute_types
   resources :display_units
-  resources :tags
+
   resources :viron
   resources :viron_authtype
   resources :swagger
@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :googleoauth
   namespace admin do
     resources :signin
+    resources :tags
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
