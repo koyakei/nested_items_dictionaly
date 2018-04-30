@@ -1,4 +1,4 @@
-class TagOrdersController < ApplicationController
+class Admin::TagOrdersController < ApplicationController
   before_action :set_tag_order, only: [:show, :update, :destroy]
 
   # GET /tag_orders

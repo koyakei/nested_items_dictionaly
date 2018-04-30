@@ -1,4 +1,4 @@
-class TagOrderTypesController < ApplicationController
+class Admin::TagOrderTypesController < ApplicationController
   before_action :set_tag_order_type, only: [:show, :update, :destroy]
 
   # GET /tag_order_types
