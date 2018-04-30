@@ -1,4 +1,4 @@
-class ItemAdditionalConditionsController < ApplicationController
+class Admin::ItemAdditionalConditionsController < ApplicationController
   before_action :set_item_additional_condition, only: [:show, :update, :destroy]
 
   # GET /item_additional_conditions
