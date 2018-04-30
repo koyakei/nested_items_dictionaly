@@ -1,4 +1,4 @@
-class MakerAliasesController < ApplicationController
+class Admin::MakerAliasesController < ApplicationController
   before_action :set_maker_alias, only: [:show, :update, :destroy]
 
   # GET /maker_aliases

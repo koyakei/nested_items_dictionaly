@@ -1,4 +1,4 @@
-class MakersController < ApplicationController
+class Admin::MakersController < ApplicationController
   before_action :set_maker, only: [:show, :update, :destroy]
 
   # GET /makers

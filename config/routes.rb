@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :tag_orders
     resources :tag_items
     resources :grades
+    resources :makers
+    resources :maker_aliases
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
