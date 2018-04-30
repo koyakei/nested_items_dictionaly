@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :yamato_logistic_order_templates
   resources :yamato_handling_type_codes
   resources :yamato_packing_item_codes
   resources :yamato_size_item_codes
@@ -30,6 +29,11 @@ Rails.application.routes.draw do
     resources :maker_aliases
     resources :standard_units
     resources :logistic_order_templates
+    namespace :logistic_order_templatable do
+      namespace :yamato do
+        resources :logistic_order_templates
+      end
+    end
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
