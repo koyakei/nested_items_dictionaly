@@ -1,4 +1,4 @@
-class AttributeTypesController < ApplicationController
+class Admin::AttributeTypesController < ApplicationController
   before_action :set_attribute_type, only: [:show, :update, :destroy]
 
   # GET /attribute_types

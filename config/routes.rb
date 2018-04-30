@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   resources :yamato_size_item_codes
   resources :items
   resources :additional_conditions
-  resources :users
-  resources :attribute_types
   resources :swagger
   resources :googlesignin
   resources :googleoauth
@@ -27,6 +25,8 @@ Rails.application.routes.draw do
     resources :tags
     resources :accessories
     resources :display_units
+    resources :users
+    resources :attribute_types
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
