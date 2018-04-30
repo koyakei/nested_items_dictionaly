@@ -1,4 +1,4 @@
-class DisplayUnitsController < ApplicationController
+class Admin::DisplayUnitsController < ApplicationController
   before_action :set_display_unit, only: [:show, :update, :destroy]
 
   # GET /display_units

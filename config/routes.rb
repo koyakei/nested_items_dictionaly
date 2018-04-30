@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   resources :additional_conditions
   resources :users
   resources :attribute_types
-  resources :display_units
   resources :swagger
   resources :googlesignin
   resources :googleoauth
@@ -27,6 +26,7 @@ Rails.application.routes.draw do
     resources :signin
     resources :tags
     resources :accessories
+    resources :display_units
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
