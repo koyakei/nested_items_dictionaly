@@ -1,4 +1,4 @@
-class StandardUnitsController < ApplicationController
+class Admin::StandardUnitsController < ApplicationController
   before_action :set_standard_unit, only: [:show, :update, :destroy]
 
   # GET /standard_units

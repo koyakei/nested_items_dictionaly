@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :grades
     resources :makers
     resources :maker_aliases
+    resources :standard_units
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
