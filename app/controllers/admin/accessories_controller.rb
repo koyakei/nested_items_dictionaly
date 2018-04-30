@@ -1,4 +1,4 @@
-class AccessoriesController < ApplicationController
+class Admin::AccessoriesController < ApplicationController
   before_action :set_accessory, only: [:show, :update, :destroy]
 
   # GET /accessories

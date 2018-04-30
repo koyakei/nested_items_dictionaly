@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   resources :yamato_handling_type_codes
   resources :yamato_packing_item_codes
   resources :yamato_size_item_codes
-  resources :accessories
   resources :items
   resources :additional_conditions
   resources :users
@@ -27,6 +26,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :signin
     resources :tags
+    resources :accessories
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
