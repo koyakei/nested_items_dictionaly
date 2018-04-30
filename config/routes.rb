@@ -21,9 +21,6 @@ Rails.application.routes.draw do
   resources :users
   resources :attribute_types
   resources :display_units
-
-  resources :viron
-  resources :viron_authtype
   resources :swagger
   resources :googlesignin
   resources :googleoauth
