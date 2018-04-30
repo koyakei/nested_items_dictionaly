@@ -1,2 +1,2 @@
-class Admin::LogisticOrderTemplatable::Yamato::LogisticOrderTemplateController < ApplicationController
+class Admin::LogisticOrderTemplatable::Yamato::LogisticOrderTemplatesController < ApplicationController
 end
