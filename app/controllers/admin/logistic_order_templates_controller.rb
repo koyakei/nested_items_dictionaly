@@ -1,4 +1,4 @@
-class LogisticOrderTemplatesController < ApplicationController
+class Admin::LogisticOrderTemplatesController < ApplicationController
   before_action :set_logistic_order_template, only: [:show, :update, :destroy]
 
   # GET /logistic_order_templates

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :logistic_order_templates
   resources :yamato_logistic_order_templates
   resources :yamato_handling_type_codes
   resources :yamato_packing_item_codes
@@ -30,6 +29,7 @@ Rails.application.routes.draw do
     resources :makers
     resources :maker_aliases
     resources :standard_units
+    resources :logistic_order_templates
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'
