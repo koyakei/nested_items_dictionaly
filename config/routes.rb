@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :tag_items
-  resources :grades
   resources :logistic_order_templates
   resources :yamato_logistic_order_templates
   resources :yamato_handling_type_codes
@@ -27,6 +25,8 @@ Rails.application.routes.draw do
     resources :costs_for_items
     resources :tag_order_types
     resources :tag_orders
+    resources :tag_items
+    resources :grades
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'

@@ -1,4 +1,4 @@
-class GradesController < ApplicationController
+class Admin::GradesController < ApplicationController
   before_action :set_grade, only: [:show, :update, :destroy]
 
   # GET /grades
