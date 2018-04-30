@@ -1,20 +1,20 @@
 Rails.application.routes.draw do
-  resources :item_feature_data
   resources :tag_items
-  resources :item_images
-  resources :item_grades_discounts
   resources :grades
-  resources :item_attribute_types
   resources :logistic_order_templates
   resources :yamato_logistic_order_templates
   resources :yamato_handling_type_codes
   resources :yamato_packing_item_codes
   resources :yamato_size_item_codes
-  resources :items
   resources :swagger
   resources :googlesignin
   resources :googleoauth
   namespace :admin do
+    resources :item_feature_data
+    resources :item_images
+    resources :item_grades_discounts
+    resources :item_attribute_types
+    resources :items
     resources :item_aliases
     resources :item_additional_conditions
     resources :signin

@@ -1,4 +1,4 @@
-class ItemFeatureDataController < ApplicationController
+class Admin::ItemFeatureDataController < ApplicationController
   before_action :set_item_feature_datum, only: [:show, :edit, :update, :destroy]
 
   # GET /item_feature_data
