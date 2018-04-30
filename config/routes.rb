@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   resources :tag_items
   resources :item_images
   resources :item_grades_discounts
-  resources :costs_for_items
   resources :grades
   resources :item_attribute_types
   resources :item_additional_conditions
@@ -16,7 +15,6 @@ Rails.application.routes.draw do
   resources :yamato_packing_item_codes
   resources :yamato_size_item_codes
   resources :items
-  resources :additional_conditions
   resources :swagger
   resources :googlesignin
   resources :googleoauth
@@ -27,6 +25,8 @@ Rails.application.routes.draw do
     resources :display_units
     resources :users
     resources :attribute_types
+    resources :additional_conditions
+    resources :costs_for_items
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'

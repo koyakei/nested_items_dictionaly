@@ -1,4 +1,4 @@
-class CostsForItemsController < ApplicationController
+class Admin::CostsForItemsController < ApplicationController
   before_action :set_costs_for_item, only: [:show, :update, :destroy]
 
   # GET /costs_for_items
