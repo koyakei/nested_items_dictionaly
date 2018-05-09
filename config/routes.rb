@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :yamato_handling_type_codes
-  resources :yamato_packing_item_codes
-  resources :yamato_size_item_codes
   resources :swagger
   resources :googlesignin
   resources :googleoauth
@@ -32,6 +29,11 @@ Rails.application.routes.draw do
     namespace :logistic_order_templatable do
       namespace :yamato do
         resources :logistic_order_templates
+        namespace :elements do
+          resources :handling_type_codes
+          resources :yamato_packing_item_codes
+          resources :yamato_size_item_codes
+        end
       end
     end
   end
