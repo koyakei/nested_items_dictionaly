@@ -3,7 +3,7 @@ branch-defaults:
     environment: product-dbapp
 environment-defaults:
   product-dbapp-stg3:
-    branch: development2
+    branch: develop2
     repository: product-db
 global:
   application_name: product-dbapp
