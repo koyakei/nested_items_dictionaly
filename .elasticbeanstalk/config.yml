@@ -1,12 +1,12 @@
 branch-defaults:
   master:
-    environment: testapp
+    environment: product-dbapp
 environment-defaults:
-  testapp:
-    branch: null
-    repository: test
+  product-dbapp-stg3:
+    branch: development2
+    repository: product-db
 global:
-  application_name: testapp
+  application_name: product-dbapp
   default_ec2_keyname: products-db
   default_platform: arn:aws:elasticbeanstalk:ap-northeast-1::platform/Puma with Ruby
     2.5 running on 64bit Amazon Linux/2.8.5
