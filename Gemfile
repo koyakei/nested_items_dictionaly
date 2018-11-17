@@ -54,3 +54,4 @@ gem "csv"
 gem "rubocop"
 gem "searchkick"
 gem "jwt"
+gem 'rack-cors'
