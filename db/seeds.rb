@@ -16,3 +16,13 @@ end
 CSV.foreach('db/seeds/csv/yamato_handling_type_codes.csv') do |row|
 	Admin::YamatoHandlingTypeCode.new.save(code: row[0], name: row[1])
 end
+
+CSV.foreach('db/seeds/csv/makers.csv') do |row|
+	aliases = []
+	row.from(3).each do |name|
+		aliases << Admin::MakerAlias.new(name: name)
+	end
+	Admin::Maker.new(name: row[0], remarks: row[1],
+	                         url: row[2],
+	                         maker_aliases: aliases).save
+end
