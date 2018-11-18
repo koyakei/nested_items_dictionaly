@@ -1,0 +1,2 @@
+class LogisticOrderTemplatable::Yamato::LogisticOrderTemplateController < ApplicationController
+end

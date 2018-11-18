@@ -52,12 +52,13 @@ node_modules/
 ### Example user template
 
 # IntelliJ project files
-.idea
+
 *.iml
 bin/
 out
 gen
-.idea/
+*.idea/
+
 tmp/cache/
 tmp/pids/
 tmp/restart.txt
@@ -66,3 +67,6 @@ tmp/sockets/
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 *.log
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

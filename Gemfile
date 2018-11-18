@@ -53,3 +53,4 @@ gem "csv"
 gem "rubocop"
 gem "searchkick"
 gem "jwt"
+

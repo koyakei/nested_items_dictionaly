@@ -1,0 +1,1 @@
+json.partial! "yamato_handling_type_codes/yamato_handling_type_code", yamato_handling_type_code: @yamato_handling_type_code
