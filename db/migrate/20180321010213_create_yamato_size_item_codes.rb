@@ -1,6 +1,6 @@
 class CreateYamatoSizeItemCodes < ActiveRecord::Migration[5.1]
   def change
-    create_table :yamato_size_item_codes do |t|
+    create_table :yamato_size_item_codes, force: :cascade do |t|
       t.text :code_from, limit: 4, null: false
       t.text :name_from, limit: 30, null: false
       t.text :code_to, limit: 4, null: false

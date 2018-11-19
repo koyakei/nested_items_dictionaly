@@ -1,6 +1,14 @@
 class Item < ApplicationRecord
-  class HasChildrenError < StandardError; end
-  has_many :children_items, class_name: Item.to_s, foreign_key: :parent_item_id
+  # searchkick word_start: [:name, :maker_name]
+  # , merge_mappings: true, mappings: {item: {
+  #   "unit.*": {
+  #     name: {type: "float"}
+  #   }
+  # }}
+  after_commit :reindex_descendant
+  class HasChildrenError < StandardError;
+  end
+  has_many :children_items, class_name: Item.to_s, foreign_key: :parent_item_id, primary_key: :id
   belongs_to :creator, class_name: User.to_s
   belongs_to :maker, optional: true
   has_many :item_aliases, dependent: :delete_all
@@ -9,33 +17,97 @@ class Item < ApplicationRecord
   has_many :logistic_order_templates, dependent: :delete_all
   has_many :accessories
   has_many :item_images, dependent: :delete_all
+  has_many :tag_items, dependent: :delete_all
+  has_many :tags, through: :tag_items, dependent: :delete_all
+  has_many :item_attribute_types, dependent: :delete_all
+  has_many :attribute_types, through: :item_attribute_types
+  has_many :display_units, through: :item_attribute_types
+  scope :top_level, -> { where(parent_item_id: nil) }
+  scope :search_import, -> { includes(:maker) }
 
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
 
-  validates :asin, length: {is: 10,
-                            too_short: "最小%{count}文字まで使用できます",
-                            too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
-  validates :isbn13, length: {is: 14,
-                              too_short: "最小%{count}文字まで使用できます ISBN13に変換してください",
-                              too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
-  validates :ean, length: {minimum: 8, maximum: 13,
-                          too_short: "最小%{count}文字まで使用できます",
-                          too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
+  validates :asin, length: { is: 10, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
+  validates :isbn13, length: { is: 14, too_short: "最小%{count}文字まで使用できます ISBN13に変換してください", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
+  validates :ean, length: { minimum: 8, maximum: 13, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
 
-  validates :url, format: {with: /\A#{URI::regexp(%w(http https))}\z/,
-                           message: "URLのみが使用できます" }, allow_blank: true
+  validates :url, format: { with: /\A#{URI::regexp(%w(http https))}\z/, message: "URLのみが使用できます" }, allow_blank: true
   validates :parent_item, :name, presence: true
   validates :name, uniqueness: true
 
-  def destroy
-    raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
-    super
+  def search_data
+    result = set_values
+    return if result.nil?
+    maker_aliases_name = ""
+    maker_aliases_name = maker&.maker_aliases.map { |al| next "" if al.nil?
+    al.name } unless maker.nil? || maker.maker_aliases.nil?
+    category_path_ids = []
+    result["category_path"].to_s.split(",")&.map {
+      |v|
+      category_path_ids << { id: v.to_i }
+    }
+
+    {
+      id: id, name: name, maker_name: maker&.name, creator_id: creator.id, parent_item_id: parent_item&.id,
+      maker_aliases: maker_aliases_name, item_aliases: item_aliases&.map(&:name),
+      category_path_ids: category_path_ids, maker_root_id: result["maker_root_id"],
+      maker_id: result["maker_id"], max_threshold_price: result["max_threshold_price"],
+      min_threshold_price: result["min_threshold_price"], is_visible: result["is_visible"],
+      maker_model_number: maker_model_number,
+      maker_model_number_full: maker_model_number_full,
+      asin: asin,
+      isbn13: isbn13,
+      prospected_price: prospected_price,
+      ean: ean,
+      url: url,
+      amazon_category_id: amazon_category_id,
+      description: description
+    }.merge(units)
   end
 
+  def units
+    units = []
+    item_attribute_types&.map {
+      |item_attribute|
+      units << {
+        item_attribute_id: item_attribute.id,
+        attribute_type_id: item_attribute.attribute_type.id,
+        display_unit_id: item_attribute.display_unit.id,
+        standard_unit_id: item_attribute.display_unit.standard_unit.id,
+        attribute_type_name: item_attribute.attribute_type.name,
+        display_value: item_attribute.display_unit.display_ratio * item_attribute.value,
+        value: item_attribute.value,
+        display_unit_name: item_attribute.display_unit.name,
+        standard_unit_name: item_attribute.display_unit.standard_unit.name
+      }
+    }
+    { units: units }
+  end
+
+  def reindex_descendant
+    search_data
+    descendants(children_items) if children_items.present?
+  end
+
+  def reindex_descendant2(children_items)
+    descendants(children_items) if children_items.present?
+  end
+
+  def descendants(children_items)
+    children_items.map { |child|
+      child.reindex
+      reindex_descendant2(child.children_items) if child.children_items.present?
+    }
+  end
+
+  # def destroy
+  #   # raise Item::HasChildrenError.new("has child items") unless children_items.count == 0
+  #   super
+  # end
+
   def set_values
-    ActiveRecord::Base.connection.select_one(
-      <<-SQL,
+    ActiveRecord::Base.connection.select_one(<<-SQL,
       WITH RECURSIVE rec(id, item_alias_id , parent_item_id, description,
        depth, start_id, maker_id ,maker_root_id,maker_name, min_threshold_price, max_threshold_price, name,
         category_path, is_visible
@@ -87,7 +159,7 @@ class Item < ApplicationRecord
         rec.is_visible
       FROM rec order by depth desc
       limit 1
-      SQL
+                                             SQL
     )
   end
 end

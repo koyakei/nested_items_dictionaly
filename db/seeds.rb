@@ -1,12 +1,21 @@
 user = User.new(id: 0)
 user.save!
-maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first)
+
+con = ActiveRecord::Base.connection
+
+con.execute("ALTER SEQUENCE items_id_seq RESTART WITH 500000")
+con.execute("ALTER SEQUENCE makers_id_seq RESTART WITH 50000")
+
+maker = Maker.new(id: 0, description: "unknown", name: "不明", creator: User.first!)
 maker.save!
+MakerAlias.new(name: :わからん, creator: User.first!, maker: maker).save!
 
 item = Item.new(id: 0, name: "全部", maker: maker, description: "全部",
                 max_threshold_price: 2_147_483_647,
                 min_threshold_price: 0, creator: User.first)
 item.save!(validate: false)
+
+ItemAlias.new(name: :すべて, creator: User.first!, item: item).save!
 
 CSV.foreach("db/seeds/csv/yamato_packing_item_codes.csv") do |row|
   LogisticOrderTemplatable::Yamato::Elements::PackingItemCode.new(
@@ -57,7 +66,7 @@ mb.save!
 litre = StandardUnit.new(name: "L")
 litre.save!
 
-area = StandardUnit.new(name: "㎡") # 機種依存文字だぜ
+area = StandardUnit.new(name: "m&sup2;") # 機種依存文字だぜ
 area.save!
 
 time = StandardUnit.new(name: "second")
@@ -68,6 +77,9 @@ hertz.save!
 
 transport_speed_byte = StandardUnit.new(name: "MB/s")
 transport_speed_byte.save!
+
+byte = StandardUnit.new(name: "B")
+byte.save!
 
 voltage = StandardUnit.new(name: "V")
 voltage.save!
@@ -102,14 +114,35 @@ decibel.save!
 watt = StandardUnit.new(name: "W")
 watt.save!
 
-watt_hour = StandardUnit.new(name: "W/h")
-watt_hour.save!
+joule = StandardUnit.new(name: "J")
+joule.save!
 
 lux = StandardUnit.new(name: "lx")
 lux.save!
 
 candela = StandardUnit.new(name: "cd")
 candela.save!
+
+mflops = StandardUnit.new(name: "MFLOPS")
+mflops.save!
+
+liter_per_hour = StandardUnit.new(name: "L/h")
+liter_per_hour.save!
+
+kg_per_sec = StandardUnit.new(name: "kg/s")
+kg_per_sec.save!
+
+deg = StandardUnit.new(name: "&deg;")
+deg.save!
+
+age = StandardUnit.new(name: "歳")
+age.save!
+
+ratio = StandardUnit.new(name: "比")
+ratio.save!
+
+screen_size = StandardUnit.new(name: "型")
+screen_size.save!
 
 # http://www.calc-site.com/units/weight
 CSV.foreach("db/seeds/csv/display_units/weight.csv") do |row|
@@ -128,7 +161,7 @@ end
 
 # バイト数
 CSV.foreach("db/seeds/csv/display_units/byte.csv") do |row|
-  DisplayUnit.create!(standard_unit: basic_japanese_counter_word, name: row[0], display_ratio: eval(row[1]).to_f, creator: user)
+  DisplayUnit.create!(standard_unit: byte, name: row[0], display_ratio: eval(row[1]).to_f, creator: user)
 end
 
 # 体積・容量
@@ -200,38 +233,100 @@ CSV.foreach("db/seeds/csv/display_units/watt.csv") do |row|
   DisplayUnit.create(standard_unit: watt, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
-CSV.foreach("db/seeds/csv/display_units/watt_hour.csv") do |row|
-  DisplayUnit.create(standard_unit: watt_hour, name: row[0], display_ratio: eval(row[1]), creator: user)
+CSV.foreach("db/seeds/csv/display_units/energy.csv") do |row|
+  DisplayUnit.create(standard_unit: joule, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
 CSV.foreach("db/seeds/csv/display_units/lux.csv") do |row|
   DisplayUnit.create(standard_unit: lux, name: row[0], display_ratio: eval(row[1]), creator: user)
 end
 
+CSV.foreach("db/seeds/csv/display_units/flops.csv") do |row|
+  DisplayUnit.create(standard_unit: mflops, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/volume_flow_rate.csv") do |row|
+  DisplayUnit.create(standard_unit: liter_per_hour, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/mass_flow_rate.csv") do |row|
+  DisplayUnit.create(standard_unit: kg_per_sec, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/deg.csv") do |row|
+  DisplayUnit.create(standard_unit: deg, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/age.csv") do |row|
+  DisplayUnit.create(standard_unit: age, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+CSV.foreach("db/seeds/csv/display_units/ratio.csv") do |row|
+  DisplayUnit.create(standard_unit: ratio, name: row[0], display_ratio: eval(row[1]), creator: user)
+end
+
+# 単位からの逆引きにも使用する標準属性
+AttributeType.create!(id: 0, standard_unit: basic_japanese_counter_word, name: "個数", creator: user)
 AttributeType.create!(standard_unit: gram, name: "重さ", creator: user)
-AttributeType.create!(standard_unit: metre, name: "幅", creator: user)
-AttributeType.create!(standard_unit: metre, name: "奥行", creator: user)
-AttributeType.create!(standard_unit: metre, name: "高さ", creator: user)
 AttributeType.create!(standard_unit: metre, name: "サイズ", creator: user)
-AttributeType.create!(standard_unit: area, name: "面積", creator: user)
+AttributeType.create!(standard_unit: mb, name: "データ容量", creator: user)
+AttributeType.create!(standard_unit: litre, name: "容量", creator: user)
 AttributeType.create!(standard_unit: time, name: "時間", creator: user)
+AttributeType.create!(standard_unit: area, name: "面積", creator: user)
 AttributeType.create!(standard_unit: hertz, name: "周波数", creator: user)
 AttributeType.create!(standard_unit: transport_speed_byte, name: "転送速度", creator: user)
-AttributeType.create!(standard_unit: voltage, name: "電圧", creator: user)
 AttributeType.create!(standard_unit: ampere, name: "電流", creator: user)
+AttributeType.create!(standard_unit: voltage, name: "電圧", creator: user)
 AttributeType.create!(standard_unit: ohm, name: "電気抵抗", creator: user)
 AttributeType.create!(standard_unit: speed, name: "速度", creator: user)
 AttributeType.create!(standard_unit: farad, name: "静電容量", creator: user)
-AttributeType.create!(standard_unit: tesla, name: "磁力", creator: user)
-AttributeType.create!(standard_unit: pascal, name: "Pa", creator: user)
-AttributeType.create!(standard_unit: celsius, name: "℃", creator: user)
-AttributeType.create!(standard_unit: rotational_speed, name: "rpm", creator: user)
+AttributeType.create!(standard_unit: tesla, name: "磁束密度", creator: user)
+AttributeType.create!(standard_unit: pascal, name: "圧力", creator: user)
+AttributeType.create!(standard_unit: celsius, name: "温度", creator: user)
+AttributeType.create!(standard_unit: rotational_speed, name: "回転数", creator: user)
 AttributeType.create!(standard_unit: decibel, name: "dB", creator: user)
-AttributeType.create!(standard_unit: watt, name: "ワット", creator: user)
-AttributeType.create!(standard_unit: watt_hour, name: "ワット時", creator: user)
-AttributeType.create!(standard_unit: lux, name: "ルクス", creator: user)
-AttributeType.create!(standard_unit: candela, name: "カンデラ", creator: user)
+AttributeType.create!(standard_unit: watt, name: "仕事率", creator: user)
+AttributeType.create!(standard_unit: joule, name: "エネルギー", creator: user)
+AttributeType.create!(standard_unit: lux, name: "照度", creator: user)
+AttributeType.create!(standard_unit: candela, name: "光度", creator: user)
+AttributeType.create!(standard_unit: mflops, name: "浮動小数点演算速度", creator: user)
+AttributeType.create!(standard_unit: liter_per_hour, name: "体積流量", creator: user)
+AttributeType.create!(standard_unit: kg_per_sec, name: "質量流量", creator: user)
+AttributeType.create!(standard_unit: deg, name: "度", creator: user)
+AttributeType.create!(standard_unit: age, name: "年齢", creator: user)
+AttributeType.create!(standard_unit: ratio, name: "比", creator: user)
+AttributeType.create!(standard_unit: screen_size, name: "画面サイズ", creator: user)
 
-AttributeType.create!(standard_unit: basic_japanese_counter_word, name: "個数", creator: user)
-AttributeType.create!(standard_unit: mb, name: "データ容量", creator: user)
-AttributeType.create!(standard_unit: litre, name: "容量", creator: user)
+# それ以外の詳細な属性
+AttributeType.create!(standard_unit: gram, name: "積載重量", creator: user)
+AttributeType.create!(standard_unit: gram, name: "本体重量", creator: user)
+AttributeType.create!(standard_unit: metre, name: "幅", creator: user)
+AttributeType.create!(standard_unit: metre, name: "奥行", creator: user)
+AttributeType.create!(standard_unit: metre, name: "高さ", creator: user)
+AttributeType.create!(standard_unit: time, name: "定格使用時間", creator: user)
+AttributeType.create!(standard_unit: time, name: "連続使用可能時間", creator: user)
+AttributeType.create!(standard_unit: time, name: "充電時間", creator: user)
+AttributeType.create!(standard_unit: hertz, name: "電源周波数", creator: user)
+AttributeType.create!(standard_unit: hertz, name: "クロック周波数", creator: user)
+AttributeType.create!(standard_unit: voltage, name: "電源電圧", creator: user)
+AttributeType.create!(standard_unit: voltage, name: "動作電源電圧", creator: user)
+AttributeType.create!(standard_unit: voltage, name: "耐電圧", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "定格入力電流", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "定格出力電流", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "定格最大出力電流", creator: user)
+AttributeType.create!(standard_unit: ampere, name: "電源電流", creator: user)
+AttributeType.create!(standard_unit: pascal, name: "最大許容圧力", creator: user)
+AttributeType.create!(standard_unit: celsius, name: "耐熱温度", creator: user)
+AttributeType.create!(standard_unit: celsius, name: "耐冷温度", creator: user)
+AttributeType.create!(standard_unit: watt, name: "消費電力", creator: user)
+AttributeType.create!(standard_unit: watt, name: "最大消費電力", creator: user)
+AttributeType.create!(standard_unit: liter_per_hour, name: "最大吐水流量", creator: user)
+
+# puts "\n== Create Elasticsearch indexes =="
+# Rake::Task["elasticsearch:reindex"].invoke
+Item.reindex
+Maker.reindex
+AttributeType.reindex
+StandardUnit.reindex
+DisplayUnit.reindex
+ItemAttributeType.reindex

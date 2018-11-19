@@ -10,7 +10,6 @@ module RailsWebApp
   class Application < Rails::Application
     config.read_encrypted_secrets = true
     config.generators do |g|
-      g.api true
       g.test_framework :rspec
     end
     # Settings in config/environments/* take precedence over those specified here.

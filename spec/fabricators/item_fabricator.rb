@@ -1,6 +1,6 @@
 Fabricator(:item) do
   name                      "name test"
-  parent_item               Item.first
+  parent_item               nil
   max_threshold_price       nil
   min_threshold_price       nil
   description               "description"

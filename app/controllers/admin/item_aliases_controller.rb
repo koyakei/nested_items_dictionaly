@@ -1,4 +1,4 @@
-class ItemAliasesController < ApplicationController
+class Admin::ItemAliasesController < ApplicationController
   before_action :set_item_alias, only: [:show, :update, :destroy]
 
   # GET /item_aliases

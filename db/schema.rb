@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_06_063500) do
+ActiveRecord::Schema.define(version: 2018_04_18_030009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_display_units_on_creator_id"
-    t.index ["name"], name: "index_display_units_on_name", unique: true
+    t.index ["name", "standard_unit_id"], name: "index_display_units_on_name_and_standard_unit_id", unique: true
     t.index ["standard_unit_id"], name: "index_display_units_on_standard_unit_id"
   end
 
@@ -100,10 +100,11 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
     t.index ["creator_id"], name: "index_grades_on_creator_id"
   end
 
-  create_table "item_additional_conditions", force: :cascade do |t|
+  create_table "item_additional_conditions", comment: "itemこのテーブルもfallbackの対象", force: :cascade do |t|
     t.bigint "item_id"
     t.bigint "additional_condition_id"
-    t.float "discount_ratio"
+    t.float "discount_ratio", default: 0.0, null: false
+    t.integer "discount_price", default: 0, null: false
     t.bigint "creator_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -137,11 +138,21 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
     t.index ["item_id"], name: "index_item_attribute_types_on_item_id"
   end
 
+  create_table "item_feature_data", force: :cascade do |t|
+    t.bigint "item_id"
+    t.integer "number"
+    t.text "feature"
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["item_id", "number"], name: "index_item_feature_data_on_item_id_and_number", unique: true
+    t.index ["item_id"], name: "index_item_feature_data_on_item_id"
+  end
+
   create_table "item_grades_discounts", force: :cascade do |t|
     t.bigint "item_id", null: false
     t.bigint "grade_id", null: false
     t.bigint "creator_id", default: 0, null: false
-    t.float "discount_ration", null: false
+    t.float "discount_ratio", default: 0.0, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["creator_id"], name: "index_item_grades_discounts_on_creator_id"
@@ -151,7 +162,7 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
 
   create_table "item_images", force: :cascade do |t|
     t.bigint "item_id", null: false
-    t.text "image_path", null: false
+    t.text "url"
     t.text "name"
     t.text "description"
     t.bigint "creator_id", default: 0, null: false
@@ -322,49 +333,50 @@ ActiveRecord::Schema.define(version: 2018_04_06_063500) do
 
   add_foreign_key "accessories", "items", column: "accessory_item_id"
   add_foreign_key "accessories", "items", column: "base_item_id"
-  add_foreign_key "accessories", "users", column: "creator_id"
-  add_foreign_key "additional_conditions", "users", column: "creator_id"
-  add_foreign_key "attribute_types", "standard_units"
-  add_foreign_key "attribute_types", "users", column: "creator_id"
+  add_foreign_key "accessories", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "additional_conditions", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "attribute_types", "standard_units", on_update: :cascade
+  add_foreign_key "attribute_types", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "costs_for_items", "items"
-  add_foreign_key "costs_for_items", "users", column: "creator_id"
-  add_foreign_key "display_units", "standard_units"
-  add_foreign_key "display_units", "users", column: "creator_id"
-  add_foreign_key "grades", "users", column: "creator_id"
+  add_foreign_key "costs_for_items", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "display_units", "standard_units", on_update: :cascade
+  add_foreign_key "display_units", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "grades", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "item_additional_conditions", "additional_conditions"
   add_foreign_key "item_additional_conditions", "items"
-  add_foreign_key "item_additional_conditions", "users", column: "creator_id"
+  add_foreign_key "item_additional_conditions", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "item_aliases", "items"
-  add_foreign_key "item_aliases", "users", column: "creator_id"
-  add_foreign_key "item_attribute_types", "attribute_types"
-  add_foreign_key "item_attribute_types", "display_units"
-  add_foreign_key "item_attribute_types", "items"
-  add_foreign_key "item_attribute_types", "users", column: "creator_id"
-  add_foreign_key "item_grades_discounts", "grades"
-  add_foreign_key "item_grades_discounts", "items"
-  add_foreign_key "item_grades_discounts", "users", column: "creator_id"
-  add_foreign_key "item_images", "items"
-  add_foreign_key "item_images", "users", column: "creator_id"
-  add_foreign_key "items", "items", column: "parent_item_id"
-  add_foreign_key "items", "makers"
-  add_foreign_key "items", "users", column: "creator_id"
-  add_foreign_key "logistic_order_templates", "items"
-  add_foreign_key "logistic_order_templates", "users", column: "creator_id"
-  add_foreign_key "maker_aliases", "makers"
-  add_foreign_key "maker_aliases", "users", column: "creator_id"
-  add_foreign_key "makers", "users", column: "creator_id"
-  add_foreign_key "standard_units", "users", column: "creator_id"
+  add_foreign_key "item_aliases", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "item_attribute_types", "attribute_types", on_update: :cascade
+  add_foreign_key "item_attribute_types", "display_units", on_update: :cascade
+  add_foreign_key "item_attribute_types", "items", on_update: :cascade
+  add_foreign_key "item_attribute_types", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "item_feature_data", "items", on_update: :cascade
+  add_foreign_key "item_grades_discounts", "grades", on_update: :cascade
+  add_foreign_key "item_grades_discounts", "items", on_update: :cascade
+  add_foreign_key "item_grades_discounts", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "item_images", "items", on_update: :cascade
+  add_foreign_key "item_images", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "items", "items", column: "parent_item_id", on_update: :cascade
+  add_foreign_key "items", "makers", on_update: :cascade
+  add_foreign_key "items", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "logistic_order_templates", "items", on_update: :cascade
+  add_foreign_key "logistic_order_templates", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "maker_aliases", "makers", on_update: :cascade
+  add_foreign_key "maker_aliases", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "makers", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "standard_units", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "tag_items", "items"
   add_foreign_key "tag_items", "tags"
-  add_foreign_key "tag_items", "users", column: "creator_id"
-  add_foreign_key "tag_order_types", "users", column: "creator_id"
+  add_foreign_key "tag_items", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "tag_order_types", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "tag_orders", "tag_order_types"
-  add_foreign_key "tag_orders", "users", column: "creator_id"
-  add_foreign_key "tags", "users", column: "creator_id"
-  add_foreign_key "yamato_logistic_order_templates", "users", column: "creator_id"
+  add_foreign_key "tag_orders", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "tags", "users", column: "creator_id", on_update: :cascade
+  add_foreign_key "yamato_logistic_order_templates", "users", column: "creator_id", on_update: :cascade
   add_foreign_key "yamato_logistic_order_templates", "yamato_handling_type_codes", column: "yamato_handling_type_code1_id"
   add_foreign_key "yamato_logistic_order_templates", "yamato_handling_type_codes", column: "yamato_handling_type_code2_id"
-  add_foreign_key "yamato_logistic_order_templates", "yamato_packing_item_codes"
-  add_foreign_key "yamato_logistic_order_templates", "yamato_size_item_codes"
-  add_foreign_key "yamato_packing_item_codes", "items"
+  add_foreign_key "yamato_logistic_order_templates", "yamato_packing_item_codes", on_update: :cascade
+  add_foreign_key "yamato_logistic_order_templates", "yamato_size_item_codes", on_update: :cascade
+  add_foreign_key "yamato_packing_item_codes", "items", on_update: :cascade
 end
