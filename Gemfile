@@ -28,6 +28,7 @@ gem 'jbuilder', '2.7.0'
 gem 'therubyracer', '0.12.3'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
