@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  # searchkick word_start: [:name, :maker_name]
+  searchkick word_start: [:name, :maker_name]
   # , merge_mappings: true, mappings: {item: {
   #   "unit.*": {
   #     name: {type: "float"}
