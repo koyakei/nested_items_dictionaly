@@ -1,4 +1,4 @@
-class TagItemsController < ApplicationController
+class Admin::TagItemsController < ApplicationController
   before_action :set_tag_item, only: [:show, :update, :destroy]
 
   # GET /tag_items

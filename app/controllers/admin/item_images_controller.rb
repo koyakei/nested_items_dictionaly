@@ -1,4 +1,4 @@
-class ItemImagesController < ApplicationController
+class Admin::ItemImagesController < ApplicationController
   before_action :set_item_image, only: [:show, :update, :destroy]
 
   # GET /item_images

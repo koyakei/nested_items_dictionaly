@@ -1,4 +1,4 @@
-class YamatoHandlingTypeCodesController < ApplicationController
+class Admin::LogisticOrderTemplatable::Yamato::HandlingTypeCodesController < ApplicationController
   before_action :set_yamato_handling_type_code, only: [:show, :update, :destroy]
 
   # GET /yamato_handling_type_codes

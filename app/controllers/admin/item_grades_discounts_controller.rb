@@ -1,4 +1,4 @@
-class ItemGradesDiscountsController < ApplicationController
+class Admin::ItemGradesDiscountsController < ApplicationController
   before_action :set_item_grades_discount, only: [:show, :update, :destroy]
 
   # GET /item_grades_discounts

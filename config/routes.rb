@@ -1,21 +1,14 @@
 Rails.application.routes.draw do
-  resources :item_feature_data
-  resources :tag_items
-  resources :item_images
-  resources :item_grades_discounts
-  resources :grades
-  resources :item_attribute_types
-  resources :logistic_order_templates
-  resources :yamato_logistic_order_templates
-  resources :yamato_handling_type_codes
-  resources :yamato_packing_item_codes
-  resources :yamato_size_item_codes
-  resources :items
   resources :swagger
   resources :googlesignin
   resources :googleoauth
   get 'hello_page/hello'
   namespace :admin do
+    resources :item_feature_data
+    resources :item_images
+    resources :item_grades_discounts
+    resources :item_attribute_types
+    resources :items
     resources :item_aliases
     resources :item_additional_conditions
     resources :signin
@@ -28,6 +21,22 @@ Rails.application.routes.draw do
     resources :costs_for_items
     resources :tag_order_types
     resources :tag_orders
+    resources :tag_items
+    resources :grades
+    resources :makers
+    resources :maker_aliases
+    resources :standard_units
+    resources :logistic_order_templates
+    namespace :logistic_order_templatable do
+      namespace :yamato do
+        resources :logistic_order_templates
+        namespace :elements do
+          resources :handling_type_codes
+          resources :yamato_packing_item_codes
+          resources :yamato_size_item_codes
+        end
+      end
+    end
   end
   # get 'hello_page/hello'
   root 'hello_page#hello'

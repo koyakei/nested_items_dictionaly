@@ -14,7 +14,7 @@
 #         attribute_types
 #         ON base.attribute_type_id = attribute_types.id
 #
-class ItemAttributeTypesController < ApplicationController
+class Admin::ItemAttributeTypesController < ApplicationController
   before_action :set_item_attribute_type, only: [:show, :update, :destroy]
 
   # GET /item_attribute_types
