@@ -15,7 +15,10 @@ development:
   <<: *default
   url: <%= ENV['DATABASE_DEVELOPMENT_URL'] %>
   database: product_db_development
-
+staging:
+  <<: *default
+  url: <%= ENV['DATABASE_STAGING_URL'] %>
+  database: product_db_staging
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
