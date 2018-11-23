@@ -1,9 +1,11 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   resources :swagger
   resources :googlesignin
   resources :googleoauth
   get 'hello_page/hello'
   namespace :admin do
+    mount Sidekiq::Web => 'sidekiq'
     resources :item_feature_data
     resources :item_images
     resources :item_grades_discounts
