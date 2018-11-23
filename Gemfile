@@ -54,3 +54,4 @@ gem "csv"
 gem "searchkick"
 gem "jwt"
 gem 'activejob-traffic_control'
+gem 'sidekiq'
