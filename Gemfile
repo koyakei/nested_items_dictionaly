@@ -53,3 +53,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "csv"
 gem "searchkick"
 gem "jwt"
+gem 'activejob-traffic_control'
