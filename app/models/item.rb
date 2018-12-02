@@ -1,10 +1,6 @@
 class Item < ApplicationRecord
-  searchkick word_start: [:name, :maker_name]
-  # , merge_mappings: true, mappings: {item: {
-  #   "unit.*": {
-  #     name: {type: "float"}
-  #   }
-  # }}
+  searchkick word_start: [:name, :maker_name, merge_mappings: true]
+
   after_commit :reindex_descendant
   class HasChildrenError < StandardError;
   end
@@ -22,17 +18,17 @@ class Item < ApplicationRecord
   has_many :item_attribute_types, dependent: :delete_all
   has_many :attribute_types, through: :item_attribute_types
   has_many :display_units, through: :item_attribute_types
-  scope :top_level, -> { where(parent_item_id: nil) }
-  scope :search_import, -> { includes(:maker) }
+  scope :top_level, -> {where(parent_item_id: nil)}
+  scope :search_import, -> {includes(:maker)}
 
   validates_numericality_of :max_threshold_price, only_integer: true, allow_nil: true
   validates :min_threshold_price, numericality: :only_integer, if: :nil?
 
-  validates :asin, length: { is: 10, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
-  validates :isbn13, length: { is: 14, too_short: "最小%{count}文字まで使用できます ISBN13に変換してください", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
-  validates :ean, length: { minimum: 8, maximum: 13, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます" }, allow_blank: true
+  validates :asin, length: {is: 10, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
+  validates :isbn13, length: {is: 14, too_short: "最小%{count}文字まで使用できます ISBN13に変換してください", too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
+  validates :ean, length: {minimum: 8, maximum: 13, too_short: "最小%{count}文字まで使用できます", too_long: "最大%{count}文字まで使用できます"}, allow_blank: true
 
-  validates :url, format: { with: /\A#{URI::regexp(%w(http https))}\z/, message: "URLのみが使用できます" }, allow_blank: true
+  validates :url, format: {with: /\A#{URI::regexp(%w(http https))}\z/, message: "URLのみが使用できます"}, allow_blank: true
   validates :parent_item, :name, presence: true
   validates :name, uniqueness: true
 
@@ -40,12 +36,12 @@ class Item < ApplicationRecord
     result = set_values
     return if result.nil?
     maker_aliases_name = ""
-    maker_aliases_name = maker&.maker_aliases.map { |al| next "" if al.nil?
-    al.name } unless maker.nil? || maker.maker_aliases.nil?
+    maker_aliases_name = maker&.maker_aliases.map {|al| next "" if al.nil?
+    al.name} unless maker.nil? || maker.maker_aliases.nil?
     category_path_ids = []
     result["category_path"].to_s.split(",")&.map {
       |v|
-      category_path_ids << { id: v.to_i }
+      category_path_ids << {id: v.to_i}
     }
 
     {
@@ -62,8 +58,10 @@ class Item < ApplicationRecord
       ean: ean,
       url: url,
       amazon_category_id: amazon_category_id,
-      description: description
-    }.merge(units)
+      description: description,
+      units: units,
+      item_images: item_image_urls
+    }
   end
 
   def units
@@ -82,7 +80,18 @@ class Item < ApplicationRecord
         standard_unit_name: item_attribute.display_unit.standard_unit.name
       }
     }
-    { units: units }
+    units
+  end
+
+  def item_image_urls
+    images = []
+    item_images&.map {
+      |item_image|
+      images << {
+        url: item_image.url
+      }
+    }
+    images
   end
 
   def reindex_descendant
@@ -95,7 +104,7 @@ class Item < ApplicationRecord
   end
 
   def descendants(children_items)
-    children_items.map { |child|
+    children_items.map {|child|
       child.reindex
       reindex_descendant2(child.children_items) if child.children_items.present?
     }
